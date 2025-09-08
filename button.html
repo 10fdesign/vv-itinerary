@@ -1,0 +1,38 @@
+<button id="bookmark_button">Add Bookmark</button>
+<script>
+	( function () {
+		const urlParams = new URLSearchParams(window.location.search);
+		const domain = urlParams.get("domain");
+		const post_id = urlParams.get("post_id");
+
+		var bookmark_button = document.getElementById("bookmark_button");
+		var post_ids = localStorage.getItem("post_ids");
+		if ( post_ids == undefined ) {
+			post_ids = [];
+		} else {
+			post_ids = post_ids.split(",");
+		}
+
+		var refresh = function () {
+			if ( post_ids.includes( post_id ) ) {
+				bookmark_button.innerHTML = "Remove Bookmark";
+			} else {
+				bookmark_button.innerHTML = "Add Bookmark";
+			}
+		}
+
+		refresh()
+
+		bookmark_button.addEventListener("click", function () {
+			var _index = post_ids.find( (element) => element == post_id );
+			if ( _index == undefined ) {
+				post_ids.push( post_id );
+			} else {
+				post_ids = post_ids.splice( _index, 1 );
+			}
+			localStorage.setItem("post_ids", post_ids.join(",") );
+			refresh()
+		});
+
+	} )();
+</script>
