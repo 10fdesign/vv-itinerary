@@ -6,14 +6,14 @@
 		<link rel="stylesheet" href="style.css">
 		<script>
 			const tile_template = `
-<img class="bg-red-50 aspect-video w-full block object-cover tile-image" />
+<img class="bg-red-50 aspect-3/2 w-full block object-cover tile-image" />
 <div class="flex flex-col gap-4 p-4">
-	<h3 class="title font-bold text-lg border-b-4 pb-2 border-b-red-50 border-b-solid w-fit">Wilburton Inn</h3>
+	<h3 class="title font-bold text-lg border-b-4 pb-2 border-b-blue border-b-solid w-fit">Wilburton Inn</h3>
 	<p class="excerpt text-md leading-8">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Doloribus maiores enim, similique?</p>
 </div>`;
 			window.addEventListener("DOMContentLoaded", function () {
 				let page_tiles_container = document.getElementById("page-tiles");
-
+				let event_tiles_container = document.getElementById("event-tiles");
 				let post_ids = localStorage.getItem("post_ids").split(",");
 
 				const xhttp = new XMLHttpRequest();
@@ -24,6 +24,7 @@
 						let _tile = document.createElement("div");
 						_tile.classList.add("flex");
 						_tile.classList.add("flex-col");
+						_tile.classList.add("bg-white");
 						_tile.innerHTML = tile_template.trim()
 						_tile.querySelector(".title").innerHTML = post_data.title.rendered;
 						_tile.querySelector(".excerpt").innerHTML = post_data.excerpt.rendered;
@@ -34,10 +35,31 @@
 				xhttp.open("GET", "https://dev.wp.10fdesign.io/wp-json/wp/v2/posts/?include%5B%5D=128&embed&include[]=129&include[]=131", true );
 				xhttp.send()
 
+				const events_xhttp = new XMLHttpRequest();
+				events_xhttp.onload = function () {
+					var events_data = JSON.parse( this.responseText );
+					console.log( events_data );
+
+					for ( event_data of events_data.events ) {
+						let _tile = document.createElement("div");
+						_tile.classList.add("flex");
+						_tile.classList.add("flex-col");
+						_tile.classList.add("bg-white");
+						_tile.innerHTML = tile_template.trim()
+						_tile.querySelector(".title").innerHTML = event_data.name;
+						_tile.querySelector(".excerpt").innerHTML = event_data.full_date_range;
+						_tile.querySelector(".tile-image").setAttribute( "src", event_data.hero_image_url );
+						event_tiles_container.appendChild( _tile );
+					}
+				};
+				events_xhttp.open("GET", "https://plan.vermontvacation.com/events.json?api_key=244a-7ed6-440a-b979-dfa20f52bce187a5&search[full_date_range]=true");
+				events_xhttp.send();
+
+
 			});
 		</script>	
 	</head>
-	<body class="font-body">
+	<body class="font-body bg-grey">
 		<div class="container my-16">
 			<div class="flex flex-col gap-8">
 				<div class="flex flex-col gap-8 w-1/2">
@@ -53,10 +75,10 @@
 							<div class="flex flex-col">
 								<div class="bg-red-50 aspect-video w-full"></div>
 								<div class="flex flex-col gap-4 p-4">
-									<h3 class="font-bold text-lg border-b-4 pb-2 border-b-red-50 border-b-solid w-fit">Wilburton Inn</h3>
+									<h3 class="font-bold text-lg border-b-4 pb-2 border-b-blue border-b-solid w-fit">Wilburton Inn</h3>
 									<p class="text-md leading-8">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Doloribus maiores enim, similique?</p>
 									<div class="flex flex-row items-center">
-										<svg class="h-8 fill-red-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
+										<svg class="h-8 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
 										<div class="address text-sm italic flex flex-col">
 											<div>18 Road Street</div>
 											<div>Brattleboro, VT 05301</div>
@@ -74,13 +96,13 @@
 					</h1>
 					<div class="grid grid-cols-2 gap-8">
 						<div id="event-tiles" class="grid grid-cols-2 gap-8 content-start">
-							<div class="flex flex-col">
+							<div class="flex flex-col bg-white">
 								<div class="bg-red-50 aspect-video w-full"></div>
 								<div class="flex flex-col gap-4 p-4">
-									<h3 class="font-bold text-lg border-b-4 pb-4 border-b-red-50 border-b-solid w-fit">Wilburton Inn</h3>
+									<h3 class="font-bold text-lg border-b-4 pb-4 border-b-blue border-b-solid w-fit">Wilburton Inn</h3>
 									<p class="text-md leading-8">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Doloribus maiores enim, similique?</p>
 									<div class="flex flex-row items-center">
-										<svg class="h-8 fill-red-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
+										<svg class="h-8 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
 										<div class="address text-sm italic flex flex-col">
 											<div>18 Road Street</div>
 											<div>Brattleboro, VT 05301</div>
