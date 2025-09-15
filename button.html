@@ -1,38 +1,53 @@
 <button id="bookmark_button">Add Bookmark</button>
 <script>
-	( function () {
-		const urlParams = new URLSearchParams(window.location.search);
-		const domain = urlParams.get("domain");
-		const post_id = urlParams.get("post_id");
+  (function () {
 
-		var bookmark_button = document.getElementById("bookmark_button");
-		var post_ids = localStorage.getItem("post_ids");
-		if ( post_ids == undefined ) {
-			post_ids = [];
-		} else {
-			post_ids = post_ids.split(",");
+    const urlParams = new URLSearchParams(window.location.search);
+    const domain = urlParams.get("domain");
+    const postID = urlParams.get("post_id");
+    const postType = urlParams.get("post_type");
+
+		const bookmark = {
+			domain: urlParams.get("domain"),
+			postID: urlParams.get("post_id"),
+			postType: urlParams.get("post_type"),
+		};
+
+		const bookmarkEquality = function(b1, b2) {
+			return b1.domain == b2.domain && b1.postID == b2.postID && b1.postType == b2.postType;
 		}
 
-		var refresh = function () {
-			if ( post_ids.includes( post_id ) ) {
-				bookmark_button.innerHTML = "Remove Bookmark";
-			} else {
-				bookmark_button.innerHTML = "Add Bookmark";
-			}
+    const bookmark_button = document.getElementById("bookmark_button");
+
+    let bookmarks = localStorage.getItem("bookmarks");
+    if (bookmarks == undefined) {
+      bookmarks = [];
+    } else {
+			bookmarks = JSON.parse(bookmarks);
 		}
 
-		refresh()
+    const refresh = function () {
 
-		bookmark_button.addEventListener("click", function () {
-			var _index = post_ids.find( (element) => element == post_id );
-			if ( _index == undefined ) {
-				post_ids.push( post_id );
+			if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
+        bookmark_button.innerHTML = "Remove Bookmark";
 			} else {
-				post_ids = post_ids.splice( _index, 1 );
-			}
-			localStorage.setItem("post_ids", post_ids.join(",") );
-			refresh()
-		});
+        bookmark_button.innerHTML = "Add Bookmark";
+      }
+    };
 
-	} )();
+    refresh();
+
+    bookmark_button.addEventListener("click", function () {
+      const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
+      if (index == -1) {
+        bookmarks.push(bookmark);
+      } else {
+        bookmarks.splice(index, 1);
+      }
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+			console.log(bookmarks);
+      refresh();
+    });
+		console.log(bookmarks);
+  })();
 </script>
