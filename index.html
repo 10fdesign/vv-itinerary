@@ -43,12 +43,16 @@
 
         // get bookmarks from local storage
 
-        let bookmarks = getCookie("wp_bookmarks");
+        // let bookmarks = getCookie("wp_bookmarks");
+        // if (bookmarks == "") {
+        //   bookmarks = [];
+        // } else {
+        //   bookmarks = JSON.parse(bookmarks);
+        // }
 
-        if (bookmarks == "") {
-          bookmarks = [];
-        } else {
-          bookmarks = JSON.parse(bookmarks);
+        let bookmarks = [];
+        if (localStorage.key("wp_storage")) {
+          bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
         }
 
         function getCookie(cname) {
