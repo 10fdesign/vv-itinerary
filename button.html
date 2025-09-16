@@ -36,6 +36,7 @@
 
       document.requestStorageAccess({ localStorage: true }).then(
         (handle) => {
+          localStorage.setItem("foo", "bar");
           const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
           if (index == -1) {
             bookmarks.push(bookmark);
