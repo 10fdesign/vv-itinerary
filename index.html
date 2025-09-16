@@ -42,8 +42,30 @@
 				let listing_tiles_container = document.getElementById("listing-tiles");
 
         // get bookmarks from local storage
-        let bookmarks = [];
-        console.log(localStorage);
+
+        let bookmarks = getCookie("wp_bookmarks");
+
+        if (bookmarks == "") {
+          bookmarks = [];
+        } else {
+          bookmarks = JSON.parse(bookmarks);
+        }
+
+        function getCookie(cname) {
+          let name = cname + "=";
+          let decodedCookie = decodeURIComponent(document.cookie);
+          let ca = decodedCookie.split(';');
+          for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return "";
+        }
 
         if (localStorage.getItem("wp_bookmarks") != undefined) {
           bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));

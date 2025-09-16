@@ -16,13 +16,7 @@
 
     const bookmark_button = document.getElementById("bookmark_button");
 
-    let bookmarks = [];
-    // if (localStorage.getItem("wp_bookmarks") != undefined) {
-    //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
-    // }
-
-
-    bookmarks = getCookie("wp_bookmarks");
+    let bookmarks = getCookie("wp_bookmarks");
 
     if (bookmarks == "") {
       bookmarks = [];
@@ -67,26 +61,14 @@
     }
 
     bookmark_button.addEventListener("click", function () {
-
-      document.requestStorageAccess({ localStorage: true }).then(
-        (handle) => {
-          localStorage.setItem("foo", "bar");
-          const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
-          if (index == -1) {
-            bookmarks.push(bookmark);
-          } else {
-            bookmarks.splice(index, 1);
-          }
-          // localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
-          setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
-          console.log(bookmarks);
-          refresh();
-        },
-        () => {
-          console.log("localStorage access denied");
-        },
-      );
+      const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
+      if (index == -1) {
+        bookmarks.push(bookmark);
+      } else {
+        bookmarks.splice(index, 1);
+      }
+      setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
+      refresh();
     });
-		console.log(bookmarks);
   });
 </script>
