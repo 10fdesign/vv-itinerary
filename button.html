@@ -3,9 +3,6 @@
   (function () {
 
     const urlParams = new URLSearchParams(window.location.search);
-    const domain = urlParams.get("domain");
-    const postID = urlParams.get("post_id");
-    const postType = urlParams.get("post_type");
 
 		const bookmark = {
 			domain: urlParams.get("domain"),
@@ -19,12 +16,10 @@
 
     const bookmark_button = document.getElementById("bookmark_button");
 
-    let bookmarks = localStorage.getItem("bookmarks");
-    if (bookmarks == undefined) {
-      bookmarks = [];
-    } else {
-			bookmarks = JSON.parse(bookmarks);
-		}
+    let bookmarks = [];
+    if (localStorage.getItem("wp_bookmarks") != undefined) {
+      bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
+    }
 
     const refresh = function () {
 
@@ -44,7 +39,7 @@
       } else {
         bookmarks.splice(index, 1);
       }
-      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+      localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
 			console.log(bookmarks);
       refresh();
     });
