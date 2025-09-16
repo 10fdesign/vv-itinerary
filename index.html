@@ -43,6 +43,8 @@
 
         // get bookmarks from local storage
         let bookmarks = [];
+        console.log(localStorage);
+
         if (localStorage.getItem("wp_bookmarks") != undefined) {
           bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
         }
