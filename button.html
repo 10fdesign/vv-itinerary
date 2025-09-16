@@ -52,7 +52,7 @@
         (handle) => {
           console.log("localStorage access granted");
           console.log(handle);
-          handle.localStorage.setItem("foo", "bar");
+          localStorage.setItem("foo", "bar");
         },
         () => {
           console.log("localStorage access denied");
