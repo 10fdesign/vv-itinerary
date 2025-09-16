@@ -1,48 +1,105 @@
-<button id="bookmark_button">Add Bookmark</button>
-<script>
-  (function () {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="bookmark_button">Add Bookmark</button>
+  <script>
+    addEventListener("DOMContentLoaded", (event) => {
 
-    const urlParams = new URLSearchParams(window.location.search);
+      const urlParams = new URLSearchParams(window.location.search);
 
-		const bookmark = {
-			domain: urlParams.get("domain"),
-			postID: urlParams.get("post_id"),
-			postType: urlParams.get("post_type"),
-		};
+      const bookmark = {
+        domain: urlParams.get("domain"),
+        postID: urlParams.get("post_id"),
+        postType: urlParams.get("post_type"),
+      };
 
-		const bookmarkEquality = function(b1, b2) {
-			return b1.domain == b2.domain && b1.postID == b2.postID && b1.postType == b2.postType;
-		}
-
-    const bookmark_button = document.getElementById("bookmark_button");
-
-    let bookmarks = [];
-    if (localStorage.getItem("wp_bookmarks") != undefined) {
-      bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
-    }
-
-    const refresh = function () {
-
-			if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
-        bookmark_button.innerHTML = "Remove Bookmark";
-			} else {
-        bookmark_button.innerHTML = "Add Bookmark";
+      const bookmarkEquality = function(b1, b2) {
+        return b1.domain == b2.domain && b1.postID == b2.postID && b1.postType == b2.postType;
       }
-    };
 
-    refresh();
+      const bookmark_button = document.getElementById("bookmark_button");
 
-    bookmark_button.addEventListener("click", function () {
-      const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
-      if (index == -1) {
-        bookmarks.push(bookmark);
-      } else {
-        bookmarks.splice(index, 1);
-      }
-      localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
-			console.log(bookmarks);
+      const refresh = function () {
+
+        // let bookmarks = getCookie("wp_bookmarks");
+        // if (bookmarks == "") {
+        //   bookmarks = [];
+        // } else {
+        //   bookmarks = JSON.parse(bookmarks);
+        // }
+
+
+        let bookmarks = [];
+        if (!localStorage.key("wp_storage")) {
+          localStorage.setItem("wp_bookmarks", JSON.stringify([]));
+        } else {
+          bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"))
+        }
+
+        if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
+          bookmark_button.innerHTML = "Remove Bookmark";
+        } else {
+          bookmark_button.innerHTML = "Add Bookmark";
+        }
+      };
+
       refresh();
+
+      // function setCookie(cname, cvalue, exdays) {
+      //   const d = new Date();
+      //   d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      //   let expires = "expires="+ d.toUTCString();
+      //   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
+      // }
+
+      // function getCookie(cname) {
+      //   let name = cname + "=";
+      //   let decodedCookie = decodeURIComponent(document.cookie);
+      //   let ca = decodedCookie.split(';');
+      //   for(let i = 0; i <ca.length; i++) {
+      //     let c = ca[i];
+      //     while (c.charAt(0) == ' ') {
+      //       c = c.substring(1);
+      //     }
+      //     if (c.indexOf(name) == 0) {
+      //       return c.substring(name.length, c.length);
+      //     }
+      //   }
+      //   return "";
+      // }
+
+      bookmark_button.addEventListener("click", function () {
+
+        let bookmarks = [];
+        if (!localStorage.key("wp_storage")) {
+          localStorage.setItem("wp_bookmarks", JSON.stringify([]));
+        } else {
+          bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"))
+        }
+
+        // let bookmarks = getCookie("wp_bookmarks");
+        // if (bookmarks == "") {
+        //   bookmarks = [];
+        // } else {
+        //   bookmarks = JSON.parse(bookmarks);
+        // }
+        const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
+        if (index == -1) {
+          bookmarks.push(bookmark);
+        } else {
+          bookmarks.splice(index, 1);
+        }
+        // setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
+        localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
+        refresh();
+      });
     });
-		console.log(bookmarks);
-  })();
-</script>
+  </script>
+
+</body>
+</html>
