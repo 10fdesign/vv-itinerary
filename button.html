@@ -51,6 +51,7 @@
       document.requestStorageAccess({ localStorage: true }).then(
         (handle) => {
           console.log("localStorage access granted");
+          console.log(handle);
           handle.localStorage.setItem("foo", "bar");
         },
         () => {
