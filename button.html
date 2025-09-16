@@ -16,17 +16,17 @@
 
     const bookmark_button = document.getElementById("bookmark_button");
 
-    let bookmarks = getCookie("wp_bookmarks");
-
-    if (bookmarks == "") {
-      bookmarks = [];
-    } else {
-      bookmarks = JSON.parse(bookmarks);
-    }
-
 
 
     const refresh = function () {
+
+      let bookmarks = getCookie("wp_bookmarks");
+
+      if (bookmarks == "") {
+        bookmarks = [];
+      } else {
+        bookmarks = JSON.parse(bookmarks);
+      }
 
 			if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
         bookmark_button.innerHTML = "Remove Bookmark";
@@ -61,6 +61,14 @@
     }
 
     bookmark_button.addEventListener("click", function () {
+
+      let bookmarks = getCookie("wp_bookmarks");
+
+      if (bookmarks == "") {
+        bookmarks = [];
+      } else {
+        bookmarks = JSON.parse(bookmarks);
+      }
       const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
       if (index == -1) {
         bookmarks.push(bookmark);
