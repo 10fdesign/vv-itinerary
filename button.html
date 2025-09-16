@@ -14,6 +14,18 @@
     });
 
 
+    document.requestStorageAccess({ localStorage: true }).then(
+      (handle) => {
+        console.log("localStorage access granted");
+        handle.localStorage.setItem("foo", "bar");
+      },
+      () => {
+        console.log("localStorage access denied");
+      },
+    );
+
+
+
     const urlParams = new URLSearchParams(window.location.search);
 
 		const bookmark = {
