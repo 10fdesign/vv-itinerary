@@ -2,20 +2,6 @@
 <script>
   addEventListener("DOMContentLoaded", (event) => {
 
-    document.hasStorageAccess().then((hasAccess) => {
-      if (hasAccess) {
-        // storage access has been granted already.
-        console.log("cookie access granted");
-      } else {
-        // storage access hasn't been granted already;
-        // you may want to call requestStorageAccess().
-        console.log("cookie access denied");
-      }
-    });
-
-
-
-
     const urlParams = new URLSearchParams(window.location.search);
 
 		const bookmark = {
@@ -50,25 +36,20 @@
 
       document.requestStorageAccess({ localStorage: true }).then(
         (handle) => {
-          console.log("localStorage access granted");
-          console.log(handle);
-          localStorage.setItem("foo", "bar");
+          const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
+          if (index == -1) {
+            bookmarks.push(bookmark);
+          } else {
+            bookmarks.splice(index, 1);
+          }
+          localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
+          console.log(bookmarks);
+          refresh();
         },
         () => {
           console.log("localStorage access denied");
         },
       );
-
-
-      const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
-      if (index == -1) {
-        bookmarks.push(bookmark);
-      } else {
-        bookmarks.splice(index, 1);
-      }
-      localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
-			console.log(bookmarks);
-      refresh();
     });
 		console.log(bookmarks);
   });
