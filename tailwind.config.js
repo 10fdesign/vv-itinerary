@@ -3,6 +3,13 @@ module.exports = {
   // content: ["./*.html", "./_layouts/*.html", "./_includes/*.html"],
   content: ["./_site/**/*.html", "./assets/js/*.js"],
   theme: {
+  	colors: {
+  		"yellow": "#F5B324",
+  		"blue": "#35AFC8",
+  		"green": "#56A054",
+  		"grey": "#F2F2F2",
+  		"white": "#ffffff"
+  	},
     fontFamily: {
       body: ["Inter", "sans-serif"],
       display: ["Tilt Warp", "sans-serif"]
@@ -17,7 +24,11 @@ module.exports = {
         'xl': '1280px',
       }
     },
-    extend: {},
+    extend: {
+    	aspectRatio: {
+    		"3/2" : "3 / 2"
+    	}
+    },
   },
   plugins: [],
 };
