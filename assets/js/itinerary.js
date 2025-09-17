@@ -249,6 +249,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		for ( listing_data of listings_data.listings ) {
 			let id = parseInt( listing_data.url.split("/")[4] );
 			let _tile = document.createElement("div");
+			_tile.classList.add("listing-tile");
 			_tile.classList.add("flex");
 			_tile.classList.add("flex-col");
 			_tile.classList.add("relative");
