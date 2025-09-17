@@ -113,7 +113,6 @@
         // } else {
         //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"))
         // }
-        console.log( bookmark, bookmarks );
 
         let bookmarks = getCookie("wp_bookmarks");
         if (bookmarks == "") {
@@ -127,6 +126,7 @@
         } else {
           bookmarks.splice(index, 1);
         }
+        console.log( bookmark, bookmarks );
         
         setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
         // localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
