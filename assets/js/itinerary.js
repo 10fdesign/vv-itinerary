@@ -152,10 +152,11 @@ window.addEventListener("DOMContentLoaded", function () {
         } catch (e) {
           return console.error(e);
         }
-
+        console.log( posts_data );
         for (post_data of posts_data) {
           let _tile = document.createElement("div");
           _tile.classList.add("flex");
+          _tile.classList.add("relative");
           _tile.classList.add("flex-col");
           _tile.innerHTML = tile_template.trim();
           if (post_data?.title?.rendered != undefined) {
@@ -172,6 +173,11 @@ window.addEventListener("DOMContentLoaded", function () {
               .setAttribute("src", post_data.featured_image_src);
           }
           page_tiles_container.appendChild(_tile);
+	  			_tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id );
+	  			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
+	  				e.preventDefault();
+	  				return -1;
+	  			});
         }
       };
       const includes = postTypeBookmarks
