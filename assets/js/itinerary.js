@@ -1,0 +1,211 @@
+const tile_template = `
+<img class="bg-red-50 aspect-3/2 w-full block object-cover tile-image" />
+<a href="" class="bookmark-toggle block absolute top-4 right-4">
+	<svg class="h-8 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M305 151.1L320 171.8L335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1L576 231.7C576 343.9 436.1 474.2 363.1 529.9C350.7 539.3 335.5 544 320 544C304.5 544 289.2 539.4 276.9 529.9C203.9 474.2 64 343.9 64 231.7L64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1z"/></svg>
+</a>
+<div class="flex flex-col gap-4 p-4 content">
+	<a class="title font-bold text-lg border-b-4 border-b-blue border-b-solid w-fit">Wilburton Inn</a>
+	<p class="excerpt text-md leading-8">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Doloribus maiores enim, similique?</p>
+</div>`;
+const event_extra_content = `
+<p class="italic date_range"></p>
+<div class="flex flex-row items-center address_row">
+	<svg class="h-6 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
+	<div class="address text-sm italic flex flex-col"></div>
+</div>
+`;
+const listing_extra_content = `
+<div class="flex flex-row items-center address_row">
+	<svg class="h-6 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
+	<div class="address text-sm italic flex flex-col">2</div>
+</div>
+`;
+
+window.addEventListener("DOMContentLoaded", function () {
+
+	let page_tiles_container = document.getElementById("page-tiles");
+	let event_tiles_container = document.getElementById("event-tiles");
+	let listing_tiles_container = document.getElementById("listing-tiles");
+
+  let bookmarks = getCookie("wp_bookmarks");
+  if (bookmarks == "") {
+    bookmarks = [];
+  } else {
+    bookmarks = JSON.parse(bookmarks);
+  }
+
+  let directory_bookmarks = {
+  	"listings": [207,149,87,135],
+  	"events": [ 4, 23 ]
+  }
+
+
+  // let bookmarks = [];
+  // if (localStorage.key("wp_storage")) {
+  //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
+  // }
+
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  // if (localStorage.getItem("wp_bookmarks") != undefined) {
+  //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
+  // }
+
+  // group bookmarks by domain
+  let byDomain = new Map();
+  for (const bookmark of bookmarks) {
+    if (!byDomain.has(bookmark.domain)) {
+      byDomain.set(bookmark.domain, []);
+    }
+    let bookmarksForDomain = byDomain.get(bookmark.domain);
+    bookmarksForDomain.push(bookmark);
+  }
+
+  for (const domainArray of byDomain) {
+    let byPostType = new Map();
+    const domain = domainArray[0];
+    const domainBookmarks = domainArray[1];
+    // subgroup by postType
+    for (const domainBookmark of domainBookmarks) {
+      if (!byPostType.has(domainBookmark.postType)) {
+        byPostType.set(domainBookmark.postType, []);
+      }
+      let bookmarksForPostType = byPostType.get(
+        domainBookmark.postType
+      );
+      bookmarksForPostType.push(domainBookmark);
+    }
+    for (const postTypeArray of byPostType) {
+      const postType = postTypeArray[0];
+      const postTypeBookmarks = postTypeArray[1];
+      const xhttp = new XMLHttpRequest();
+      xhttp.onload = function () {
+        let posts_data;
+        try {
+          posts_data = JSON.parse(this.responseText);
+        } catch (e) {
+          return console.error(e);
+        }
+
+        for (post_data of posts_data) {
+          let _tile = document.createElement("div");
+          _tile.classList.add("flex");
+          _tile.classList.add("flex-col");
+          _tile.innerHTML = tile_template.trim();
+          if (post_data?.title?.rendered != undefined) {
+            _tile.querySelector(".title").innerHTML =
+              post_data.title.rendered;
+          }
+          if (post_data?.excerpt?.rendered != undefined) {
+            _tile.querySelector(".excerpt").innerHTML =
+              post_data.excerpt.rendered;
+          }
+          if (post_data?.featured_image_src != undefined) {
+            _tile
+              .querySelector(".tile-image")
+              .setAttribute("src", post_data.featured_image_src);
+          }
+          page_tiles_container.appendChild(_tile);
+        }
+      };
+      const includes = postTypeBookmarks
+        .map((b) => `include[]=${b.postID}`)
+        .join("&");
+      xhttp.open(
+        "GET",
+        `${domain}/wp-json/wp/v2/${postType}/?${includes}`,
+        true
+      );
+      xhttp.send();
+    }
+  }
+
+  const events_xhttp = new XMLHttpRequest();
+  events_xhttp.onload = function () {
+		var events_data = JSON.parse( this.responseText );
+		for ( event_data of events_data.events ) {
+			console.log( event_data );
+			let _tile = document.createElement("div");
+			_tile.classList.add("flex");
+			_tile.classList.add("flex-col");
+			_tile.classList.add("bg-white");
+			_tile.classList.add("relative");
+			_tile.innerHTML = tile_template.trim()
+			_tile.querySelector(".title").innerHTML = event_data.name;
+			_tile.querySelector(".title").setAttribute("href", event_data.url );
+			_tile.querySelector(".excerpt").innerHTML = event_data.excerpt;
+			_tile.querySelector(".tile-image").setAttribute( "src", event_data.hero_image_url );
+			_tile.querySelector(".content").innerHTML += event_extra_content
+			if ( event_data.date_range ) {
+				_tile.querySelector(".date_range").innerHTML = event_data.date_range;
+			} else {
+				_tile.querySelector(".date_range").style.display = "none";
+			}
+
+			if ( event_data.address ) {
+				_tile.querySelector(".address").innerHTML = event_data.address;
+			} else {
+				_tile.querySelector(".address_row").style.display = "none";
+			}	
+			event_tiles_container.appendChild( _tile );
+		}
+	};
+	let events_url = "https://stayandplay-staging.herokuapp.com/itinerary/events.json?";
+	for ( event_id of directory_bookmarks.events ) {
+		events_url = events_url + "ids[]=" + event_id + "&";
+	}
+	events_xhttp.open("GET", events_url );
+	events_xhttp.send();
+
+	const listings_xhttp = new XMLHttpRequest();
+	listings_xhttp.onload = function () {
+		var listings_data = JSON.parse( this.responseText );
+	
+		for ( listing_data of listings_data.listings ) {
+			let id = parseInt( listing_data.split("/")[4] );
+			let _tile = document.createElement("div");
+			_tile.classList.add("flex");
+			_tile.classList.add("flex-col");
+			_tile.classList.add("relative");
+			_tile.classList.add("bg-white");
+			_tile.innerHTML = tile_template.trim()
+			_tile.querySelector(".title").innerHTML = listing_data.name;
+			_tile.querySelector(".title").setAttribute("href", listing_data.url );
+			_tile.querySelector(".excerpt").innerHTML = listing_data.excerpt;
+			_tile.querySelector(".tile-image").setAttribute( "src", listing_data.hero_image_url );
+			_tile.querySelector(".content").innerHTML += listing_extra_content
+			if ( listing_data.address ) {
+				_tile.querySelector(".address").innerHTML = listing_data.address;
+			} else {
+				_tile.querySelector(".address_row").style.display = "none";
+			}
+			_tile.querySelector(".bookmark-toggle").addEventListener("click", function() {
+				var bookmark_index = directory_bookmarks.listings.find( id );
+			})
+
+			listing_tiles_container.appendChild( _tile );
+		}
+	};
+	let listings_url = "https://stayandplay-staging.herokuapp.com/itinerary/listings.json?";
+	for ( listing_id of directory_bookmarks.listings ) {
+		listings_url = listings_url + "ids[]=" + listing_id + "&";
+	}
+	listings_xhttp.open("GET", listings_url );
+	listings_xhttp.send();
+
+
+});
