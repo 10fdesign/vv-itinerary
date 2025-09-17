@@ -43,7 +43,7 @@ window.addEventListener("DOMContentLoaded", function () {
   } else {
     stayandplay_bookmarks = JSON.parse(stayandplay_bookmarks);
   }
-  
+
   var directory_bookmarks = { events: [], listings: [] };
   for ( row of stayandplay_bookmarks ) {
   	if ( row.type == "event" ) {
@@ -129,7 +129,7 @@ window.addEventListener("DOMContentLoaded", function () {
     for (const postTypeArray of byPostType) {
       const postType = postTypeArray[0];
       const postTypeBookmarks = postTypeArray[1];
-      const xhttp = new XMLHttpRequest();    
+      const xhttp = new XMLHttpRequest();
       xhttp.onload = function () {
         let posts_data;
         try {
@@ -256,6 +256,4 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 	listings_xhttp.open("GET", listings_url );
 	listings_xhttp.send();
-
-
 });

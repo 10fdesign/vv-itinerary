@@ -35,15 +35,11 @@ function buildMap(listings, mapElement) {
   });
 
   var service = new google.maps.places.PlacesService(map);
-  for (place of places) {
-    console.log("place = ", place);
+  for (const place of places) {
     service.getDetails({
       placeId: place
     }, function (result, status) {
       listingsByPlaceId.set(result.place_id, listingsByPlaceId.get(place));
-      console.log(listingsByPlaceId);
-      console.log("result = ", result);
-      console.log("status = ", status);
       const marker = new google.maps.Marker({
         map: map,
         place: {
