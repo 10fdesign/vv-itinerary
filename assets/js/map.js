@@ -74,11 +74,11 @@ function buildMap(listings, mapElement) {
           if (listing.description) {
             textContent += `<p>${listing.description}</p>`;
           }
+          console.log(listing.url);
           if (listing.url) {
-            let linkLabel = listing.url;
-            linkLabel = linkLabel.replace(/https?:\/\//, '')
+            console.log("listing.url = ", listing.url)
             // textContent += `<a class="url plain-link" href="${listing.url}">${globeSVG} ${linkLabel}</a>`;
-            textContent += `<a class="url plain-link" href="${listing.showPath}">${globeSVG} See More</a>`;
+            textContent += `<a class="url plain-link" href="${listing.url}">${globeSVG} See More</a>`;
           }
           textContent += `<a href="https://www.google.com/maps/dir/?api=1&destination_place_id=${result.place_id}&destination=d" target="_blank" class="plain-link directions">${directionsSVG} Get Directions</a>`;
 
