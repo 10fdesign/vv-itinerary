@@ -8,7 +8,6 @@ function handleCopyLink(e) {
 
     let save_url = generateURLFromCookies();
 
-    console.log("I'm savin here");
     copyToClipboard(save_url);
 }
 
