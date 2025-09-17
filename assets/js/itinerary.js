@@ -21,6 +21,22 @@ const listing_extra_content = `
 </div>
 `;
 
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 window.addEventListener("DOMContentLoaded", function () {
 
 	const EVENTS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/events.json?"
@@ -51,22 +67,6 @@ window.addEventListener("DOMContentLoaded", function () {
   	} else if ( row.type == "listing" ) {
   		directory_bookmarks.listings.push( { id: row.id, domain: row.domain } );
   	}
-  }
-
-  function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
   }
 
   // group bookmarks by domain
