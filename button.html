@@ -61,7 +61,6 @@
         //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"))
         // }
 
-        console.log( bookmarks );
         if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
           // bookmark_button.innerHTML = "Remove Bookmark";
           console.log("on");
@@ -130,7 +129,14 @@
         
         setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
         // localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
-        refresh();
+ 
+        if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
+          // bookmark_button.innerHTML = "Remove Bookmark";
+          bookmark_button.classList.add("bookmark_button-on");
+        } else {
+          // bookmark_button.innerHTML = "Add Bookmark";
+          bookmark_button.classList.remove("bookmark_button-on");
+        }
       });
     });
   </script>
