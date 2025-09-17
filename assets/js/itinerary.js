@@ -117,78 +117,85 @@ window.addEventListener("DOMContentLoaded", function () {
     document.cookie = cookie;
   }
 
-  // group bookmarks by domain
-  let byDomain = new Map();
-  for (const bookmark of bookmarks) {
-    if (!byDomain.has(bookmark.domain)) {
-      byDomain.set(bookmark.domain, []);
-    }
-    let bookmarksForDomain = byDomain.get(bookmark.domain);
-    bookmarksForDomain.push(bookmark);
-  }
-
-  for (const domainArray of byDomain) {
-    let byPostType = new Map();
-    const domain = domainArray[0];
-    const domainBookmarks = domainArray[1];
-    // subgroup by postType
-    for (const domainBookmark of domainBookmarks) {
-      if (!byPostType.has(domainBookmark.postType)) {
-        byPostType.set(domainBookmark.postType, []);
+  if ( bookmarks.length == 0 ) {
+    let _not_found = document.createElement("p");
+    _not_found.innerHTML = "You haven't saved any pages yet."
+    page_tiles_container.appendChild( _not_found );
+  } else {
+    // group bookmarks by domain
+    let byDomain = new Map();
+    for (const bookmark of bookmarks) {
+      if (!byDomain.has(bookmark.domain)) {
+        byDomain.set(bookmark.domain, []);
       }
-      let bookmarksForPostType = byPostType.get(
-        domainBookmark.postType
-      );
-      bookmarksForPostType.push(domainBookmark);
+      let bookmarksForDomain = byDomain.get(bookmark.domain);
+      bookmarksForDomain.push(bookmark);
     }
-    for (const postTypeArray of byPostType) {
-      const postType = postTypeArray[0];
-      const postTypeBookmarks = postTypeArray[1];
-      const xhttp = new XMLHttpRequest();
-      xhttp.onload = function () {
-        let posts_data;
-        try {
-          posts_data = JSON.parse(this.responseText);
-        } catch (e) {
-          return console.error(e);
+
+    for (const domainArray of byDomain) {
+      let byPostType = new Map();
+      const domain = domainArray[0];
+      const domainBookmarks = domainArray[1];
+      // subgroup by postType
+      for (const domainBookmark of domainBookmarks) {
+        if (!byPostType.has(domainBookmark.postType)) {
+          byPostType.set(domainBookmark.postType, []);
         }
-        console.log( posts_data );
-        for (post_data of posts_data) {
-          let _tile = document.createElement("div");
-          _tile.classList.add("flex");
-          _tile.classList.add("relative");
-          _tile.classList.add("flex-col");
-          _tile.innerHTML = tile_template.trim();
-          if (post_data?.title?.rendered != undefined) {
-            _tile.querySelector(".title").innerHTML =
-              post_data.title.rendered;
+        let bookmarksForPostType = byPostType.get(
+          domainBookmark.postType
+        );
+        bookmarksForPostType.push(domainBookmark);
+      }
+      for (const postTypeArray of byPostType) {
+        const postType = postTypeArray[0];
+        const postTypeBookmarks = postTypeArray[1];
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+          let posts_data;
+          try {
+            posts_data = JSON.parse(this.responseText);
+          } catch (e) {
+            return console.error(e);
           }
-          if (post_data?.excerpt?.rendered != undefined) {
-            _tile.querySelector(".excerpt").innerHTML =
-              post_data.excerpt.rendered;
+          console.log( posts_data );
+          
+          for (post_data of posts_data) {
+            let _tile = document.createElement("div");
+            _tile.classList.add("flex");
+            _tile.classList.add("relative");
+            _tile.classList.add("flex-col");
+            _tile.innerHTML = tile_template.trim();
+            if (post_data?.title?.rendered != undefined) {
+              _tile.querySelector(".title").innerHTML =
+                post_data.title.rendered;
+            }
+            if (post_data?.excerpt?.rendered != undefined) {
+              _tile.querySelector(".excerpt").innerHTML =
+                post_data.excerpt.rendered;
+            }
+            if (post_data?.featured_image_src != undefined) {
+              _tile
+                .querySelector(".tile-image")
+                .setAttribute("src", post_data.featured_image_src);
+            }
+            page_tiles_container.appendChild(_tile);
+            _tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id );
+            _tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
+              e.preventDefault();
+              return -1;
+            });
           }
-          if (post_data?.featured_image_src != undefined) {
-            _tile
-              .querySelector(".tile-image")
-              .setAttribute("src", post_data.featured_image_src);
-          }
-          page_tiles_container.appendChild(_tile);
-	  			_tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id );
-	  			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
-	  				e.preventDefault();
-	  				return -1;
-	  			});
-        }
-      };
-      const includes = postTypeBookmarks
-        .map((b) => `include[]=${b.postID}`)
-        .join("&");
-      xhttp.open(
-        "GET",
-        `${domain}/wp-json/wp/v2/${postType}/?${includes}`,
-        true
-      );
-      xhttp.send();
+        };
+        const includes = postTypeBookmarks
+          .map((b) => `include[]=${b.postID}`)
+          .join("&");
+        xhttp.open(
+          "GET",
+          `${domain}/wp-json/wp/v2/${postType}/?${includes}`,
+          true
+        );
+        xhttp.send();
+      }
     }
   }
 
@@ -197,47 +204,55 @@ window.addEventListener("DOMContentLoaded", function () {
 		var events_data = JSON.parse( this.responseText );
     const mapElement = document.getElementById("events-map");
     buildMap(events_data.events, mapElement);
-		for ( event_data of events_data.events ) {
-			console.log( event_data );
-			let _tile = document.createElement("div");
-			_tile.classList.add("flex");
-			_tile.classList.add("flex-col");
-			_tile.classList.add("bg-white");
-			_tile.classList.add("relative");
-			_tile.innerHTML = tile_template.trim()
-			_tile.querySelector(".title").innerHTML = event_data.name;
-			_tile.querySelector(".title").setAttribute("href", event_data.url );
-			_tile.querySelector(".excerpt").innerHTML = event_data.excerpt;
-			_tile.querySelector(".tile-image").setAttribute( "src", event_data.hero_image_url );
-			_tile.querySelector(".content").innerHTML += event_extra_content
-			if ( event_data.date_range ) {
-				_tile.querySelector(".date_range").innerHTML = event_data.date_range;
-			} else {
-				_tile.querySelector(".date_range").style.display = "none";
-			}
 
-			if ( event_data.address ) {
-				_tile.querySelector(".address").innerHTML = event_data.address;
-			} else {
-				_tile.querySelector(".address_row").style.display = "none";
-			}
-
-			_tile.querySelector(".bookmark-toggle").setAttribute("data-id", event_data.id );
-			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
-				e.preventDefault();
-				const index = directory_bookmarks.events.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
-        if (index == -1) {
-          // nothing
+    if ( events_data.events.length == 0 ) {
+      let _not_found = document.createElement("p");
+      _not_found.innerHTML = "You haven't saved any events yet."
+      event_tiles_container.appendChild( _not_found );
+      mapElement.hidden = true;
+    } else {
+      for ( event_data of events_data.events ) {
+        console.log( event_data );
+        let _tile = document.createElement("div");
+        _tile.classList.add("flex");
+        _tile.classList.add("flex-col");
+        _tile.classList.add("bg-white");
+        _tile.classList.add("relative");
+        _tile.innerHTML = tile_template.trim()
+        _tile.querySelector(".title").innerHTML = event_data.name;
+        _tile.querySelector(".title").setAttribute("href", event_data.url );
+        _tile.querySelector(".excerpt").innerHTML = event_data.excerpt;
+        _tile.querySelector(".tile-image").setAttribute( "src", event_data.hero_image_url );
+        _tile.querySelector(".content").innerHTML += event_extra_content
+        if ( event_data.date_range ) {
+          _tile.querySelector(".date_range").innerHTML = event_data.date_range;
         } else {
-          directory_bookmarks.events.splice(index, 1);
+          _tile.querySelector(".date_range").style.display = "none";
         }
-				event_tiles_container.removeChild( _tile );
-				saveStayAndPlayBookmarks();
-				return -1;
-			});
 
-			event_tiles_container.appendChild( _tile );
-		}
+        if ( event_data.address ) {
+          _tile.querySelector(".address").innerHTML = event_data.address;
+        } else {
+          _tile.querySelector(".address_row").style.display = "none";
+        }
+
+        _tile.querySelector(".bookmark-toggle").setAttribute("data-id", event_data.id );
+        _tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
+          e.preventDefault();
+          const index = directory_bookmarks.events.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
+          if (index == -1) {
+            // nothing
+          } else {
+            directory_bookmarks.events.splice(index, 1);
+          }
+          event_tiles_container.removeChild( _tile );
+          saveStayAndPlayBookmarks();
+          return -1;
+        });
+
+        event_tiles_container.appendChild( _tile );
+      }
+    }
 	};
 	let events_url = EVENTS_BASE_URL;
 	for ( event_row of directory_bookmarks.events ) {
@@ -252,40 +267,47 @@ window.addEventListener("DOMContentLoaded", function () {
     const mapElement = document.getElementById("listings-map");
     buildMap(listings_data.listings, mapElement);
 
-		for ( listing_data of listings_data.listings ) {
-			let id = parseInt( listing_data.url.split("/")[4] );
-			let _tile = document.createElement("div");
-			_tile.classList.add("listing-tile");
-			_tile.classList.add("flex");
-			_tile.classList.add("flex-col");
-			_tile.classList.add("relative");
-			_tile.classList.add("bg-white");
-			_tile.innerHTML = tile_template.trim();
-			_tile.querySelector(".title").innerHTML = listing_data.name;
-			_tile.querySelector(".title").setAttribute("href", listing_data.url);
-			_tile.querySelector(".excerpt").innerHTML = listing_data.excerpt;
-			_tile.querySelector(".tile-image").setAttribute("src", listing_data.hero_image_url);
-			_tile.querySelector(".content").innerHTML += listing_extra_content
-			if ( listing_data.address ) {
-				_tile.querySelector(".address").innerHTML = listing_data.address;
-			} else {
-				_tile.querySelector(".address_row").style.display = "none";
-			}
-			_tile.querySelector(".bookmark-toggle").setAttribute("data-id", id );
-			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
-				e.preventDefault();
-				const index = directory_bookmarks.listings.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
-        if (index == -1) {
-          // nothing
+    if ( listings_data.listings.length == 0 ) {
+      let _not_found = document.createElement("p");
+      _not_found.innerHTML = "You haven't saved any listings yet."
+      listing_tiles_container.appendChild( _not_found );
+      mapElement.hidden = true;
+    } else {
+      for ( listing_data of listings_data.listings ) {
+        let id = parseInt( listing_data.url.split("/")[4] );
+        let _tile = document.createElement("div");
+        _tile.classList.add("listing-tile");
+        _tile.classList.add("flex");
+        _tile.classList.add("flex-col");
+        _tile.classList.add("relative");
+        _tile.classList.add("bg-white");
+        _tile.innerHTML = tile_template.trim();
+        _tile.querySelector(".title").innerHTML = listing_data.name;
+        _tile.querySelector(".title").setAttribute("href", listing_data.url);
+        _tile.querySelector(".excerpt").innerHTML = listing_data.excerpt;
+        _tile.querySelector(".tile-image").setAttribute("src", listing_data.hero_image_url);
+        _tile.querySelector(".content").innerHTML += listing_extra_content
+        if ( listing_data.address ) {
+          _tile.querySelector(".address").innerHTML = listing_data.address;
         } else {
-          directory_bookmarks.listings.splice(index, 1);
+          _tile.querySelector(".address_row").style.display = "none";
         }
-				listing_tiles_container.removeChild( _tile );
-				saveStayAndPlayBookmarks();
-				return -1;
-			});
-			listing_tiles_container.appendChild( _tile );
-		}
+        _tile.querySelector(".bookmark-toggle").setAttribute("data-id", id );
+        _tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
+          e.preventDefault();
+          const index = directory_bookmarks.listings.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
+          if (index == -1) {
+            // nothing
+          } else {
+            directory_bookmarks.listings.splice(index, 1);
+          }
+          listing_tiles_container.removeChild( _tile );
+          saveStayAndPlayBookmarks();
+          return -1;
+        });
+        listing_tiles_container.appendChild( _tile );
+      }
+    }
 	};
 	let listings_url = LISTINGS_BASE_URL;
 	for ( listing_row of directory_bookmarks.listings ) {

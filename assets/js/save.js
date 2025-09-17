@@ -52,30 +52,5 @@ async function copyToClipboard(textToCopy) {
     console.log('Text copied to clipboard:', textToCopy);
   } catch (err) {
     console.error('Failed to copy text:', err);
-    // Fallback for older browsers or if Clipboard API is not available
-    fallbackCopyToClipboard(textToCopy);
   }
 }
-
-function fallbackCopyToClipboard(textToCopy) {
-  const textArea = document.createElement("textarea");
-  textArea.value = textToCopy;
-  // Make the textarea invisible
-  textArea.style.position = "fixed";
-  textArea.style.left = "-9999px";
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-  try {
-    document.execCommand('copy');
-    console.log('Text copied using fallback method:', textToCopy);
-  } catch (err) {
-    console.error('Fallback copy failed:', err);
-  } finally {
-    document.body.removeChild(textArea);
-  }
-}
-
-// Example usage:
-const myText = "This is the text to be copied!";
-copyToClipboard(myText);
