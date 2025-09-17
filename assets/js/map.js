@@ -1,11 +1,12 @@
 function buildMap(listings, mapElement) {
+  console.log("listings = ", listings);
   let map = new google.maps.Map(mapElement, {
     zoom: 7,
     center: new google.maps.LatLng(44.0, -72.7),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
-  let places = listings.map((l) => l.placeId).filter((id) => id);
+  let places = listings.map((l) => l.google_place_id).filter((id) => id);
 
   let directionsSVG = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 573.3 573.3">
   <path d="M286.7,15.1C136.7,15.1,15.1,136.7,15.1,286.7s121.6,271.6,271.6,271.6,271.6-121.6,271.6-271.6S436.6,15.1,286.7,15.1ZM403.6,236.8h0c0,0-72,71.9-72,71.9-9.4,9.4-24.6,9.4-33.9,0-9.3-9.4-9.4-24.6,0-33.9l31-31h-78.1c-13.3,0-24,10.7-24,24v157.7c0,13.3-10.7,24-24,24s-24-10.7-24-24v-157.7c0-39.8,32.2-72,72-72h78.1l-31-31c-9.4-9.4-9.4-24.6,0-33.9,9.4-9.3,24.6-9.4,33.9,0l72,72c9.4,9.4,9.4,24.6,0,33.9Z"/>
@@ -18,8 +19,8 @@ function buildMap(listings, mapElement) {
 
   let listingsByPlaceId = new Map();
   listings
-    .filter((l) => l.placeId)
-    .forEach((l) => listingsByPlaceId.set(l.placeId, l));
+    .filter((l) => l.google_place_id)
+    .forEach((l) => listingsByPlaceId.set(l.google_place_id, l));
 
   let markerMap = new Map();
 
@@ -27,58 +28,66 @@ function buildMap(listings, mapElement) {
     // maxWidth: 400
   });
 
- document.addEventListener('click', function(e) {
-    if(e.target && e.target.id == 'infowindow-close'){
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.classList.contains('infowindow-close')) {
       infowindow.close();
     }
- });
+  });
 
   var service = new google.maps.places.PlacesService(map);
-  for ( place of places ) {
-
+  for (place of places) {
+    console.log("place = ", place);
     service.getDetails({
-        placeId: place
+      placeId: place
     }, function (result, status) {
-        const marker = new google.maps.Marker({
-            map: map,
-            place: {
-                placeId: result.place_id,
-                location: result.geometry.location
-            },
-            placeId: place
-        });
+      listingsByPlaceId.set(result.place_id, listingsByPlaceId.get(place));
+      console.log(listingsByPlaceId);
+      console.log("result = ", result);
+      console.log("status = ", status);
+      const marker = new google.maps.Marker({
+        map: map,
+        place: {
+          placeId: result.place_id,
+          location: result.geometry.location
+        },
+        placeId: place
+      });
 
-        google.maps.event.addListener(marker, 'click', (function(marker) {
-          return function() {
-            const listing = listingsByPlaceId.get(result.place_id);
-            if (!listing) {
-              return;
-            }
-            let textContent = "";
-            let imageContent = "";
+      google.maps.event.addListener(marker, 'click', (function (marker) {
+        return function () {
+          console.log(listingsByPlaceId);
+          console.log("result.place_id = ", result.place_id)
+          const listing = listingsByPlaceId.get(result.place_id);
+          console.log("hey!");
+          if (!listing) {
+            console.log("returning!");
+            return;
+          }
+          let textContent = "";
+          let imageContent = "";
 
-            if (listing.imageTag) {
-              imageContent += `<div class="image-content">${listing.imageTag}</div>`;
-            }
-            textContent += `
+          if (listing.hero_image_url) {
+            imageContent += `<div class="image-content"><img src="${listing.hero_image_url}"></div>`;
+          }
+          textContent += `
             <div class="listing-title">
               <h2>${listing.name}</h2>
-              <div id="infowindow-close" class="close">×</div>
+              <div class="infowindow-close">×</div>
             </div>`;
-            textContent += `<div class="address">${result.adr_address}</div>`
-            if (listing.description) {
-              textContent += `<p>${listing.description}</p>`;
-            }
-            if (listing.url) {
-              let linkLabel = listing.url;
-              linkLabel = linkLabel.replace(/https?:\/\//, '')
-              // textContent += `<a class="url plain-link" href="${listing.url}">${globeSVG} ${linkLabel}</a>`;
-              textContent += `<a class="url plain-link" href="${listing.showPath}">${globeSVG} See More</a>`;
-            }
-            textContent += `<a href="https://www.google.com/maps/dir/?api=1&destination_place_id=${result.place_id}&destination=d" target="_blank" class="plain-link directions">${directionsSVG} Get Directions</a>`;
+          textContent += `<div class="address">${result.adr_address}</div>`
+          if (listing.description) {
+            textContent += `<p>${listing.description}</p>`;
+          }
+          if (listing.url) {
+            let linkLabel = listing.url;
+            linkLabel = linkLabel.replace(/https?:\/\//, '')
+            // textContent += `<a class="url plain-link" href="${listing.url}">${globeSVG} ${linkLabel}</a>`;
+            textContent += `<a class="url plain-link" href="${listing.showPath}">${globeSVG} See More</a>`;
+          }
+          textContent += `<a href="https://www.google.com/maps/dir/?api=1&destination_place_id=${result.place_id}&destination=d" target="_blank" class="plain-link directions">${directionsSVG} Get Directions</a>`;
 
-            const contentString = `
-            <div class="canadian-deal-infowindow">
+          const contentString = `
+            <div class="map-infowindow">
               ${imageContent}
               <div class="text-content">
                 ${textContent}
@@ -86,11 +95,12 @@ function buildMap(listings, mapElement) {
             </div>
             `;
 
-            infowindow.setContent(contentString);
+          infowindow.setContent(contentString);
 
-            infowindow.open(map, marker);
-          }
-        })(marker));
+          infowindow.open(map, marker);
+        }
+      })(marker));
     });
   }
+  mapElement.listingsByPlaceId = listingsByPlaceId;
 }

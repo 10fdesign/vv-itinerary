@@ -137,6 +137,8 @@ window.addEventListener("DOMContentLoaded", function () {
   const events_xhttp = new XMLHttpRequest();
   events_xhttp.onload = function () {
 		var events_data = JSON.parse( this.responseText );
+    const mapElement = document.getElementById("events-map");
+    buildMap(events_data.events, mapElement);
 		for ( event_data of events_data.events ) {
 			console.log( event_data );
 			let _tile = document.createElement("div");
@@ -168,12 +170,14 @@ window.addEventListener("DOMContentLoaded", function () {
 	for ( event_id of directory_bookmarks.events ) {
 		events_url = events_url + "ids[]=" + event_id + "&";
 	}
-	events_xhttp.open("GET", events_url );
+	events_xhttp.open("GET", events_url);
 	events_xhttp.send();
 
 	const listings_xhttp = new XMLHttpRequest();
 	listings_xhttp.onload = function () {
 		var listings_data = JSON.parse( this.responseText );
+    const mapElement = document.getElementById("listings-map");
+    buildMap(listings_data.listings, mapElement);
 
 		for ( listing_data of listings_data.listings ) {
 			let id = parseInt( listing_data.url.split("/")[4] );
@@ -182,11 +186,11 @@ window.addEventListener("DOMContentLoaded", function () {
 			_tile.classList.add("flex-col");
 			_tile.classList.add("relative");
 			_tile.classList.add("bg-white");
-			_tile.innerHTML = tile_template.trim()
+			_tile.innerHTML = tile_template.trim();
 			_tile.querySelector(".title").innerHTML = listing_data.name;
-			_tile.querySelector(".title").setAttribute("href", listing_data.url );
+			_tile.querySelector(".title").setAttribute("href", listing_data.url);
 			_tile.querySelector(".excerpt").innerHTML = listing_data.excerpt;
-			_tile.querySelector(".tile-image").setAttribute( "src", listing_data.hero_image_url );
+			_tile.querySelector(".tile-image").setAttribute("src", listing_data.hero_image_url);
 			_tile.querySelector(".content").innerHTML += listing_extra_content
 			if ( listing_data.address ) {
 				_tile.querySelector(".address").innerHTML = listing_data.address;
