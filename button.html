@@ -120,7 +120,7 @@
           bookmarks = JSON.parse(bookmarks);
         }
         const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
-        console.log( index, bookmarks );
+        console.log( index, bookmarks, bookmark, bookmarks.length );
         if (index == -1) {
           bookmarks.push(bookmark);
         } else {
