@@ -193,10 +193,17 @@ window.addEventListener("DOMContentLoaded", function () {
 			} else {
 				_tile.querySelector(".address_row").style.display = "none";
 			}
-			_tile.querySelector(".bookmark-toggle").addEventListener("click", function() {
+			_tile.querySelector(".bookmark-toggle")
+			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
+				console.log(e, this);
+				e.preventDefault();
 				var bookmark_index = directory_bookmarks.listings.find( id );
-			})
-
+				if ( bookmark_index != -1 ) {
+					directory_bookmarks = directory_bookmarks.splice( bookmark_index, 0 );
+				}
+				listing_tiles_container.removeChild( _tile );
+				return -1;
+			});
 			listing_tiles_container.appendChild( _tile );
 		}
 	};
