@@ -63,10 +63,8 @@
 
         if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
           // bookmark_button.innerHTML = "Remove Bookmark";
-          console.log("on");
           bookmark_button.classList.add("bookmark_button-on");
         } else {
-        	console.log("off");
           // bookmark_button.innerHTML = "Add Bookmark";
           bookmark_button.classList.remove("bookmark_button-on");
         }
@@ -120,13 +118,11 @@
           bookmarks = JSON.parse(bookmarks);
         }
         const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
-        console.log( index, bookmarks, bookmark, bookmarks.length );
         if (index == -1) {
           bookmarks.push(bookmark);
         } else {
           bookmarks.splice(index, 1);
         }
-        console.log( bookmark, bookmarks );
         
         setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
         // localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
