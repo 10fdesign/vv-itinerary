@@ -23,6 +23,9 @@ const listing_extra_content = `
 
 window.addEventListener("DOMContentLoaded", function () {
 
+	const EVENTS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/events.json?"
+	const LISTINGS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/listings.json?"
+
 	let page_tiles_container = document.getElementById("page-tiles");
 	let event_tiles_container = document.getElementById("event-tiles");
 	let listing_tiles_container = document.getElementById("listing-tiles");
@@ -34,16 +37,21 @@ window.addEventListener("DOMContentLoaded", function () {
     bookmarks = JSON.parse(bookmarks);
   }
 
-  let directory_bookmarks = {
-  	"listings": [207,149,87,135],
-  	"events": [ 4, 23 ]
+  let stayandplay_bookmarks = getCookie("stayandplay_bookmarks");
+  if (stayandplay_bookmarks == "") {
+    stayandplay_bookmarks = [];
+  } else {
+    stayandplay_bookmarks = JSON.parse(stayandplay_bookmarks);
   }
-
-
-  // let bookmarks = [];
-  // if (localStorage.key("wp_storage")) {
-  //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
-  // }
+  
+  var directory_bookmarks = { events: [], listings: [] };
+  for ( row of stayandplay_bookmarks ) {
+  	if ( row.type == "event" ) {
+  		directory_bookmarks.events.push( { id: row.id, domain: row.domain } );
+  	} else if ( row.type == "listing" ) {
+  		directory_bookmarks.listings.push( { id: row.id, domain: row.domain } );
+  	}
+  }
 
   function getCookie(cname) {
     let name = cname + "=";
@@ -60,10 +68,6 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     return "";
   }
-
-  // if (localStorage.getItem("wp_bookmarks") != undefined) {
-  //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"));
-  // }
 
   // group bookmarks by domain
   let byDomain = new Map();
@@ -92,7 +96,7 @@ window.addEventListener("DOMContentLoaded", function () {
     for (const postTypeArray of byPostType) {
       const postType = postTypeArray[0];
       const postTypeBookmarks = postTypeArray[1];
-      const xhttp = new XMLHttpRequest();
+      const xhttp = new XMLHttpRequest();    
       xhttp.onload = function () {
         let posts_data;
         try {
@@ -166,9 +170,9 @@ window.addEventListener("DOMContentLoaded", function () {
 			event_tiles_container.appendChild( _tile );
 		}
 	};
-	let events_url = "https://stayandplay-staging.herokuapp.com/itinerary/events.json?";
-	for ( event_id of directory_bookmarks.events ) {
-		events_url = events_url + "ids[]=" + event_id + "&";
+	let events_url = EVENTS_BASE_URL;
+	for ( event_row of directory_bookmarks.events ) {
+		events_url = events_url + "ids[]=" + event_row.id + "&";
 	}
 	events_xhttp.open("GET", events_url);
 	events_xhttp.send();
@@ -199,7 +203,6 @@ window.addEventListener("DOMContentLoaded", function () {
 			}
 			_tile.querySelector(".bookmark-toggle")
 			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
-				console.log(e, this);
 				e.preventDefault();
 				var bookmark_index = directory_bookmarks.listings.find( id );
 				if ( bookmark_index != -1 ) {
@@ -211,9 +214,9 @@ window.addEventListener("DOMContentLoaded", function () {
 			listing_tiles_container.appendChild( _tile );
 		}
 	};
-	let listings_url = "https://stayandplay-staging.herokuapp.com/itinerary/listings.json?";
-	for ( listing_id of directory_bookmarks.listings ) {
-		listings_url = listings_url + "ids[]=" + listing_id + "&";
+	let listings_url = LISTINGS_BASE_URL;
+	for ( listing_row of directory_bookmarks.listings ) {
+		listings_url = listings_url + "ids[]=" + listing_row.id + "&";
 	}
 	listings_xhttp.open("GET", listings_url );
 	listings_xhttp.send();
