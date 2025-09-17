@@ -26,20 +26,20 @@
 
       const refresh = function () {
 
-        // let bookmarks = getCookie("wp_bookmarks");
-        // if (bookmarks == "") {
-        //   bookmarks = [];
-        // } else {
-        //   bookmarks = JSON.parse(bookmarks);
-        // }
-
-
-        let bookmarks = [];
-        if (!localStorage.key("wp_storage")) {
-          localStorage.setItem("wp_bookmarks", JSON.stringify([]));
+        let bookmarks = getCookie("wp_bookmarks");
+        if (bookmarks == "") {
+          bookmarks = [];
         } else {
-          bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"))
+          bookmarks = JSON.parse(bookmarks);
         }
+
+
+        // let bookmarks = [];
+        // if (!localStorage.key("wp_storage")) {
+        //   localStorage.setItem("wp_bookmarks", JSON.stringify([]));
+        // } else {
+        //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"))
+        // }
 
         if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
           bookmark_button.innerHTML = "Remove Bookmark";
@@ -50,52 +50,59 @@
 
       refresh();
 
-      // function setCookie(cname, cvalue, exdays) {
-      //   const d = new Date();
-      //   d.setTime(d.getTime() + (exdays*24*60*60*1000));
-      //   let expires = "expires="+ d.toUTCString();
-      //   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
-      // }
+      function setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        const hostname = window.location.hostname;
+        const match = hostname.match(/[\w]*\.(com|io)/);
+        const domain = (match) ? false : match[0];
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        const expires = "expires="+ d.toUTCString();
+        let cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
+        if (domain) {
+          cookie += ` Domain=${domain}`;
+        }
+        document.cookie = cookie;
+      }
 
-      // function getCookie(cname) {
-      //   let name = cname + "=";
-      //   let decodedCookie = decodeURIComponent(document.cookie);
-      //   let ca = decodedCookie.split(';');
-      //   for(let i = 0; i <ca.length; i++) {
-      //     let c = ca[i];
-      //     while (c.charAt(0) == ' ') {
-      //       c = c.substring(1);
-      //     }
-      //     if (c.indexOf(name) == 0) {
-      //       return c.substring(name.length, c.length);
-      //     }
-      //   }
-      //   return "";
-      // }
+      function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
 
       bookmark_button.addEventListener("click", function () {
 
-        let bookmarks = [];
-        if (!localStorage.key("wp_storage")) {
-          localStorage.setItem("wp_bookmarks", JSON.stringify([]));
-        } else {
-          bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"))
-        }
-
-        // let bookmarks = getCookie("wp_bookmarks");
-        // if (bookmarks == "") {
-        //   bookmarks = [];
+        // let bookmarks = [];
+        // if (!localStorage.key("wp_storage")) {
+        //   localStorage.setItem("wp_bookmarks", JSON.stringify([]));
         // } else {
-        //   bookmarks = JSON.parse(bookmarks);
+        //   bookmarks = JSON.parse(localStorage.getItem("wp_bookmarks"))
         // }
+
+        let bookmarks = getCookie("wp_bookmarks");
+        if (bookmarks == "") {
+          bookmarks = [];
+        } else {
+          bookmarks = JSON.parse(bookmarks);
+        }
         const index = bookmarks.findIndex((b) => bookmarkEquality(b, bookmark));
         if (index == -1) {
           bookmarks.push(bookmark);
         } else {
           bookmarks.splice(index, 1);
         }
-        // setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
-        localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
+        setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
+        // localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
         refresh();
       });
     });

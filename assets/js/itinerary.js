@@ -160,7 +160,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				_tile.querySelector(".address").innerHTML = event_data.address;
 			} else {
 				_tile.querySelector(".address_row").style.display = "none";
-			}	
+			}
 			event_tiles_container.appendChild( _tile );
 		}
 	};
@@ -174,7 +174,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	const listings_xhttp = new XMLHttpRequest();
 	listings_xhttp.onload = function () {
 		var listings_data = JSON.parse( this.responseText );
-	
+
 		for ( listing_data of listings_data.listings ) {
 			let id = parseInt( listing_data.url.split("/")[4] );
 			let _tile = document.createElement("div");
