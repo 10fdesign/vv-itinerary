@@ -8,7 +8,8 @@ module.exports = {
   		"blue": "#35AFC8",
   		"green": "#56A054",
   		"grey": "#F2F2F2",
-  		"white": "#ffffff"
+  		"white": "#ffffff",
+  		"slate": "#20282A"
   	},
     fontFamily: {
       body: ["Inter", "sans-serif"],
