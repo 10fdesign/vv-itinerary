@@ -1,0 +1,132 @@
+
+.infowindow-image-wrapper {
+  position: relative;
+}
+
+.map-infowindow {
+  padding-top: 12px;
+  padding-left: 3px;
+  width: 100%;
+}
+
+.map-infowindow:has(.image-content) {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1em;
+}
+
+@media only screen and (max-width: 1280px) {
+  .map-infowindow:has(.image-content) {
+    display: block;
+  }
+
+  .map-infowindow .image-content {
+    display: none;
+  }
+}
+
+.map-infowindow .image-content {
+  position: relative;
+  padding: 0;
+}
+
+.map-infowindow .image-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.map-infowindow .text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  align-items: flex-start;
+  max-width: 300px;
+}
+
+.map-infowindow a:hover {
+  text-decoration: none;
+  color: var(--accent-blue);
+}
+
+.map-infowindow h2 {
+  color: black;
+  text-decoration: none;
+  font-size: 1.5rem;
+  text-transform: none;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.map-infowindow a:hover h2 {
+  color: var(--accent-blue);
+}
+
+.map-infowindow p {
+  font-family: franklin-gothic-atf, sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0;
+}
+
+.map-infowindow .plain-link {
+  font-family: franklin-gothic-atf, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.map-infowindow .plain-link:hover {
+  color: var(--accent-blue);
+}
+
+.map-infowindow .address {
+  color: #444;
+  font-family: franklin-gothic-atf, sans-serif;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.map-infowindow .directions,
+.map-infowindow .url {
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 0.7ch;
+}
+
+.map-infowindow .directions svg,
+.map-infowindow .url svg {
+  height: 2.2ch;
+  fill: var(--blue);
+}
+
+.map-infowindow .directions:hover svg,
+.map-infowindow .url:hover svg {
+  fill: var(--accent-blue);
+}
+
+.gm-style-iw-chr {
+  display: none;
+}
+
+.map-infowindow .listing-title {
+  display: flex;
+  gap: 0.9ch;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.map-infowindow .infowindow-close {
+  font-size: 2em;
+}
+
+.map-infowindow .infowindow-close:hover,
+.map-infowindow .infowindow-close:active {
+  color: var(--red);
+  cursor: pointer;
+}
