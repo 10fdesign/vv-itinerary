@@ -53,6 +53,25 @@ window.addEventListener("DOMContentLoaded", function () {
   	}
   }
 
+  function saveStayAndPlayBookmarks() {
+  	stayandplay_bookmarks = [];
+  	for ( listing_row of directory_bookmarks.listings ) {
+  		stayandplay_bookmarks.push({ type: "listing", domain: listing_row.domain, id: listing_row.id });
+  	}
+  	for ( event_row of directory_bookmarks.events ) {
+  		stayandplay_bookmarks.push({ type: "event", domain: listing_row.domain, id: listing_row.id });
+  	}
+  	setCookie("stayandplay_bookmarks", JSON.stringify(stayandplay_bookmarks), 365);
+  }
+
+  const bookmarkEquality = function(b1, b2) {
+    return b1.domain == b2.domain && b1.postID == b2.postID && b1.postType == b2.postType;
+  }
+
+	const bookmarkEqualityDirectory = function(b1, b2) {
+    return b1.id == b2.id && b1.type == b2.type;
+  }
+
   function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -67,6 +86,20 @@ window.addEventListener("DOMContentLoaded", function () {
       }
     }
     return "";
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    const hostname = window.location.hostname;
+    const match = hostname.match(/[\w]*\.(com|io)/);
+    const domain = (match) ? false : match[0];
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    const expires = "expires="+ d.toUTCString();
+    let cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
+    if (domain) {
+      cookie += ` Domain=${domain}`;
+    }
+    document.cookie = cookie;
   }
 
   // group bookmarks by domain
@@ -197,14 +230,17 @@ window.addEventListener("DOMContentLoaded", function () {
 			} else {
 				_tile.querySelector(".address_row").style.display = "none";
 			}
-			_tile.querySelector(".bookmark-toggle")
+			_tile.querySelector(".bookmark-toggle").setAttribute("data-id", id );
 			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
 				e.preventDefault();
-				var bookmark_index = directory_bookmarks.listings.find( id );
-				if ( bookmark_index != -1 ) {
-					directory_bookmarks = directory_bookmarks.splice( bookmark_index, 0 );
-				}
+				const index = directory_bookmarks.listings.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id"), type: "listing" } ));
+        if (index == -1) {
+          // nothing
+        } else {
+          directory_bookmarks.listings.splice(index, 1);
+        }
 				listing_tiles_container.removeChild( _tile );
+				saveStayAndPlayBookmarks();
 				return -1;
 			});
 			listing_tiles_container.appendChild( _tile );
