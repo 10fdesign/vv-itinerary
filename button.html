@@ -76,10 +76,10 @@
         const d = new Date();
         const hostname = window.location.hostname;
         const match = hostname.match(/[\w]*\.(com|io)/);
-        const domain = (match) ? match[0] : hostname;
+        const domain = (match) ? match[0] : false;
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         const expires = "expires="+ d.toUTCString();
-        let cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
+        let cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
         if (domain) {
           cookie += ` Domain=${domain}`;
         }
@@ -123,10 +123,10 @@
         } else {
           bookmarks.splice(index, 1);
         }
-        
+
         setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
         // localStorage.setItem("wp_bookmarks", JSON.stringify(bookmarks));
- 
+
         if (bookmarks.find((b) => bookmarkEquality(b, bookmark)) != undefined) {
           // bookmark_button.innerHTML = "Remove Bookmark";
           bookmark_button.classList.add("bookmark_button-on");
