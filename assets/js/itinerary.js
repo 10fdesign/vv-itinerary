@@ -37,6 +37,20 @@ function getCookie(cname) {
   return "";
 }
 
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  const hostname = window.location.hostname;
+  const match = hostname.match(/[\w]*\.(com|io)/);
+  const domain = (match) ? match[0] : hostname;
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  const expires = "expires="+ d.toUTCString();
+  let cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
+  if (domain) {
+    cookie += ` Domain=${domain}`;
+  }
+  document.cookie = cookie;
+}
+
 window.addEventListener("DOMContentLoaded", function () {
 
 	const EVENTS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/events.json?"
@@ -101,20 +115,6 @@ window.addEventListener("DOMContentLoaded", function () {
       }
     }
     return "";
-  }
-
-  function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    const hostname = window.location.hostname;
-    const match = hostname.match(/[\w]*\.(com|io)/);
-    const domain = (match) ? match[0] : hostname;
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    const expires = "expires="+ d.toUTCString();
-    let cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
-    if (domain) {
-      cookie += ` Domain=${domain}`;
-    }
-    document.cookie = cookie;
   }
 
   if ( bookmarks.length == 0 ) {

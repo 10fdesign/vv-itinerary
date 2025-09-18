@@ -1,7 +1,82 @@
 window.addEventListener("DOMContentLoaded", function() {
-    let copy_link = document.getElementById("copy-link");
+    const copy_link = document.getElementById("copy-link");
     copy_link.addEventListener('click', handleCopyLink);
+
+    const view_saved_trip_link = document.getElementById("view-saved-trip-link");
+    view_saved_trip_link.addEventListener('click', handleViewSavedTripLink);
+
+    const make_saved_trip_link = document.getElementById("make-saved-trip-link");
+    make_saved_trip_link.addEventListener('click', handleMakeSavedTrip);
+
+    handleUrlParams();
 });
+
+function handleViewSavedTripLink(e) {
+    e.preventDefault();
+
+    window.location.href = window.location.origin;
+}
+
+function handleMakeSavedTrip(e) {
+    e.preventDefault();
+
+    let userConfirmed = confirm("This will replace your saved itinerary with the current itinerary.")
+
+    if (!userConfirmed) {
+        return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const urlparams__wp_bookmarks = urlParams.get('wp_bookmarks');
+    const urlparams__stayandplay_bookmarks = urlParams.get('stayandplay_bookmarks');
+
+    setCookie("wp_bookmarks", urlparams__wp_bookmarks, 365);
+    setCookie("stayandplay_bookmarks", urlparams__stayandplay_bookmarks, 365);
+
+    window.location.href = window.location.origin;
+}
+
+function handleUrlParams() {
+    // Load bookmarks from URL
+        // TODO: When you load the page, if there’s a query string, load those tiles
+            // If there are no cookies, write the query string to cookies
+            // If the query string matches the cookies, nobody cares
+            // If the query string doesn’t match the cookies, show the optional top panel
+
+    const saveBanner = document.getElementById('save-banner');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log("urlParams", urlParams);
+
+    // Exit early if no urlParams
+    if ( urlParams.size == 0 ) {
+        return;
+    }
+
+    const urlparams__wp_bookmarks = urlParams.get('wp_bookmarks');
+    const urlparams__stayandplay_bookmarks = urlParams.get('stayandplay_bookmarks');
+
+    const cookie__wp_bookmarks = getCookie("wp_bookmarks");
+    const cookie__stayandplay_bookmarks = getCookie("stayandplay_bookmarks");
+
+    if ( cookie__stayandplay_bookmarks == "" && cookie__wp_bookmarks == "" ) {
+        // If there are no cookies, write the query string to cookies
+
+        setCookie("stayandplay_bookmarks", urlParams.get('stayandplay_bookmarks'), 365);
+        setCookie("wp_bookmarks", urlParams.get('wp_bookmarks'), 365);
+
+        console.log("No cookies found. Saved urlParams to cookies.");
+    } else if ( cookie__stayandplay_bookmarks == urlparams__stayandplay_bookmarks && cookie__wp_bookmarks == urlparams__wp_bookmarks ) {
+        // If the query string matches the cookies, nobody cares
+
+        console.log("Cookies match urlParams. No change.")
+    } else {
+        saveBanner.classList.remove("hidden");
+
+        console.log("Cookies don't match urlParams. Unhiding save-banner.")
+    }
+}
 
 function handleCopyLink(e) {
     e.preventDefault();
