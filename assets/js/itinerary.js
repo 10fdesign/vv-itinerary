@@ -108,10 +108,10 @@ window.addEventListener("DOMContentLoaded", function () {
     const d = new Date();
     const hostname = window.location.hostname;
     const match = hostname.match(/[\w]*\.(com|io)/);
-    const domain = (match) ? match[0] : hostname;
+    const domain = (match) ? match[0] : false;
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     const expires = "expires=" + d.toUTCString();
-    let cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
+    let cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
     if (domain) {
       cookie += ` Domain=${domain}`;
     }
@@ -132,6 +132,8 @@ window.addEventListener("DOMContentLoaded", function () {
       let bookmarksForDomain = byDomain.get(bookmark.domain);
       bookmarksForDomain.push(bookmark);
     }
+
+    console.log(bookmarks);
 
     for (const domainArray of byDomain) {
       let byPostType = new Map();
@@ -162,6 +164,11 @@ window.addEventListener("DOMContentLoaded", function () {
 
           for (post_data of posts_data) {
             let _tile = document.createElement("div");
+            _tile.bookmark = {
+              domain: domain,
+              postType: postType,
+              postID: "" + post_data.id,
+            }
             _tile.classList.add("flex");
             _tile.classList.add("relative");
             _tile.classList.add("flex-col");
@@ -182,6 +189,28 @@ window.addEventListener("DOMContentLoaded", function () {
             page_tiles_container.appendChild(_tile);
             _tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id);
             _tile.querySelector(".bookmark-toggle").addEventListener("click", function (e) {
+              let bookmarks = getCookie("wp_bookmarks");
+              if (bookmarks == "") {
+                bookmarks = [];
+              } else {
+                bookmarks = JSON.parse(bookmarks);
+              }
+
+              const index = bookmarks.findIndex(function(b) {
+                return bookmarkEquality(b, _tile.bookmark);
+              });
+              console.log(bookmarks);
+              console.log(_tile.bookmark);
+              console.log("index = ", index)
+              if (index != -1) {
+                console.log("removing!");
+                console.log(bookmarks);
+                bookmarks.splice(index, 1);
+                console.log(bookmarks);
+                setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
+                setCookie("wp_bookmarks2", JSON.stringify(bookmarks), 365);
+              }
+              page_tiles_container.removeChild(_tile);
               e.preventDefault();
               return -1;
             });
