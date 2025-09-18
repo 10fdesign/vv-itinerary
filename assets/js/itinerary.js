@@ -152,6 +152,7 @@ window.addEventListener("DOMContentLoaded", function () {
             }
             _tile.classList.add("flex");
             _tile.classList.add("relative");
+            _tile.classList.add("bg-white");
             _tile.classList.add("flex-col");
             _tile.innerHTML = tile_template.trim();
             if (post_data?.title?.rendered != undefined) {
