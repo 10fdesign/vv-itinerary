@@ -320,7 +320,9 @@ window.addEventListener("DOMContentLoaded", function () {
   listings_xhttp.open("GET", listings_url);
   listings_xhttp.send();
 
-  document.getElementById("clear_itinerary").addEventListener("click", function () {
+  document.getElementById("clear_itinerary").addEventListener("click", function (e) {
+    e.preventDefault();
+    
     if (window.confirm("This will clear your entire itinerary.  Are you sure you wish to proceed?")) {
       setCookie("stayandplay_bookmarks", "", 365);
       setCookie("wp_bookmarks", "", 365);
