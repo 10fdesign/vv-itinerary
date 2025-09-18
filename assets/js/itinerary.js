@@ -133,8 +133,6 @@ window.addEventListener("DOMContentLoaded", function () {
       bookmarksForDomain.push(bookmark);
     }
 
-    console.log(bookmarks);
-
     for (const domainArray of byDomain) {
       let byPostType = new Map();
       const domain = domainArray[0];
@@ -160,7 +158,6 @@ window.addEventListener("DOMContentLoaded", function () {
           } catch (e) {
             return console.error(e);
           }
-          console.log(posts_data);
 
           for (post_data of posts_data) {
             let _tile = document.createElement("div");
@@ -199,16 +196,9 @@ window.addEventListener("DOMContentLoaded", function () {
               const index = bookmarks.findIndex(function(b) {
                 return bookmarkEquality(b, _tile.bookmark);
               });
-              console.log(bookmarks);
-              console.log(_tile.bookmark);
-              console.log("index = ", index)
               if (index != -1) {
-                console.log("removing!");
-                console.log(bookmarks);
                 bookmarks.splice(index, 1);
-                console.log(bookmarks);
                 setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
-                setCookie("wp_bookmarks2", JSON.stringify(bookmarks), 365);
               }
               page_tiles_container.removeChild(_tile);
               e.preventDefault();
@@ -242,7 +232,6 @@ window.addEventListener("DOMContentLoaded", function () {
       mapElement.hidden = true;
     } else {
       for (event_data of events_data.events) {
-        console.log(event_data);
         let _tile = document.createElement("div");
         _tile.classList.add("flex");
         _tile.classList.add("flex-col");
