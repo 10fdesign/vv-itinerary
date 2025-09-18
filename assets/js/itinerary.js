@@ -324,7 +324,8 @@ window.addEventListener("DOMContentLoaded", function () {
     if (window.confirm("This will clear your entire itinerary.  Are you sure you wish to proceed?")) {
       setCookie("stayandplay_bookmarks", "", 365);
       setCookie("wp_bookmarks", "", 365);
-      window.reload();
+      
+      window.location.href = window.location.origin;
     }
   });
 
