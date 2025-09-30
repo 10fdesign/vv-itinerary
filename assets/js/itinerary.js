@@ -24,7 +24,7 @@ const undo_tile_template = `
 <div class="flex flex-col gap-4 p-4 content">
 	<a class="font-bold text-lg border-b-4 border-b-blue border-b-solid w-fit">Bookmark Deleted</a>
 	<p class="excerpt text-md leading-8">You removed the bookmark for <span class="title"></span></p>
-	<a href="" class="undo text-center text-lg">Undo?</a>
+	<a href="" class="undo text-center text-lg text-blue">Undo?</a>
 </div>
 `;
 
@@ -74,6 +74,7 @@ window.addEventListener("DOMContentLoaded", function () {
     bookmarks = JSON.parse(bookmarks);
   }
 
+  var wordpress_undo_bookmarks = [];
   var undo_bookmarks = {
   	events: [],
   	listings: [],
@@ -123,6 +124,38 @@ window.addEventListener("DOMContentLoaded", function () {
 		return _tile;
   }
 
+  function createWordpressUndoTile( data, tile ) {
+  	wordpress_undo_bookmarks.push( data );
+		let _tile = document.createElement("div");
+		_tile.classList.add("flex");
+		_tile.classList.add("flex-col");
+		_tile.classList.add("relative");
+		_tile.classList.add("bg-grey");
+		_tile.innerHTML = undo_tile_template.trim();
+		_tile.querySelector(".title").innerHTML = tile.querySelector(".title").innerHTML;
+		var undo = _tile.querySelector(".undo");
+		undo.addEventListener( "click", function (e) {
+			let bookmarks = getCookie("wp_bookmarks");
+			if (bookmarks == "") {
+			  bookmarks = [];
+			} else {
+			  bookmarks = JSON.parse(bookmarks);
+			}
+			e.preventDefault();
+			if ( tile ) {
+				_tile.parentElement.replaceChild( tile, _tile );
+			}
+			const index = wordpress_undo_bookmarks.findIndex(function(b) {
+	      return bookmarkEquality(b, data);
+	    });
+	    wordpress_undo_bookmarks.splice( index, 1 );
+			bookmarks.push( data );
+			setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
+			return -1;
+		})
+		return _tile;
+  }
+
   function createListingTile( listing_data ) {
 		let id = parseInt( listing_data.url.split("/")[4] );
 		let _tile = document.createElement("div");
@@ -153,7 +186,6 @@ window.addEventListener("DOMContentLoaded", function () {
         var result = directory_bookmarks.listings.splice(index, 1);
         listing_tiles_container.replaceChild( undo_tile, _tile );
       }
-      console.log( directory_bookmarks.listings );
 			saveStayAndPlayBookmarks();
 			return -1;
 		});
@@ -231,6 +263,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	  page_tiles_container.appendChild(_tile);
 	  _tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id);
 	  _tile.querySelector(".bookmark-toggle").addEventListener("click", function (e) {
+	  	e.preventDefault()
 	    let bookmarks = getCookie("wp_bookmarks");
 	    if (bookmarks == "") {
 	      bookmarks = [];
@@ -242,11 +275,13 @@ window.addEventListener("DOMContentLoaded", function () {
 	      return bookmarkEquality(b, _tile.bookmark);
 	    });
 	    if (index != -1) {
+	      var undo_tile = createWordpressUndoTile( bookmarks[ index ], _tile );
 	      bookmarks.splice(index, 1);
-	      // setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
+	      page_tiles_container.replaceChild( undo_tile, _tile );
+	    } else {
+	    	page_tiles_container.removeChild(_tile);
 	    }
-	    page_tiles_container.removeChild(_tile);
-	    e.preventDefault();
+      setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
 	    return -1;
 	  });
   }
