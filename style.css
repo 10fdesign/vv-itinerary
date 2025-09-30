@@ -720,6 +720,15 @@ video {
   gap: 2rem;
 }
 
+.gap-x-8 {
+  -moz-column-gap: 2rem;
+       column-gap: 2rem;
+}
+
+.gap-y-16 {
+  row-gap: 4rem;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }

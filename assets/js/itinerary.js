@@ -32,7 +32,7 @@ function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
+  for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
     while (c.charAt(0) == ' ') {
       c = c.substring(1);
@@ -44,14 +44,28 @@ function getCookie(cname) {
   return "";
 }
 
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  const hostname = window.location.hostname;
+  const match = hostname.match(/[\w]*\.(com|io)/);
+  const domain = (match) ? match[0] : hostname;
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  const expires = "expires="+ d.toUTCString();
+  let cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+  if (domain) {
+    cookie += ` Domain=${domain}`;
+  }
+  document.cookie = cookie;
+}
+
 window.addEventListener("DOMContentLoaded", function () {
 
-	const EVENTS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/events.json?"
-	const LISTINGS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/listings.json?"
+  const EVENTS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/events.json?"
+  const LISTINGS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/listings.json?"
 
-	let page_tiles_container = document.getElementById("page-tiles");
-	let event_tiles_container = document.getElementById("event-tiles");
-	let listing_tiles_container = document.getElementById("listing-tiles");
+  let page_tiles_container = document.getElementById("page-tiles");
+  let event_tiles_container = document.getElementById("event-tiles");
+  let listing_tiles_container = document.getElementById("listing-tiles");
 
   let bookmarks = getCookie("wp_bookmarks");
   if (bookmarks == "") {
@@ -67,18 +81,19 @@ window.addEventListener("DOMContentLoaded", function () {
   };
 
   let stayandplay_bookmarks = getCookie("stayandplay_bookmarks");
-  if (stayandplay_bookmarks == "") {    stayandplay_bookmarks = [];
+  if (stayandplay_bookmarks == "") {
+    stayandplay_bookmarks = [];
   } else {
     stayandplay_bookmarks = JSON.parse(stayandplay_bookmarks);
   }
 
   var directory_bookmarks = { events: [], listings: [] };
-  for ( row of stayandplay_bookmarks ) {
-  	if ( row.type == "event" ) {
-  		directory_bookmarks.events.push( { id: row.id } );
-  	} else if ( row.type == "listing" ) {
-  		directory_bookmarks.listings.push( { id: row.id } );
-  	}
+  for (row of stayandplay_bookmarks) {
+    if (row.type == "event") {
+      directory_bookmarks.events.push({ id: row.id });
+    } else if (row.type == "listing") {
+      directory_bookmarks.listings.push({ id: row.id });
+    }
   }
 
   console.log( "DIRECTORY ", directory_bookmarks );
@@ -202,130 +217,122 @@ window.addEventListener("DOMContentLoaded", function () {
   }
 
   function saveStayAndPlayBookmarks() {
-  	stayandplay_bookmarks = [];
-  	for ( listing_row of directory_bookmarks.listings ) {
-  		stayandplay_bookmarks.push({ type: "listing", domain: listing_row.domain, id: listing_row.id });
-  	}
-  	for ( event_row of directory_bookmarks.events ) {
-  		stayandplay_bookmarks.push({ type: "event", domain: listing_row.domain, id: listing_row.id });
-  	}
-  	setCookie("stayandplay_bookmarks", JSON.stringify(stayandplay_bookmarks), 365);
+    stayandplay_bookmarks = [];
+    for (listing_row of directory_bookmarks.listings) {
+      stayandplay_bookmarks.push({ type: "listing", domain: listing_row.domain, id: listing_row.id });
+    }
+    for (event_row of directory_bookmarks.events) {
+      stayandplay_bookmarks.push({ type: "event", domain: listing_row.domain, id: listing_row.id });
+    }
+    setCookie("stayandplay_bookmarks", JSON.stringify(stayandplay_bookmarks), 365);
   }
 
-  const bookmarkEquality = function(b1, b2) {
+  const bookmarkEquality = function (b1, b2) {
     return b1.domain == b2.domain && b1.postID == b2.postID && b1.postType == b2.postType;
   }
 
-	const bookmarkEqualityDirectory = function(b1, b2) {
+  const bookmarkEqualityDirectory = function (b1, b2) {
     return b1.id == b2.id && b1.type == b2.type;
   }
 
-  function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
+  if (bookmarks.length == 0) {
+    let _not_found = document.createElement("p");
+    _not_found.innerHTML = "You haven't saved any pages yet."
+    page_tiles_container.appendChild(_not_found);
+  } else {
+    // group bookmarks by domain
+    let byDomain = new Map();
+    for (const bookmark of bookmarks) {
+      if (!byDomain.has(bookmark.domain)) {
+        byDomain.set(bookmark.domain, []);
       }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
+      let bookmarksForDomain = byDomain.get(bookmark.domain);
+      bookmarksForDomain.push(bookmark);
     }
-    return "";
-  }
 
-  function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    const hostname = window.location.hostname;
-    const match = hostname.match(/[\w]*\.(com|io)/);
-    const domain = (match) ? match[0] : hostname;
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    const expires = "expires="+ d.toUTCString();
-    let cookie = cname + "=" + cvalue + ";" + expires + ";path=/; Partitioned; Secure;";
-    if (domain) {
-      cookie += ` Domain=${domain}`;
-    }
-    document.cookie = cookie;
-  }
-
-  // group bookmarks by domain
-  let byDomain = new Map();
-  for (const bookmark of bookmarks) {
-    if (!byDomain.has(bookmark.domain)) {
-      byDomain.set(bookmark.domain, []);
-    }
-    let bookmarksForDomain = byDomain.get(bookmark.domain);
-    bookmarksForDomain.push(bookmark);
-  }
-
-  for (const domainArray of byDomain) {
-    let byPostType = new Map();
-    const domain = domainArray[0];
-    const domainBookmarks = domainArray[1];
-    // subgroup by postType
-    for (const domainBookmark of domainBookmarks) {
-      if (!byPostType.has(domainBookmark.postType)) {
-        byPostType.set(domainBookmark.postType, []);
-      }
-      let bookmarksForPostType = byPostType.get(
-        domainBookmark.postType
-      );
-      bookmarksForPostType.push(domainBookmark);
-    }
-    for (const postTypeArray of byPostType) {
-      const postType = postTypeArray[0];
-      const postTypeBookmarks = postTypeArray[1];
-      const xhttp = new XMLHttpRequest();
-      xhttp.onload = function () {
-        let posts_data;
-        try {
-          posts_data = JSON.parse(this.responseText);
-        } catch (e) {
-          return console.error(e);
+    for (const domainArray of byDomain) {
+      let byPostType = new Map();
+      const domain = domainArray[0];
+      const domainBookmarks = domainArray[1];
+      // subgroup by postType
+      for (const domainBookmark of domainBookmarks) {
+        if (!byPostType.has(domainBookmark.postType)) {
+          byPostType.set(domainBookmark.postType, []);
         }
-        console.log( posts_data );
-        for (post_data of posts_data) {
-          createPostTile( post_data );
-        }
-      };
-      const includes = postTypeBookmarks
-        .map((b) => `include[]=${b.postID}`)
-        .join("&");
-      xhttp.open(
-        "GET",
-        `${domain}/wp-json/wp/v2/${postType}/?${includes}`,
-        true
-      );
-      xhttp.send();
+        let bookmarksForPostType = byPostType.get(
+          domainBookmark.postType
+        );
+        bookmarksForPostType.push(domainBookmark);
+      }
+
+      for (const postTypeArray of byPostType) {
+        const postType = postTypeArray[0];
+        const postTypeBookmarks = postTypeArray[1];
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+          let posts_data;
+          try {
+            posts_data = JSON.parse(this.responseText);
+          } catch (e) {
+            return console.error(e);
+          }
+
+          for (post_data of posts_data) {
+            createPostTile( post_data );
+          }
+        };
+        const includes = postTypeBookmarks
+          .map((b) => `include[]=${b.postID}`)
+          .join("&");
+        xhttp.open(
+          "GET",
+          `${domain}/wp-json/wp/v2/${postType}/?${includes}`,
+          true
+        );
+        xhttp.send();
+      }
     }
   }
 
   const events_xhttp = new XMLHttpRequest();
   events_xhttp.onload = function () {
-		var events_data = JSON.parse( this.responseText );
+    var events_data = JSON.parse(this.responseText);
     const mapElement = document.getElementById("events-map");
     buildMap(events_data.events, mapElement);
-		for ( event_data of events_data.events ) {
-			createEventTile( event_data );
-		}
-	};
-	let events_url = EVENTS_BASE_URL;
-	for ( event_row of directory_bookmarks.events ) {
-		events_url = events_url + "ids[]=" + event_row.id + "&";
-	}
-	events_xhttp.open("GET", events_url);
-	events_xhttp.send();
 
-	const listings_xhttp = new XMLHttpRequest();
-	listings_xhttp.onload = function () {
-		var listings_data = JSON.parse( this.responseText );
+    if (events_data.events.length == 0) {
+      let _not_found = document.createElement("p");
+      _not_found.innerHTML = "You haven't saved any events yet."
+      event_tiles_container.appendChild(_not_found);
+      mapElement.hidden = true;
+    } else {
+      for (event_data of events_data.events) {
+        createEventTile( event_data );
+      }
+    }
+  };
+  let events_url = EVENTS_BASE_URL;
+  for (event_row of directory_bookmarks.events) {
+    events_url = events_url + "ids[]=" + event_row.id + "&";
+  }
+  events_xhttp.open("GET", events_url);
+  events_xhttp.send();
+
+  const listings_xhttp = new XMLHttpRequest();
+  listings_xhttp.onload = function () {
+    var listings_data = JSON.parse(this.responseText);
     const mapElement = document.getElementById("listings-map");
     buildMap(listings_data.listings, mapElement);
 
-		for ( listing_data of listings_data.listings ) {
-			createListingTile( listing_data );
+    if (listings_data.listings.length == 0) {
+      let _not_found = document.createElement("p");
+      _not_found.innerHTML = "You haven't saved any listings yet."
+      listing_tiles_container.appendChild(_not_found);
+      mapElement.hidden = true;
+    } else {
+			for ( listing_data of listings_data.listings ) {
+				createListingTile( listing_data );
+			}
 		}
 	};
 	let listings_url = LISTINGS_BASE_URL;
@@ -334,13 +341,16 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 	listings_xhttp.open("GET", listings_url );
 	listings_xhttp.send();
-
-	document.getElementById("clear_itinerary").addEventListener("click", function() {
-		if (window.confirm("This will clear your entire itinerary.  Are you sure you wish to proceed?")) {
-	    setCookie("stayandplay_bookmarks", "[]", 365);
-	    setCookie("wp_bookmarks", "[]", 365);
-	    window.reload();
-	  }
-	});
+      
+  document.getElementById("clear_itinerary").addEventListener("click", function (e) {
+    e.preventDefault();
+    
+    if (window.confirm("This will clear your entire itinerary.  Are you sure you wish to proceed?")) {
+      setCookie("stayandplay_bookmarks", "", 365);
+      setCookie("wp_bookmarks", "", 365);
+      
+      window.location.href = window.location.origin;
+    }
+  });
 
 });
