@@ -96,19 +96,30 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  console.log( "DIRECTORY ", directory_bookmarks );
-  console.log( "WORDPRESS ", bookmarks );
-
-  function createUndoTile( data, type ) {
-  	undo_bookmarks[ type ].push( data );
+  function createUndoTile( data, type, tile ) {
+  	undo_bookmarks[ type ][ data.id ] = tile;
 		let _tile = document.createElement("div");
 		_tile.classList.add("flex");
 		_tile.classList.add("flex-col");
 		_tile.classList.add("relative");
 		_tile.classList.add("bg-grey");
 		_tile.innerHTML = undo_tile_template.trim();
-		_tile.querySelector(".title").innerHTML = data.name;
-		// _tile.querySelector
+		_tile.querySelector(".title").innerHTML = tile.querySelector(".title").innerHTML;
+		var undo = _tile.querySelector(".undo");
+		undo.setAttribute("data-type", type);
+		undo.setAttribute("data-id", data.id);
+		undo.addEventListener( "click", function (e) {
+			e.preventDefault();
+			var type = this.getAttribute("data-type");
+			var id = this.getAttribute("data-id");
+			var tile = undo_bookmarks[ type][ id ];
+			if ( tile ) {
+				_tile.parentElement.replaceChild( tile, _tile );
+			}
+			undo_bookmarks[ type][ id ] = null;
+			directory_bookmarks[ type ].push( { id: id } );
+			saveStayAndPlayBookmarks();
+		})
 		return _tile;
   }
 
@@ -138,11 +149,12 @@ window.addEventListener("DOMContentLoaded", function () {
         // nothing
 				listing_tiles_container.removeChild( _tile );
       } else {
+        var undo_tile = createUndoTile( directory_bookmarks.listings[ index ], "listings", _tile );
         var result = directory_bookmarks.listings.splice(index, 1);
-        var undo_tile = createUndoTile( result );
         listing_tiles_container.replaceChild( undo_tile, _tile );
       }
-			// saveStayAndPlayBookmarks();
+      console.log( directory_bookmarks.listings );
+			saveStayAndPlayBookmarks();
 			return -1;
 		});
 		listing_tiles_container.appendChild( _tile );
@@ -178,10 +190,12 @@ window.addEventListener("DOMContentLoaded", function () {
 			const index = directory_bookmarks.events.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
       if (index == -1) {
         // nothing
+				event_tiles_container.removeChild( _tile );
       } else {
+        var undo_tile = createUndoTile( directory_bookmarks.events[ index ], "events", _tile );
         directory_bookmarks.events.splice(index, 1);
+        event_tiles_container.replaceChild( undo_tile, _tile );
       }
-			event_tiles_container.removeChild( _tile );
 			saveStayAndPlayBookmarks();
 			return -1;
 		});
@@ -189,31 +203,52 @@ window.addEventListener("DOMContentLoaded", function () {
 		event_tiles_container.appendChild( _tile );
   }
 
-  function createPostTile( post_data ) {
-    let _tile = document.createElement("div");
-    _tile.classList.add("flex");
-    _tile.classList.add("relative");
-    _tile.classList.add("flex-col");
-    _tile.innerHTML = tile_template.trim();
-    if (post_data?.title?.rendered != undefined) {
-      _tile.querySelector(".title").innerHTML =
-        post_data.title.rendered;
-    }
-    if (post_data?.excerpt?.rendered != undefined) {
-      _tile.querySelector(".excerpt").innerHTML =
-        post_data.excerpt.rendered;
-    }
-    if (post_data?.featured_image_src != undefined) {
-      _tile
-        .querySelector(".tile-image")
-        .setAttribute("src", post_data.featured_image_src);
-    }
-    page_tiles_container.appendChild(_tile);
-		_tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id );
-		_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
-			e.preventDefault();
-			return -1;
-		});
+  function createPostTile( post_data, postType, domain ) {
+		let _tile = document.createElement("div");
+	  _tile.bookmark = {
+	    domain: domain,
+	    postType: postType,
+	    postID: "" + post_data.id,
+	  }
+	  _tile.classList.add("flex");
+	  _tile.classList.add("relative");
+	  _tile.classList.add("bg-white");
+	  _tile.classList.add("flex-col");
+	  _tile.innerHTML = tile_template.trim();
+	  if (post_data?.title?.rendered != undefined) {
+	    _tile.querySelector(".title").innerHTML =
+	      post_data.title.rendered;
+	  }
+	  if (post_data?.excerpt?.rendered != undefined) {
+	    _tile.querySelector(".excerpt").innerHTML =
+	      post_data.excerpt.rendered;
+	  }
+	  if (post_data?.featured_image_src != undefined) {
+	    _tile
+	      .querySelector(".tile-image")
+	      .setAttribute("src", post_data.featured_image_src);
+	  }
+	  page_tiles_container.appendChild(_tile);
+	  _tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id);
+	  _tile.querySelector(".bookmark-toggle").addEventListener("click", function (e) {
+	    let bookmarks = getCookie("wp_bookmarks");
+	    if (bookmarks == "") {
+	      bookmarks = [];
+	    } else {
+	      bookmarks = JSON.parse(bookmarks);
+	    }
+
+	    const index = bookmarks.findIndex(function(b) {
+	      return bookmarkEquality(b, _tile.bookmark);
+	    });
+	    if (index != -1) {
+	      bookmarks.splice(index, 1);
+	      // setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
+	    }
+	    page_tiles_container.removeChild(_tile);
+	    e.preventDefault();
+	    return -1;
+	  });
   }
 
   function saveStayAndPlayBookmarks() {
@@ -222,7 +257,7 @@ window.addEventListener("DOMContentLoaded", function () {
       stayandplay_bookmarks.push({ type: "listing", domain: listing_row.domain, id: listing_row.id });
     }
     for (event_row of directory_bookmarks.events) {
-      stayandplay_bookmarks.push({ type: "event", domain: listing_row.domain, id: listing_row.id });
+      stayandplay_bookmarks.push({ type: "event", domain: event_row.domain, id: event_row.id });
     }
     setCookie("stayandplay_bookmarks", JSON.stringify(stayandplay_bookmarks), 365);
   }
@@ -278,7 +313,7 @@ window.addEventListener("DOMContentLoaded", function () {
           }
 
           for (post_data of posts_data) {
-            createPostTile( post_data );
+            createPostTile( post_data, postType, domain );
           }
         };
         const includes = postTypeBookmarks
