@@ -20,6 +20,13 @@ const listing_extra_content = `
 	<div class="address text-sm italic flex flex-col">2</div>
 </div>
 `;
+const undo_tile_template = `
+<div class="flex flex-col gap-4 p-4 content">
+	<a class="font-bold text-lg border-b-4 border-b-blue border-b-solid w-fit">Bookmark Deleted</a>
+	<p class="excerpt text-md leading-8">You removed the bookmark for <span class="title"></span></p>
+	<a href="" class="undo text-center text-lg">Undo?</a>
+</div>
+`;
 
 function getCookie(cname) {
   let name = cname + "=";
@@ -53,6 +60,12 @@ window.addEventListener("DOMContentLoaded", function () {
     bookmarks = JSON.parse(bookmarks);
   }
 
+  var undo_bookmarks = {
+  	events: [],
+  	listings: [],
+  	wordpress: []
+  };
+
   let stayandplay_bookmarks = getCookie("stayandplay_bookmarks");
   if (stayandplay_bookmarks == "") {    stayandplay_bookmarks = [];
   } else {
@@ -66,6 +79,126 @@ window.addEventListener("DOMContentLoaded", function () {
   	} else if ( row.type == "listing" ) {
   		directory_bookmarks.listings.push( { id: row.id } );
   	}
+  }
+
+  console.log( "DIRECTORY ", directory_bookmarks );
+  console.log( "WORDPRESS ", bookmarks );
+
+  function createUndoTile( data, type ) {
+  	undo_bookmarks[ type ].push( data );
+		let _tile = document.createElement("div");
+		_tile.classList.add("flex");
+		_tile.classList.add("flex-col");
+		_tile.classList.add("relative");
+		_tile.classList.add("bg-grey");
+		_tile.innerHTML = undo_tile_template.trim();
+		_tile.querySelector(".title").innerHTML = data.name;
+		// _tile.querySelector
+		return _tile;
+  }
+
+  function createListingTile( listing_data ) {
+		let id = parseInt( listing_data.url.split("/")[4] );
+		let _tile = document.createElement("div");
+		_tile.classList.add("flex");
+		_tile.classList.add("flex-col");
+		_tile.classList.add("relative");
+		_tile.classList.add("bg-white");
+		_tile.innerHTML = tile_template.trim();
+		_tile.querySelector(".title").innerHTML = listing_data.name;
+		_tile.querySelector(".title").setAttribute("href", listing_data.url);
+		_tile.querySelector(".excerpt").innerHTML = listing_data.excerpt;
+		_tile.querySelector(".tile-image").setAttribute("src", listing_data.hero_image_url);
+		_tile.querySelector(".content").innerHTML += listing_extra_content
+		if ( listing_data.address ) {
+			_tile.querySelector(".address").innerHTML = listing_data.address;
+		} else {
+			_tile.querySelector(".address_row").style.display = "none";
+		}
+		_tile.querySelector(".bookmark-toggle").setAttribute("data-id", id );
+		_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
+			e.preventDefault();
+			const index = directory_bookmarks.listings.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
+      if (index == -1) {
+        // nothing
+				listing_tiles_container.removeChild( _tile );
+      } else {
+        var result = directory_bookmarks.listings.splice(index, 1);
+        var undo_tile = createUndoTile( result );
+        listing_tiles_container.replaceChild( undo_tile, _tile );
+      }
+			// saveStayAndPlayBookmarks();
+			return -1;
+		});
+		listing_tiles_container.appendChild( _tile );
+  }
+
+  function createEventTile( event_data ) {
+		let _tile = document.createElement("div");
+		_tile.classList.add("flex");
+		_tile.classList.add("flex-col");
+		_tile.classList.add("bg-white");
+		_tile.classList.add("relative");
+		_tile.innerHTML = tile_template.trim()
+		_tile.querySelector(".title").innerHTML = event_data.name;
+		_tile.querySelector(".title").setAttribute("href", event_data.url );
+		_tile.querySelector(".excerpt").innerHTML = event_data.excerpt;
+		_tile.querySelector(".tile-image").setAttribute( "src", event_data.hero_image_url );
+		_tile.querySelector(".content").innerHTML += event_extra_content
+		if ( event_data.date_range ) {
+			_tile.querySelector(".date_range").innerHTML = event_data.date_range;
+		} else {
+			_tile.querySelector(".date_range").style.display = "none";
+		}
+
+		if ( event_data.address ) {
+			_tile.querySelector(".address").innerHTML = event_data.address;
+		} else {
+			_tile.querySelector(".address_row").style.display = "none";
+		}
+
+		_tile.querySelector(".bookmark-toggle").setAttribute("data-id", event_data.id );
+		_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
+			e.preventDefault();
+			const index = directory_bookmarks.events.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
+      if (index == -1) {
+        // nothing
+      } else {
+        directory_bookmarks.events.splice(index, 1);
+      }
+			event_tiles_container.removeChild( _tile );
+			saveStayAndPlayBookmarks();
+			return -1;
+		});
+
+		event_tiles_container.appendChild( _tile );
+  }
+
+  function createPostTile( post_data ) {
+    let _tile = document.createElement("div");
+    _tile.classList.add("flex");
+    _tile.classList.add("relative");
+    _tile.classList.add("flex-col");
+    _tile.innerHTML = tile_template.trim();
+    if (post_data?.title?.rendered != undefined) {
+      _tile.querySelector(".title").innerHTML =
+        post_data.title.rendered;
+    }
+    if (post_data?.excerpt?.rendered != undefined) {
+      _tile.querySelector(".excerpt").innerHTML =
+        post_data.excerpt.rendered;
+    }
+    if (post_data?.featured_image_src != undefined) {
+      _tile
+        .querySelector(".tile-image")
+        .setAttribute("src", post_data.featured_image_src);
+    }
+    page_tiles_container.appendChild(_tile);
+		_tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id );
+		_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
+			e.preventDefault();
+			return -1;
+		});
   }
 
   function saveStayAndPlayBookmarks() {
@@ -154,30 +287,7 @@ window.addEventListener("DOMContentLoaded", function () {
         }
         console.log( posts_data );
         for (post_data of posts_data) {
-          let _tile = document.createElement("div");
-          _tile.classList.add("flex");
-          _tile.classList.add("relative");
-          _tile.classList.add("flex-col");
-          _tile.innerHTML = tile_template.trim();
-          if (post_data?.title?.rendered != undefined) {
-            _tile.querySelector(".title").innerHTML =
-              post_data.title.rendered;
-          }
-          if (post_data?.excerpt?.rendered != undefined) {
-            _tile.querySelector(".excerpt").innerHTML =
-              post_data.excerpt.rendered;
-          }
-          if (post_data?.featured_image_src != undefined) {
-            _tile
-              .querySelector(".tile-image")
-              .setAttribute("src", post_data.featured_image_src);
-          }
-          page_tiles_container.appendChild(_tile);
-	  			_tile.querySelector(".bookmark-toggle").setAttribute("data-id", post_data.id );
-	  			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
-	  				e.preventDefault();
-	  				return -1;
-	  			});
+          createPostTile( post_data );
         }
       };
       const includes = postTypeBookmarks
@@ -198,45 +308,7 @@ window.addEventListener("DOMContentLoaded", function () {
     const mapElement = document.getElementById("events-map");
     buildMap(events_data.events, mapElement);
 		for ( event_data of events_data.events ) {
-			console.log( event_data );
-			let _tile = document.createElement("div");
-			_tile.classList.add("flex");
-			_tile.classList.add("flex-col");
-			_tile.classList.add("bg-white");
-			_tile.classList.add("relative");
-			_tile.innerHTML = tile_template.trim()
-			_tile.querySelector(".title").innerHTML = event_data.name;
-			_tile.querySelector(".title").setAttribute("href", event_data.url );
-			_tile.querySelector(".excerpt").innerHTML = event_data.excerpt;
-			_tile.querySelector(".tile-image").setAttribute( "src", event_data.hero_image_url );
-			_tile.querySelector(".content").innerHTML += event_extra_content
-			if ( event_data.date_range ) {
-				_tile.querySelector(".date_range").innerHTML = event_data.date_range;
-			} else {
-				_tile.querySelector(".date_range").style.display = "none";
-			}
-
-			if ( event_data.address ) {
-				_tile.querySelector(".address").innerHTML = event_data.address;
-			} else {
-				_tile.querySelector(".address_row").style.display = "none";
-			}
-
-			_tile.querySelector(".bookmark-toggle").setAttribute("data-id", event_data.id );
-			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
-				e.preventDefault();
-				const index = directory_bookmarks.events.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
-        if (index == -1) {
-          // nothing
-        } else {
-          directory_bookmarks.events.splice(index, 1);
-        }
-				event_tiles_container.removeChild( _tile );
-				saveStayAndPlayBookmarks();
-				return -1;
-			});
-
-			event_tiles_container.appendChild( _tile );
+			createEventTile( event_data );
 		}
 	};
 	let events_url = EVENTS_BASE_URL;
@@ -253,37 +325,7 @@ window.addEventListener("DOMContentLoaded", function () {
     buildMap(listings_data.listings, mapElement);
 
 		for ( listing_data of listings_data.listings ) {
-			let id = parseInt( listing_data.url.split("/")[4] );
-			let _tile = document.createElement("div");
-			_tile.classList.add("flex");
-			_tile.classList.add("flex-col");
-			_tile.classList.add("relative");
-			_tile.classList.add("bg-white");
-			_tile.innerHTML = tile_template.trim();
-			_tile.querySelector(".title").innerHTML = listing_data.name;
-			_tile.querySelector(".title").setAttribute("href", listing_data.url);
-			_tile.querySelector(".excerpt").innerHTML = listing_data.excerpt;
-			_tile.querySelector(".tile-image").setAttribute("src", listing_data.hero_image_url);
-			_tile.querySelector(".content").innerHTML += listing_extra_content
-			if ( listing_data.address ) {
-				_tile.querySelector(".address").innerHTML = listing_data.address;
-			} else {
-				_tile.querySelector(".address_row").style.display = "none";
-			}
-			_tile.querySelector(".bookmark-toggle").setAttribute("data-id", id );
-			_tile.querySelector(".bookmark-toggle").addEventListener("click", function(e) {
-				e.preventDefault();
-				const index = directory_bookmarks.listings.findIndex((b) => bookmarkEqualityDirectory(b, { id: this.getAttribute("data-id") } ));
-        if (index == -1) {
-          // nothing
-        } else {
-          directory_bookmarks.listings.splice(index, 1);
-        }
-				listing_tiles_container.removeChild( _tile );
-				saveStayAndPlayBookmarks();
-				return -1;
-			});
-			listing_tiles_container.appendChild( _tile );
+			createListingTile( listing_data );
 		}
 	};
 	let listings_url = LISTINGS_BASE_URL;

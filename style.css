@@ -797,6 +797,10 @@ video {
   padding-bottom: 8rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .font-body {
   font-family: Inter, sans-serif;
 }
