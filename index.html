@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="reskin.css">
 		<link rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="assets/css/map.css">
+		<link rel="stylesheet" href="assets/css/itinerary.css">
 		<style>
 			.excerpt {
 			   overflow: hidden;
@@ -16,10 +17,10 @@
 			   -webkit-box-orient: vertical;
 			}
 		</style>
-		<script src="assets/js/itinerary.js"></script>
 		<script src="https://maps.google.com/maps/api/js?key=AIzaSyChd8CCFV5wt-LwpKVlRvOHmslmUqO0B0U&libraries=places"></script>
 		<script src="assets/js/map.js"></script>
 		<script src="assets/js/save.js"></script>
+		<script src="assets/js/itinerary.js"></script>
 	</head>
 	<body class="font-body bg-grey">
 
@@ -123,11 +124,11 @@
 		<div class="w-full relative">
 			<img src="https://vermontvacation.com/wp-content/uploads/2023/06/LowRes-140929kbp052.jpg" alt="" class="absolute w-full h-full object-cover">
 			<div class="container relative flex flex-col gap-8 py-32">
-				<div class="hidden warning p-4 rounded-md flex flex-col md:flex-row bg-white/25 text-white font-bold justify-between items-center text-sm gap-4 md:gap-16" id="save-banner">
+				<div id="save-banner" class="hidden warning p-4 backdrop-blur-sm rounded-md flex flex-col md:flex-row bg-white/25 text-white font-bold justify-between items-center text-sm gap-4 md:gap-16">
 					<div>
 						You're viewing a trip that's different than your currently saved one. Do you want to overwrite your saved trip?
 					</div>
-					<div class="flex flex-col justify-center items-center md:items-end">
+					<div class="md:basis-[200px] flex flex-col justify-center items-center md:items-end">
 						<a id="view-saved-trip-link" href="" class="border-b-solid border-b-4 border-b-green">View my saved trip</a>
 						<a id="make-saved-trip-link" href="" class="border-b-solid border-b-4 border-b-yellow">Make this my saved trip</a>
 					</div>
@@ -153,7 +154,7 @@
 						<h1 class="text-3xl font-bold uppercase">
 							My Saved Places
 						</h1>
-						<a href="" class="border-b-solid border-b-4 border-b-yellow">Browse and add more places</a>
+						<a href="https://plan.vermontvacation.com/" class="border-b-solid border-b-4 border-b-yellow">Browse and add more places</a>
 					</div>
 					<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 						<div id="listing-tiles" class="grid grid-cols-1 sm:grid-cols-2 gap-8 content-start">
@@ -166,7 +167,7 @@
 						<h1 class="text-3xl font-bold uppercase">
 							My Saved Events
 						</h1>
-						<a href="" class="border-b-solid border-b-4 border-b-yellow">Browse and add more events</a>
+						<a href="https://plan.vermontvacation.com/events" class="border-b-solid border-b-4 border-b-yellow">Browse and add more events</a>
 					</div>
 					<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 						<div id="event-tiles" class="grid grid-cols-1 sm:grid-cols-2 gap-8 content-start">
@@ -179,7 +180,7 @@
 						<h1 class="text-3xl font-bold uppercase">
 							My Saved Pages
 						</h1>
-						<a href="" class="border-b-solid border-b-4 border-b-yellow">Browse and add more pages</a>
+						<a href="https://vermontvacation.com/" class="border-b-solid border-b-4 border-b-yellow">Browse and add more pages</a>
 					</div>
 					<div id="page-tiles" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 					</div>
@@ -206,7 +207,7 @@
 		                  <a href="https://accd.vermont.gov/tourism/travel-trade"
 		                     target="">Travel Trade</a>
 		                  <a href="https://accd.vermont.gov/tourism/"
-		                     target="">Tourism Industry Partners </a>
+		                     target="">Tourism Industry Partners</a>
 		                  <a href="https://thinkvermont.com/"
 		                     target="">Relocate to Vermont</a>
 		               </div>

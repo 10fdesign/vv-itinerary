@@ -51,7 +51,7 @@ function handleUrlParams() {
 
     // Exit early if no urlParams
     if ( urlParams.size == 0 ) {
-        return;
+        return urlParams;
     }
 
     const urlparams__wp_bookmarks = urlParams.get('wp_bookmarks');
@@ -74,8 +74,9 @@ function handleUrlParams() {
     } else {
         saveBanner.classList.remove("hidden");
 
-        console.log("Cookies don't match urlParams. Unhiding save-banner.")
+        console.log("Cookies don't match urlParams. Unhiding save-banner.");
     }
+    return urlParams;
 }
 
 function handleCopyLink(e) {
