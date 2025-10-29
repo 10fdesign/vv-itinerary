@@ -175,6 +175,29 @@ function createPostTile(postData, postType, domain) {
     setCookie("wp_bookmarks", JSON.stringify(bookmarks), 365);
     return -1;
   });
+
+
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    let imageData;
+    try {
+      imageData = JSON.parse(this.responseText);
+    } catch (e) {
+      return console.error(e);
+    }
+    if (imageData?.image != undefined) {
+      tile
+        .querySelector(".tile-image")
+        .setAttribute("src", imageData.image);
+    }
+  };
+  xhttp.open(
+    "GET",
+    `${domain}/wp-json/mydata/v1/hero/${postData.id}`,
+    true
+  );
+  xhttp.send();
+
 }
 
 function buildPostTiles(bookmarks) {

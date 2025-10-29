@@ -688,10 +688,6 @@ video {
   width: 100%;
 }
 
-.basis-\[200px\] {
-  flex-basis: 200px;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
