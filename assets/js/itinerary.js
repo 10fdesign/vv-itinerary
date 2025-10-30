@@ -117,7 +117,6 @@ function createPostTile(postData, postType, domain) {
     postType: postType,
     postID: "" + postData.id,
   }
-  console.log(postData);
   tile.classList.add("flex");
   tile.classList.add("relative");
   tile.classList.add("bg-white");
@@ -140,7 +139,6 @@ function createPostTile(postData, postType, domain) {
     imageSet = true;
   }
   if (postData?.link != undefined) {
-    console.log("setting link!");
     tile
       .querySelector(".title-link")
       .setAttribute("href", postData.link);
@@ -236,7 +234,6 @@ function buildPostTiles(bookmarks) {
     console.log("Couldn't find #page-tiles!");
     return;
   }
-  console.log("building page tiles!");
 
   if (bookmarks.length == 0) {
     let _not_found = document.createElement("p");
@@ -422,7 +419,7 @@ function createListingTile(listingData) {
   }
   let id = parseInt(listingData.url.split("/")[4]);
   let tile = document.createElement("div");
-  console.log(listingData);
+
   tile.bookmark = {
     id: listingData.id
   }
@@ -513,9 +510,7 @@ function saveStayAndPlayBookmarks(directoryBookmarks) {
 function resizeUnderlines() {
   const results = document.querySelectorAll(".underlined-title");
   results.forEach((el) => {
-    console.log(el);
     const measurementElement = el.querySelector('.measurement');
-    console.log(measurementElement.offsetLeft);
     let underlineElement = el.querySelector('.underline-element');
     underlineElement.style.width = "calc(" + measurementElement.offsetLeft + "px - 1rem)";
   });
