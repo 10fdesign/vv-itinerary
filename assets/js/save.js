@@ -8,8 +8,21 @@ window.addEventListener("DOMContentLoaded", function () {
   const make_saved_trip_link = document.getElementById("make-saved-trip-link");
   make_saved_trip_link.addEventListener('click', handleMakeSavedTrip);
 
+  const shareTripLink = document.getElementById("email_trip");
+  shareTripLink.addEventListener('click', handleShareTrip);
+
   handleUrlParams();
 });
+
+function handleShareTrip(e) {
+  e.preventDefault();
+  const subject = "My Vermont Vacation"
+  const body = "Here's a link to my trip: " + generateURLFromCookies() + " ";
+  const url = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  window.location.href = url;
+  return false;
+}
 
 function handleViewSavedTripLink(e) {
   e.preventDefault();
