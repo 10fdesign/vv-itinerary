@@ -3585,7 +3585,7 @@ header .search-submit i {
 }
 
 .grid:after {
-    content: "";
+    /* content: ""; */
     display: block;
     clear: both
 }

@@ -1,4 +1,3 @@
-
 const EVENTS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/events.json?";
 const LISTINGS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/listings.json?";
 
@@ -319,7 +318,7 @@ function loadDirectoryBookmarksFromCookie() {
 
 /* Events */
 
-function createEventTile(eventData) {
+function createEventTile(eventData, index) {
   const eventTilesContainer = document.getElementById("event-tiles");
   if (!eventTilesContainer) {
     console.log("Couldn't find #event-tiles");
@@ -333,6 +332,7 @@ function createEventTile(eventData) {
   tile.classList.add("flex-col");
   tile.classList.add("bg-white");
   tile.classList.add("relative");
+  tile.style.order = index;
   tile.innerHTML = tile_template.trim();
   const undoTile = tile.querySelector(".tenf-undo-tile");
   tile.querySelector(".title").innerHTML = eventData.name;
@@ -394,8 +394,16 @@ function buildEventTiles(eventBookmarks) {
       eventTilesContainer.appendChild(_not_found);
       mapElement.hidden = true;
     } else {
+      let index = 0;
+      if (eventsData.events.length == 1) {
+        mapElement.classList.add("map-3-wide");
+      }
       for (const eventData of eventsData.events) {
-        createEventTile(eventData);
+        if (index == 2) {
+          index += 1;
+        }
+        createEventTile(eventData, index);
+        index += 1;
       }
     }
     resizeUnderlines();
@@ -411,7 +419,7 @@ function buildEventTiles(eventBookmarks) {
 
 /* Listings */
 
-function createListingTile(listingData) {
+function createListingTile(listingData, index) {
   let listingTilesContainer = document.getElementById("listing-tiles");
   if (!listingTilesContainer) {
     console.log("Couldn't find $listing-tiles!");
@@ -427,6 +435,7 @@ function createListingTile(listingData) {
   tile.classList.add("flex-col");
   tile.classList.add("relative");
   tile.classList.add("bg-white");
+  tile.style.order = index;
   tile.innerHTML = tile_template.trim();
   const undoTile = tile.querySelector(".tenf-undo-tile");
   tile.querySelector(".title").innerHTML = listingData.name;
@@ -480,8 +489,16 @@ function buildListingTiles(listingBookmarks) {
       listingTilesContainer.appendChild(_not_found);
       mapElement.hidden = true;
     } else {
+      let index = 0;
+      if (listingsData.listings.length == 1) {
+        mapElement.classList.add("map-3-wide");
+      }
       for (const listingData of listingsData.listings) {
-        createListingTile(listingData);
+        if (index == 2) {
+          index += 1;
+        }
+        createListingTile(listingData, index);
+        index += 1;
       }
     }
     resizeUnderlines();
@@ -523,14 +540,12 @@ window.addEventListener("DOMContentLoaded", function () {
 
   const urlParams = new URLSearchParams(window.location.search);
   let usingUrlParams = false;
-  let URLWPBookmarks = [];
-  if ((UrlWPBookmarks = urlParams.get("wp_bookmarks")) != null && UrlWPBookmarks != "") {
-    UrlWPBookmarks = JSON.parse(UrlWPBookmarks);
+  let UrlWPBookmarks = [];
+  if ((UrlWPBookmarks = URIDecodeWP(urlParams.get("w"))) != [] && UrlWPBookmarks != "") {
     usingUrlParams = true;
   }
   let UrlDirectoryBookmarks = {};
-  if ((UrlDirectoryBookmarks = urlParams.get("stayandplay_bookmarks")) != null && UrlDirectoryBookmarks != "") {
-    UrlDirectoryBookmarks = JSON.parse(UrlDirectoryBookmarks);
+  if ((UrlDirectoryBookmarks = URIDecodeDirectory(urlParams.get("d"))) != [] && UrlDirectoryBookmarks != "") {
     let bookmarks = { events: [], listings: [] };
     for (let row of UrlDirectoryBookmarks) {
       if (row.type == "event") {

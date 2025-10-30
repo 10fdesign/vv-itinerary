@@ -1,3 +1,9 @@
 .tenf-preview .bookmark-toggle {
   display: none;
 }
+
+@media (min-width: 1024px) {
+  .map-3-wide.map-3-wide.map-3-wide.map-3-wide {
+    grid-column: span 3 / span 3;
+  }
+}
