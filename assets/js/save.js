@@ -16,7 +16,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 function handleShareTrip(e) {
   e.preventDefault();
-  const subject = "My Vermont Vacation"
+  const subject = "My Vermont trip"
   const body = "Here's a link to my trip: " + generateURLFromCookies() + " ";
   const url = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
