@@ -110,6 +110,7 @@ function createPostTile(postData, postType, domain) {
     console.log("Couldn't find #page-tiles!");
     return;
   }
+  let imageSet = false;
   let tile = document.createElement("div");
   tile.bookmark = {
     domain: domain,
@@ -136,6 +137,7 @@ function createPostTile(postData, postType, domain) {
     tile
       .querySelector(".tile-image")
       .setAttribute("src", postData.featured_image_src);
+    imageSet = true;
   }
   if (postData?.link != undefined) {
     console.log("setting link!");
@@ -176,27 +178,55 @@ function createPostTile(postData, postType, domain) {
     return -1;
   });
 
-
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function () {
-    let imageData;
-    try {
-      imageData = JSON.parse(this.responseText);
-    } catch (e) {
-      return console.error(e);
+  if (!imageSet) {
+    const featuredMedia = postData?.featured_media;
+    const xhttp = new XMLHttpRequest();
+    if (featuredMedia != undefined && featuredMedia != "") {
+      xhttp.onload = function () {
+        let imageData;
+        try {
+          imageData = JSON.parse(this.responseText);
+        } catch (e) {
+          return console.error(e);
+        }
+        let src;
+        if ((src = imageData?.media_details?.sizes?.large?.source_url) != undefined) {
+          tile
+            .querySelector(".tile-image")
+            .setAttribute("src", src);
+        } else if ((src = imageData?.media_details?.sizes?.full?.source_url) != undefined) {
+          tile
+            .querySelector(".tile-image")
+            .setAttribute("src", src);
+        }
+      };
+      xhttp.open(
+        "GET",
+        `${domain}/wp-json/wp/v2/media/${featuredMedia}`,
+        true
+      );
+    } else {
+      xhttp.onload = function () {
+        let imageData;
+        try {
+          imageData = JSON.parse(this.responseText);
+        } catch (e) {
+          return console.error(e);
+        }
+        if (imageData?.image != undefined) {
+          tile
+            .querySelector(".tile-image")
+            .setAttribute("src", imageData.image);
+        }
+      };
+      xhttp.open(
+        "GET",
+        `${domain}/wp-json/mydata/v1/hero/${postData.id}`,
+        true
+      );
     }
-    if (imageData?.image != undefined) {
-      tile
-        .querySelector(".tile-image")
-        .setAttribute("src", imageData.image);
-    }
-  };
-  xhttp.open(
-    "GET",
-    `${domain}/wp-json/mydata/v1/hero/${postData.id}`,
-    true
-  );
-  xhttp.send();
+    xhttp.send();
+  }
 
 }
 
