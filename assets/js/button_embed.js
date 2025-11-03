@@ -50,6 +50,6 @@ window.addEventListener("DOMContentLoaded", function () {
     return;
   }
   iframe.setAttribute("id", "itinerary_button_iframe");
-  iframe.setAttribute("src", `https://10fdesign.github.io/vv-itinerary/button?domain=${domain}&post_id=${postID}&post_type=${postType}`);
+  iframe.setAttribute("src", `https://mytrip.vermontvacation.com/button?domain=${domain}&post_id=${postID}&post_type=${postType}`);
   document.body.appendChild(iframe);
 });
