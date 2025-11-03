@@ -6,6 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
   iframe.style.zIndex = "10";
   iframe.style.width = "48px";
   iframe.style.height = "48px";
+  iframe.style.border = "none";
   let postType = false;
   let postID = false;
   const body = document.body;
