@@ -1,5 +1,5 @@
-const EVENTS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/events.json?";
-const LISTINGS_BASE_URL = "https://dev.directory.10fdesign.io/itinerary/listings.json?";
+const EVENTS_BASE_URL = "https://plan.vermontvacation.com/itinerary/events.json?";
+const LISTINGS_BASE_URL = "https://plan.vermontvacation.com/itinerary/listings.json?";
 
 const UNDO_TEMPLATE = `
 <div class="tenf-undo-tile transition-all absolute inset-0 bg-white/80 backdrop-blur-sm p-4 flex justify-center items-center flex-col z-10 text-center gap-4" style="visibility: hidden; opacity: 0;">
