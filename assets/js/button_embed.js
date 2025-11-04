@@ -1,11 +1,11 @@
 window.addEventListener("DOMContentLoaded", function () {
   const iframe = document.createElement("iframe");
   iframe.style.position = "fixed";
-  iframe.style.bottom = "32px";
-  iframe.style.left = "32px";
+  iframe.style.bottom = "24px";
+  iframe.style.left = "24px";
   iframe.style.zIndex = "10";
-  iframe.style.width = "48px";
-  iframe.style.height = "48px";
+  iframe.style.width = "78px";
+  iframe.style.height = "88px";
   iframe.style.border = "none";
   let postType = false;
   let postID = false;
