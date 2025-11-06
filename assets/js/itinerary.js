@@ -4,18 +4,19 @@ const LISTINGS_BASE_URL = "https://plan.vermontvacation.com/itinerary/listings.j
 const UNDO_TEMPLATE = `
 <div class="tenf-undo-tile transition-all absolute inset-0 bg-white/80 backdrop-blur-sm p-4 flex justify-center items-center flex-col z-10 text-center gap-4" style="visibility: hidden; opacity: 0;">
   <div class="tenf-undo-text">NAMEHERE has been removed.</div>
-  <a class="tenf-undo-button text-sm uppercase font-bold text-blue cursor-pointer">Undo</a>
+  <a class="tenf-undo-button text-sm uppercase font-bold text-blue cursor-pointer font-display">Undo</a>
 </div>
 `;
 
 const tile_template = `
 <img src="/assets/img/fallback.jpg" class="bg-red-50 aspect-3/2 w-full block object-cover tile-image" />
 <a href="" class="bookmark-toggle block absolute top-4 right-4">
-	<svg class="h-8 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M305 151.1L320 171.8L335 151.1C360 116.5 400.2 96 442.9 96C516.4 96 576 155.6 576 229.1L576 231.7C576 343.9 436.1 474.2 363.1 529.9C350.7 539.3 335.5 544 320 544C304.5 544 289.2 539.4 276.9 529.9C203.9 474.2 64 343.9 64 231.7L64 229.1C64 155.6 123.6 96 197.1 96C239.8 96 280 116.5 305 151.1z"/></svg>
+
+  <i class="fas fa-heart text-yellow text-2xl"></i>
 </a>
 <div class="space-y-4 p-4 content">
   <div class="underlined-title">
-    <a class="font-bold text-lg w-fit title-link hover:text-blue"><span class="title">Wilburton Inn</span><span class="measurement"></span></a>
+    <a class="font-bold text-lg w-fit title-link hover:text-blue font-display"><span class="title">Wilburton Inn</span><span class="measurement"></span></a>
     <div class="underline-element border-b-4 border-blue border-solid"></div>
   </div>
 	<p class="excerpt text-md leading-8">Lorem ipsum dolor sit amet consectetur adipisicing, elit. Doloribus maiores enim, similique?</p>
@@ -26,14 +27,14 @@ ${UNDO_TEMPLATE}
 const event_extra_content = `
 <p class="italic date_range"></p>
 <div class="flex flex-row items-center address_row">
-	<svg class="h-6 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
+	<svg class="h-6 w-6 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
 	<div class="address text-sm italic flex flex-col"></div>
 </div>
 `;
 
 const listing_extra_content = `
 <div class="flex flex-row items-center address_row">
-	<svg class="h-6 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
+	<svg class="h-6 w-6 fill-yellow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>
 	<div class="address text-sm italic flex flex-col">2</div>
 </div>
 `;
@@ -179,6 +180,8 @@ function createPostTile(postData, postType, domain) {
     const featuredMedia = postData?.featured_media;
     const xhttp = new XMLHttpRequest();
     if (featuredMedia != undefined && featuredMedia != "") {
+      imageSet = true;
+      const xhttp = new XMLHttpRequest();
       xhttp.onload = function () {
         let imageData;
         try {
@@ -202,28 +205,32 @@ function createPostTile(postData, postType, domain) {
         `${domain}/wp-json/wp/v2/media/${featuredMedia}`,
         true
       );
-    } else {
-      xhttp.onload = function () {
-        let imageData;
-        try {
-          imageData = JSON.parse(this.responseText);
-        } catch (e) {
-          return console.error(e);
-        }
-        if (imageData?.image != undefined) {
-          tile
-            .querySelector(".tile-image")
-            .setAttribute("src", imageData.image);
-        }
-      };
-      xhttp.open(
-        "GET",
-        `${domain}/wp-json/mydata/v1/hero/${postData.id}`,
-        true
-      );
+      xhttp.send();
     }
-    xhttp.send();
   }
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    let apiData;
+    try {
+      apiData = JSON.parse(this.responseText);
+    } catch (e) {
+      return console.error(e);
+    }
+    if (!imageSet && apiData?.image != undefined) {
+      tile
+        .querySelector(".tile-image")
+        .setAttribute("src", imageData.image);
+    }
+    if (apiData?.teaser_text != undefined) {
+      tile.querySelector(".excerpt").innerHTML = apiData.teaser_text;
+    }
+  };
+  xhttp.open(
+    "GET",
+    `${domain}/wp-json/mydata/v1/hero/${postData.id}`,
+    true
+  );
+  xhttp.send();
 
 }
 
@@ -291,6 +298,7 @@ function buildPostTiles(bookmarks) {
         `${domain}/wp-json/wp/v2/${postType}/?${includes}`,
         true
       );
+      console.log(`${domain}/wp-json/wp/v2/${postType}/?${includes}`);
       xhttp.send();
     }
   }
@@ -358,7 +366,7 @@ function createEventTile(eventData, index) {
     let directoryBookmarks = loadDirectoryBookmarksFromCookie();
     const index = directoryBookmarks.events.findIndex((b) => bookmarkEqualityDirectory(b, { id: tile.bookmark.id }));
     if (index == -1) {
-      directoryBookmarks.events.push({id: tile.bookmark.id});
+      directoryBookmarks.events.push({ id: tile.bookmark.id });
     }
     saveStayAndPlayBookmarks(directoryBookmarks);
     undoTile.style.visibility = "hidden";
@@ -454,7 +462,7 @@ function createListingTile(listingData, index) {
     let directoryBookmarks = loadDirectoryBookmarksFromCookie();
     const index = directoryBookmarks.listings.findIndex((b) => bookmarkEqualityDirectory(b, { id: tile.bookmark.id }));
     if (index == -1) {
-      directoryBookmarks.listings.push({id: tile.bookmark.id});
+      directoryBookmarks.listings.push({ id: tile.bookmark.id });
     }
     saveStayAndPlayBookmarks(directoryBookmarks);
     undoTile.style.visibility = "hidden";

@@ -8,10 +8,12 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Baumans&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik+80s+Fade&family=Rubik+Iso&family=Syne+Mono&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+		<link rel="stylesheet" id="franklin-gothic-css" href="https://use.typekit.net/pcc5rji.css?ver=1" type="text/css" media="screen">
 		<link rel="stylesheet" href="reskin.css">
 		<link rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="assets/css/map.css">
 		<link rel="stylesheet" href="assets/css/itinerary.css">
+		<link rel="stylesheet" href="assets/fontawesome/css/all.css">
 		<link rel="stylesheet" media="screen" href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
 		<style>
 			.excerpt {
@@ -29,7 +31,7 @@
 		<script src="assets/js/itinerary.js"></script>
 		<script src="assets/js/reskin.js"></script>
 	</head>
-	<body class="font-body bg-grey">
+	<body class="bg-grey">
 
 		<!-- HEADER -->
 		<header id="header" class="header">
@@ -130,7 +132,7 @@
 
 		<div class="w-full relative">
 			<img src="https://vermontvacation.com/wp-content/uploads/2023/06/LowRes-140929kbp052.jpg" alt="" class="absolute w-full h-full object-cover">
-			<div class="container relative flex flex-col gap-8 py-32">
+			<div class="container relative flex flex-col gap-8 pb-32 py-48">
 				<div id="save-banner" class="hidden warning p-4 backdrop-blur-sm rounded-md flex flex-col md:flex-row bg-white/25 text-white font-bold justify-between items-center text-sm gap-4 md:gap-16">
 					<div>
 						You're viewing a trip that's different than your currently saved one. Do you want to overwrite your saved trip?
@@ -141,27 +143,28 @@
 					</div>
 				</div>
 				<div class="flex flex-col text-white">
-					<h3 class="text-2xl font-bold">UTILIZING YOUR</h3>
 					<div class="flex flex-col md:flex-row justify-between">
-						<h1 class="text-4xl font-bold text-body">TRIP ITINERARY</h1>
-						<div class="flex flex-row gap-8 items-end">
-							<a id="copy-link" href="" class="border-b-solid border-b-4 border-b-blue">Copy link to this trip</a>
-							<a id="email_trip" href="" class="border-b-solid border-b-4 border-b-green">Email this trip</a>
-							<a id="clear_itinerary" href="" class="border-b-solid border-b-4 border-b-yellow">Clear my trip</a>
-						</div>
+						<h1 class="text-4xl font-bold text-body">MY TRIP</h1>
 					</div>
 					<p class="text-md text-body md:w-1/2 mt-8">All the places, pages and events you saved by selecting heart icons are listed below, along with an interactive map showing each location. Click or tap each name to learn more.</p>
 				</div>
+			</div>
+		</div>
+		<div class="bg-neutral-200 py-4">
+			<div class="container flex flex-row gap-8 justify-around font-display font-semibold uppercase">
+				<a id="copy-link" href="" class="hover:text-blue">Copy link to this trip</a>
+				<a id="email_trip" href="" class="hover:text-blue">Email this trip</a>
+				<a id="clear_itinerary" href="" class="hover:text-blue">Clear my trip</a>
 			</div>
 		</div>
 		<div class="container my-16">
 			<div class="flex flex-col gap-x-8 gap-y-16">
 				<div class="flex flex-col gap-8">
 					<div class="flex flex-col md:flex-row items-center md:gap-8">
-						<h1 class="text-3xl font-bold uppercase">
+						<h2 class="text-3xl font-bold uppercase">
 							My Saved Places
-						</h1>
-						<a href="https://plan.vermontvacation.com/" class="border-b-solid border-b-4 border-b-yellow">Browse and add more places</a>
+						</h2>
+						<a href="https://plan.vermontvacation.com/" class="border-b-solid border-b-4 border-b-yellow font-display font-semibold">Browse and add more places</a>
 					</div>
 					<div class="">
 						<div id="listing-tiles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 content-start">
@@ -171,10 +174,10 @@
 				</div>
 				<div class="flex flex-col gap-8">
 					<div class="flex flex-col md:flex-row items-center md:gap-8">
-						<h1 class="text-3xl font-bold uppercase">
+						<h2 class="text-3xl font-bold uppercase">
 							My Saved Events
-						</h1>
-						<a href="https://plan.vermontvacation.com/events" class="border-b-solid border-b-4 border-b-yellow">Browse and add more events</a>
+						</h2>
+						<a href="https://plan.vermontvacation.com/events" class="border-b-solid border-b-4 border-b-yellow font-display font-semibold">Browse and add more events</a>
 					</div>
 					<div class="">
 						<div id="event-tiles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 content-start">
@@ -184,10 +187,10 @@
 				</div>
 				<div class="flex flex-col gap-8">
 					<div class="flex flex-col md:flex-row items-center md:gap-8">
-						<h1 class="text-3xl font-bold uppercase">
+						<h2 class="text-3xl font-bold uppercase">
 							My Saved Pages
-						</h1>
-						<a href="https://vermontvacation.com/" class="border-b-solid border-b-4 border-b-yellow">Browse and add more pages</a>
+						</h2>
+						<a href="https://vermontvacation.com/" class="border-b-solid border-b-4 border-b-yellow font-display font-semibold">Browse and add more pages</a>
 					</div>
 					<div id="page-tiles" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 					</div>

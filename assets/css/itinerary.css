@@ -1,3 +1,7 @@
+body {
+  font-family: georgiapro, sans-serif;
+}
+
 .tenf-preview .bookmark-toggle {
   display: none;
 }

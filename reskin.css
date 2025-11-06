@@ -249,7 +249,7 @@ h1 {
     font-size: 2.5rem;
     line-height: 1.25;
     text-indent: -2px;
-    letter-spacing: -2px
+    /* letter-spacing: -2px */
 }
 
 h2 {
@@ -1065,7 +1065,7 @@ ol ul {
 }
 
 .header {
-    position: sticky;
+    position: fixed;
     top: 0;
     background: rgba(32, 40, 42, .7);
     width: 100%;
