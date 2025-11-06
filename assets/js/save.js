@@ -101,6 +101,8 @@ function handleCopyLink(e) {
   let save_url = generateURLFromCookies();
 
   copyToClipboard(save_url);
+  const copy_link = document.getElementById("copy-link");
+  copy_link.innerHTML = "Copied!";
 }
 
 function generateURLFromCookies() {
