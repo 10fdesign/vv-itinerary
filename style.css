@@ -691,27 +691,6 @@ video {
   width: 1.5rem;
 }
 
-.w-fit {
-  width: -moz-fit-content;
-  width: fit-content;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.w-4 {
-  width: 1rem;
-}
-
-.w-\[20px\] {
-  width: 20px;
-}
-
-.w-\[calc\(20px\+1rem\)\] {
-  width: calc(20px + 1rem);
-}
-
 .w-\[14px\] {
   width: 14px;
 }
@@ -720,12 +699,13 @@ video {
   width: 16px;
 }
 
-.w-\[16\.5\] {
-  width: 16.5;
+.w-fit {
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
-.w-\[16\.5px\] {
-  width: 16.5px;
+.w-full {
+  width: 100%;
 }
 
 .transform {
@@ -776,10 +756,6 @@ video {
   justify-content: space-around;
 }
 
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .gap-4 {
   gap: 1rem;
 }
@@ -807,16 +783,8 @@ video {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
-.self-end {
-  align-self: flex-end;
-}
-
 .self-center {
   align-self: center;
-}
-
-.rounded-lg {
-  border-radius: 0.5rem;
 }
 
 .rounded-md {
@@ -887,9 +855,8 @@ video {
   background-color: rgb(255 255 255 / 0.8);
 }
 
-.bg-yellow {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 179 36 / var(--tw-bg-opacity, 1));
+.\!fill-white {
+  fill: #ffffff !important;
 }
 
 .fill-white {
@@ -898,10 +865,6 @@ video {
 
 .fill-yellow {
   fill: #F5B324;
-}
-
-.\!fill-white {
-  fill: #ffffff !important;
 }
 
 .object-cover {
@@ -913,9 +876,9 @@ video {
   padding: 1rem;
 }
 
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
+.px-\[0\.5rem\] {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .py-4 {
@@ -928,26 +891,12 @@ video {
   padding-bottom: 12rem;
 }
 
-.px-\[0\.5rem\] {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.px-\[0\.rem\] {
-  padding-left: 0.rem;
-  padding-right: 0.rem;
-}
-
 .pb-32 {
   padding-bottom: 8rem;
 }
 
 .text-center {
   text-align: center;
-}
-
-.align-baseline {
-  vertical-align: baseline;
 }
 
 .font-display {
@@ -969,6 +918,10 @@ video {
   line-height: 2.5rem;
 }
 
+.text-\[0\.7em\] {
+  font-size: 0.7em;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -977,15 +930,6 @@ video {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-
-.text-\[0\.7em\] {
-  font-size: 0.7em;
 }
 
 .font-bold {
@@ -1008,17 +952,8 @@ video {
   line-height: 2rem;
 }
 
-.tracking-wide {
-  letter-spacing: 0.025em;
-}
-
 .tracking-\[0\.5px\] {
   letter-spacing: 0.5px;
-}
-
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
 .text-blue {

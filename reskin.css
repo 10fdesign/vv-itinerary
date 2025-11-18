@@ -476,7 +476,6 @@ table tbody+tbody {
 .table-bordered {
     border: 1px solid #b8b8b8;
     border-collapse: separate;
-    *border-collapse: collapsed;
     border-radius: .47rem
 }
 
@@ -1269,7 +1268,8 @@ ol ul {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0
+    margin: 0;
+    padding-left: 2.5rem;
 }
 
 .header__canvas #menu-off-canvas li {
@@ -1508,13 +1508,6 @@ header ul.menu, header .menu-item a {
 	width: 100%;
 }
 
-// .header__canvas #menu-off-canvas-utility li a:after {
-//     content: "";
-//     display: block;
-//     border-bottom: 4px solid #f5b324;
-//     border-radius: 2px
-// }
-
 .header__inner {
     display: flex;
     flex-direction: row;
@@ -1718,7 +1711,7 @@ span {
 
 .site-search__close i {
     color: #20282a;
-    font-size: 2rem
+    font-size: 1.7rem
 }
 
 .site-search__inner {
@@ -4273,4 +4266,37 @@ header .search-submit i {
     }
 }
 
-/*# sourceMappingURL=app.css.map */
+
+@media screen and (max-width: 600px) {
+  .header__canvas #menu-off-canvas-utility {
+    flex-direction: column;
+    padding-left: 2.5rem;
+    margin-top: 3rem;
+  }
+}
+
+@media screen and (max-width: 1030px) {
+  .header__canvas #menu-off-canvas-utility {
+    align-items: flex-start !important;
+    padding-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header__canvas #menu-off-canvas-utility {
+    display: flex !important;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+	.header__canvas #menu-off-canvas-utility {
+		flex-direction: column;
+		padding-left: 2.5rem;
+		margin-top: 3rem;
+	}
+
+	#menu-off-canvas-utility a {
+		margin-bottom: 0.5rem;
+	}
+}
