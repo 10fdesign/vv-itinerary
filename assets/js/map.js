@@ -42,6 +42,7 @@ function buildMap(listings, mapElement) {
       listingsByPlaceId.set(result.place_id, listingsByPlaceId.get(place));
       const marker = new google.maps.Marker({
         map: map,
+        title: result.name,
         place: {
           placeId: result.place_id,
           location: result.geometry.location

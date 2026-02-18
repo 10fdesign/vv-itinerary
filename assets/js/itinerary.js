@@ -4,7 +4,7 @@ const LISTINGS_BASE_URL = "https://plan.vermontvacation.com/itinerary/listings.j
 const UNDO_TEMPLATE = `
 <div class="tenf-undo-tile transition-all absolute inset-0 bg-white/80 backdrop-blur-sm p-4 flex justify-center items-center flex-col z-10 text-center gap-4" style="visibility: hidden; opacity: 0;">
   <div class="tenf-undo-text">NAMEHERE has been removed.</div>
-  <a class="tenf-undo-button text-sm uppercase font-bold text-blue cursor-pointer font-display">Undo</a>
+  <a class="tenf-undo-button text-sm uppercase font-bold text-blue cursor-pointer font-display" aria-label="Undo Removed Bookmark">Undo</a>
 </div>
 `;
 
@@ -158,6 +158,7 @@ function createPostTile(postData, postType, domain) {
     undoTile.style.visibility = "hidden";
     undoTile.style.opacity = "0";
   });
+  tile.querySelector(".bookmark-toggle").setAttribute("aria-label", "Remove Saved Page");
   tile.querySelector(".bookmark-toggle").addEventListener("click", function (e) {
     e.preventDefault();
 
@@ -372,6 +373,7 @@ function createEventTile(eventData, index) {
     undoTile.style.visibility = "hidden";
     undoTile.style.opacity = "0";
   });
+  tile.querySelector(".bookmark-toggle").setAttribute("aria-label", "Remove Saved Event");
   tile.querySelector(".bookmark-toggle").addEventListener("click", function (e) {
     e.preventDefault();
     let directoryBookmarks = loadDirectoryBookmarksFromCookie();
@@ -468,6 +470,7 @@ function createListingTile(listingData, index) {
     undoTile.style.visibility = "hidden";
     undoTile.style.opacity = "0";
   });
+  tile.querySelector(".bookmark-toggle").setAttribute("aria-label", "Remove Saved Listing");
   tile.querySelector(".bookmark-toggle").addEventListener("click", function (e) {
     e.preventDefault();
     let directoryBookmarks = loadDirectoryBookmarksFromCookie();
