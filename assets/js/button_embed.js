@@ -51,6 +51,7 @@ window.addEventListener("DOMContentLoaded", function () {
     return;
   }
   iframe.setAttribute("id", "itinerary_button_iframe");
+  iframe.setAttribute("title", "Add To My Trip Button");
   iframe.setAttribute("src", `https://mytrip.vermontvacation.com/button?domain=${domain}&post_id=${postID}&post_type=${postType}`);
   document.body.appendChild(iframe);
 });
