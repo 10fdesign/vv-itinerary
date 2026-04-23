@@ -137,6 +137,7 @@ function createPostTile(postData, postType, domain) {
       .querySelector(".tile-image")
       .setAttribute("src", postData.featured_image_src);
     imageSet = true;
+      tile.querySelector(".tile-image").setAttribute("alt", `Decorative tile image for ${postData.title.rendered}`);
   }
   if (postData?.link != undefined) {
     tile
@@ -195,10 +196,12 @@ function createPostTile(postData, postType, domain) {
           tile
             .querySelector(".tile-image")
             .setAttribute("src", src);
+          tile.querySelector(".tile-image").setAttribute("alt", `Decorative tile image for ${postData.title.rendered}`);
         } else if ((src = imageData?.media_details?.sizes?.full?.source_url) != undefined) {
           tile
             .querySelector(".tile-image")
             .setAttribute("src", src);
+          tile.querySelector(".tile-image").setAttribute("alt", `Decorative tile image for ${postData.title.rendered}`);
         }
       };
       xhttp.open(
@@ -349,6 +352,8 @@ function createEventTile(eventData, index) {
   tile.querySelector(".title-link").setAttribute("href", eventData.url);
   tile.querySelector(".excerpt").innerHTML = eventData.excerpt;
   tile.querySelector(".tile-image").setAttribute("src", eventData.hero_image_url);
+  tile.querySelector(".tile-image").setAttribute("alt", `Decorative tile image for ${eventData.name}`);
+
   tile.querySelector(".content").innerHTML += event_extra_content
   if (eventData.date_range) {
     tile.querySelector(".date_range").innerHTML = eventData.date_range;
@@ -454,6 +459,8 @@ function createListingTile(listingData, index) {
   tile.querySelector(".excerpt").innerHTML = listingData.excerpt;
   tile.querySelector(".tile-image").setAttribute("src", listingData.hero_image_url);
   tile.querySelector(".content").innerHTML += listing_extra_content
+  tile.querySelector(".tile-image").setAttribute("alt", `Decorative tile image for ${listingData.name}`);
+
   if (listingData.address) {
     tile.querySelector(".address").innerHTML = listingData.address;
   } else {
