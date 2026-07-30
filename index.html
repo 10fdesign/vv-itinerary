@@ -9,7 +9,7 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Baumans&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik+80s+Fade&family=Rubik+Iso&family=Syne+Mono&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
 		<link rel="stylesheet" id="franklin-gothic-css" href="https://use.typekit.net/pcc5rji.css?ver=1" type="text/css" media="screen">
-		<link rel="stylesheet" href="reskin.css?version=1.1">
+		<link rel="stylesheet" href="reskin.css?version=1.2">
 		<link rel="stylesheet" href="style.css?version=1.1">
 		<link rel="stylesheet" href="assets/css/map.css">
 		<link rel="stylesheet" href="assets/css/itinerary.css?version=1.1">
@@ -49,9 +49,11 @@
 		      <div class="header__logo">
 		         <a href="https://vermontvacation.com">
 		         <span class="sr-only">Back to Home</span>
-		         <img src="https://vermontvacation.com/wp-content/uploads/2023/06/vermont-footer-logo-300x45.png"
+		         <img src="https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-300x72.png"
 		            width="300"
-		            height="45"
+		            height="72"
+		            srcset="https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-300x72.png 300w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-1024x246.png 1024w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-768x185.png 768w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1.png 1392w"
+		            sizes="(max-width: 300px) 100vw, 300px"
 		            alt="Vermont Logo"/>
 		         </a>
 		      </div>
@@ -66,20 +68,26 @@
 		         </nav>
 		      </div>
 		      <div class="header__utility">
-						<div class="px-[0.5rem]">
-							<a href="/" class="flex gap-[0.4rem] justify-end self-center">
-								<span class="text-white font-semibold font-display text-[0.7em] tracking-[0.5px]">My Trip</span>
-								<svg xmlns="http://www.w3.org/2000/svg" class="fill-white w-[16px]" viewBox="0 0 512 512"><!--!Font Awesome Free v6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
-							</a>
-						</div>
-						<div class="px-[0.5rem]">
-							<a href="https://vermontvacation.com/?searchform=open" class="text-white" target="_blank" aria-label="Search">
-								<svg xmlns="http://www.w3.org/2000/svg" class="!fill-white w-[16px]" viewBox="0 0 512 512"><!--!Font Awesome Free v6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-							</a>
-						</div>
-						<button id="openHamburger" class="header__utility-hamburger" aria-label="open menu">
-							<svg xmlns="http://www.w3.org/2000/svg" class="w-[14px] fill-white" viewBox="0 0 448 512"><!--!Font Awesome Free v6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/></svg>
-						</button>
+		         <div class="header__utility-favorites">
+		            <a href="/">
+		               <span class="header__utility-favorites-text">My Trip</span>
+		               <span class="header__utility-favorites-icon"><img src="https://vermontvacation.com/wp-content/themes/bvk-theme/img/icons/heart.png" alt="My Trip Favorites Heart" width="24" height="23"/></span></a>
+		         </div>
+
+		         <div class="header__utility-search">
+		            <a href="https://vermontvacation.com/?searchform=open" target="_blank" aria-label="Toggle Site Search"><span class="sr-only">Toggle Site Search</span><img src="https://vermontvacation.com/wp-content/themes/bvk-theme/img/icons/search.png" alt="Site Search Magnifying Glass" width="23" height="26"/></a>
+		         </div>
+
+		         <button id="openHamburger" class="header__utility-hamburger" aria-label="open menu">
+		         <span class="sr-only">Open Menu</span>
+		         <img src="https://vermontvacation.com/wp-content/themes/bvk-theme/img/icons/toggle.png" alt="Menu Toggle" width="22" height="15"/>
+		         </button>
+		      </div>
+
+		      <div class="header__utility-cta">
+		         <a id="cta-button__nav" class="cta-button"
+		            href="https://vermontvacation.com/request-information/"
+		            target="">Free Inspiration Guide</a>
 		      </div>
 		   </div>
 		   <div class="header__canvas">
@@ -89,11 +97,11 @@
 		      <div id="canvasNav" class="header__canvas-nav">
 		         <button id="closeHamburger" class="header__utility-hamburger" aria-label="Close Menu">
 		         <span class="sr-only">Close Menu</span>
-		         	<i class="fas fa-times "></i>
+		         <i class="fas fa-times"></i>
 		         </button>
 		         <ul id="menu-off-canvas" class="menu">
 		            <li id="menu-item-957" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-957">
-		               <a title="Activities" href="https://vermontvacation.com/things-to-do/" class="menu-image-title-after menu-image-not-hovered"><img width="2000" height="1125" src="https://vermontvacation.com/wp-content/uploads/2023/07/LowRes-A001_A026_072624-0000377-Edit.jpg" class="menu-image menu-image-title-after" alt="Two children run through a shallow stream in the woods on a warm day." decoding="async" fetchpriority="high" /><span class="menu-image-title-after menu-image-title">Things to Do</span></a>
+		               <a title="Activities" href="https://vermontvacation.com/things-to-do/" class="menu-image-title-before menu-image-not-hovered"><span class="menu-image-title-before menu-image-title">Things to Do</span><img width="1200" height="600" src="https://vermontvacation.com/wp-content/uploads/2026/05/LowRes-Summer_Drone_LittlePondDigital-1.jpg" class="menu-image menu-image-title-before" alt="Two people take in the view from a fire tower above a green summer forest, with mountains in the distance." decoding="async" /></a>
 		               <ul class="sub-menu">
 		                  <li id="menu-item-7470" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7470"><a href="https://vermontvacation.com/things-to-do/">THINGS TO DO</a></li>
 		                  <li id="menu-item-959" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-959"><a href="https://vermontvacation.com/things-to-do/outdoor-recreation/">Outdoor Recreation</a></li>
@@ -103,16 +111,16 @@
 		               </ul>
 		            </li>
 		            <li id="menu-item-956" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-956">
-		               <a title="Places" href="https://vermontvacation.com/places-to-visit/" class="menu-image-title-after menu-image-not-hovered"><img width="2000" height="1332" src="https://vermontvacation.com/wp-content/uploads/2023/07/LowRes-hildene-drone-4.jpg" class="menu-image menu-image-title-after" alt="A historic mansion seen from above in the summer, nestled between mountains." decoding="async" /><span class="menu-image-title-after menu-image-title">Places to Visit</span></a>
+		               <a title="Places" href="https://vermontvacation.com/places-to-visit/" class="menu-image-title-before menu-image-not-hovered"><span class="menu-image-title-before menu-image-title">Places to Visit</span><img width="2000" height="1500" src="https://vermontvacation.com/wp-content/uploads/2026/06/20250724_vtburlington-24.jpg" class="menu-image menu-image-title-before" alt="Aerial view of the Burlington waterfront and marina on Lake Champlain in summer." decoding="async" /></a>
 		               <ul class="sub-menu">
-		                  <li id="menu-item-7471" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7471"><a href="https://vermontvacation.com/places-to-visit/">PLACES TO VISIT</a></li>
+		                  <li id="menu-item-23542" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-23542"><a href="https://vermontvacation.com/places-to-visit/">PLACES TO VISIT</a></li>
 		                  <li id="menu-item-987" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-987"><a href="https://vermontvacation.com/places-to-visit/vermont-regions/">Vermont Regions</a></li>
 		                  <li id="menu-item-958" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-958"><a href="https://vermontvacation.com/places-to-visit/downtowns/">Downtowns</a></li>
 		                  <li id="menu-item-985" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-985"><a href="https://vermontvacation.com/places-to-visit/attractions/">Top Attractions</a></li>
 		               </ul>
 		            </li>
 		            <li id="menu-item-967" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-967">
-		               <a title="Seasons" href="https://vermontvacation.com/vermont-seasons/" class="menu-image-title-after menu-image-not-hovered"><img width="2000" height="1541" src="https://vermontvacation.com/wp-content/uploads/2023/08/LowRes-Sundog_bh_aerial_waterfront.jpg" class="menu-image menu-image-title-after" alt="Ariel view of a large lake surrounded by trees in the fall." decoding="async" /><span class="menu-image-title-after menu-image-title">Vermont Seasons</span></a>
+		               <a title="Seasons" href="https://vermontvacation.com/vermont-seasons/" class="menu-image-title-before menu-image-not-hovered"><span class="menu-image-title-before menu-image-title">Vermont Seasons</span><img width="2000" height="1499" src="https://vermontvacation.com/wp-content/uploads/2024/07/LowRes-Sundog_Mt-Abe_summit.jpg" class="menu-image menu-image-title-before" alt="Seen from above, a mountain top surrounded by other peaks." decoding="async" /></a>
 		               <ul class="sub-menu">
 		                  <li id="menu-item-7472" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7472"><a href="https://vermontvacation.com/vermont-seasons/">VERMONT SEASONS</a></li>
 		                  <li id="menu-item-989" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-989"><a href="https://vermontvacation.com/vermont-seasons/spring/">Spring</a></li>
@@ -122,7 +130,7 @@
 		               </ul>
 		            </li>
 		            <li id="menu-item-966" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-966">
-		               <a title="Plan" href="https://vermontvacation.com/plan-your-visit/" class="menu-image-title-after menu-image-not-hovered"><img width="2000" height="1243" src="https://vermontvacation.com/wp-content/uploads/2023/08/LowRes-Sundog_bh_aerial_fall-e1711482787614.jpg" class="menu-image menu-image-title-after" alt="" decoding="async" /><span class="menu-image-title-after menu-image-title">Plan Your Visit</span></a>
+		               <a title="Plan" href="https://vermontvacation.com/plan-your-visit/" class="menu-image-title-before menu-image-not-hovered"><span class="menu-image-title-before menu-image-title">Plan Your Visit</span><img width="2000" height="1333" src="https://vermontvacation.com/wp-content/uploads/2023/09/LowRes-Champlain-Valley-Fair-Brian-Drourr-Photography-2.jpg" class="menu-image menu-image-title-before" alt="Night scene at the fair with a spinning carnival ride." decoding="async" /></a>
 		               <ul class="sub-menu">
 		                  <li id="menu-item-7473" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7473"><a href="https://vermontvacation.com/plan-your-visit/">PLAN YOUR VISIT</a></li>
 		                  <li id="menu-item-984" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-984"><a href="https://vermontvacation.com/plan-your-visit/places-to-stay/">Places to Stay</a></li>
@@ -134,9 +142,9 @@
 		         </ul>
 		         <div class="header__canvas-nav-sep"></div>
 		         <ul id="menu-off-canvas-utility" class="menu">
-		            <li id="menu-item-359" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-359"><a href="https://plan.vermontvacation.com/">Directory</a></li>
-		            <li id="menu-item-360" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-360"><a href="https://plan.vermontvacation.com/events">Events Calendar</a></li>
-		            <li id="menu-item-1705" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1705"><a href="https://vermontvacation.com/request-information/">Free Vacation Maps and Guides</a></li>
+		            <li id="menu-item-13126" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13126"><a href="https://plan.vermontvacation.com/">Directory</a></li>
+		            <li id="menu-item-13127" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13127"><a href="https://plan.vermontvacation.com/events">Events Calendar</a></li>
+		            <li id="menu-item-13128" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13128"><a href="https://vermontvacation.com/request-information/">Free Vacation Maps and Guides</a></li>
 		         </ul>
 		      </div>
 		   </div>
@@ -218,35 +226,30 @@
 		   <div class="row">
 		      <div class="footer__inner">
 		         <div class="footer__primary">
-		            <div class="footer__primary-logo">
-		               <img src="https://vermontvacation.com/wp-content/uploads/2023/06/vermont-footer-logo.png"
-		                  width="325"
-		                  height="49"
-		                  alt="Vermont Logo"/>
-		            </div>
 		            <div class="footer__primary-menus">
 		               <div class="footer__primary-menus-one footer__primary-menu">
 		                  <a href="https://accd.vermont.gov/tourism/media-room/"
 		                     target="">Media</a>
-
-											<a href="https://forms.office.com/pages/responsepage.aspx?id=O5O0IK26PEOcAnDtzHVZxvNV_-0pmtxLmdAIJV-JuLFUN0dBMDNXUTBCNE9QUjRVNU1QNlVWOFVWVy4u" target="_blank" rel="noopener">Influencers and Creators</a>
+		                  <a href="https://forms.office.com/pages/responsepage.aspx?id=O5O0IK26PEOcAnDtzHVZxvNV_-0pmtxLmdAIJV-JuLFUN0dBMDNXUTBCNE9QUjRVNU1QNlVWOFVWVy4u"
+		                     target="">Influencers and Creators</a>
 		                  <a href="https://accd.vermont.gov/tourism/travel-trade"
 		                     target="">Travel Trade</a>
 		                  <a href="https://accd.vermont.gov/tourism/"
-		                     target="">Tourism Industry Partners</a>
+		                     target="">Tourism Industry Partners </a>
 		                  <a href="https://thinkvermont.com/"
 		                     target="">Relocate to Vermont</a>
 		               </div>
 		               <div class="footer__primary-menus-two footer__primary-menu">
 		                  <a href="https://vermontvacation.com/visitez-le-vermont/"
 		                     target="">Français</a>
-		                  <a href="https://www.visittheusa.de/state/vermont"
-		                     target="">Deutsch</a>
-		                  <a href="https://www.visittheusa.mx/state/vermont"
-		                     target="">Español</a>
-		                  <a href="https://www.gousa.jp/state/vermont"
-		                     target="">日本語</a>
-											<a href="https://vermontvacation.com/plan-your-visit/getting-here/travel-tips-for-canadian-visitors/" target="">Canada Travel Tips</a>
+		                  <a href="https://www.visittheusa.com/de/destinations/vermont/"
+		                     target="_blank">Deutsch</a>
+		                  <a href="https://www.visittheusa.com/es/destinations/vermont/"
+		                     target="_blank">Español</a>
+		                  <a href="https://www.visittheusa.com/ja/destinations/vermont/"
+		                     target="_blank">日本語</a>
+		                  <a href="https://vermontvacation.com/plan-your-visit/getting-here/travel-tips-for-canadian-visitors/"
+		                     target="">Canada Travel Tips</a>
 		               </div>
 		               <div class="footer__primary-menus-three footer__primary-menu">
 		                  <a href="https://plan.vermontvacation.com/"
@@ -264,75 +267,27 @@
 		         </div>
 		         <div class="footer__secondary">
 		            <div class="footer__secondary-logo">
-		               <img src="https://vermontvacation.com/wp-content/uploads/2023/06/vermont-footer-logo.png"
-		                  width="325"
-		                  height="49"
+		               <img src="https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-1024x246.png"
+		                  width="1024"
+		                  height="246"
+		                  srcset="https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-1024x246.png 1024w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-300x72.png 300w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-768x185.png 768w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1.png 1392w"
+		                  sizes="(max-width: 1024px) 100vw, 1024px"
 		                  alt="Vermont Logo"/>
 		            </div>
 		            <div class="footer__secondary-form">
-		               <script type="text/javascript"></script>
-		               <div class='gf_browser_chrome gform_wrapper gravity-theme gform-theme--no-framework black_wrapper' data-form-theme='gravity-theme' data-form-index='0' id='gform_wrapper_1' >
-		                  <div class='gform_heading'>
-		                     <h2 class="gform_title">Subscribe to Our Newsletters</h2>
-		                     <p class='gform_description'></p>
-		                  </div>
-		                  <form method='post' enctype='multipart/form-data'  id='gform_1' class='black' action='/' data-formid='1' novalidate>
-		                     <div class='gf_invisible ginput_recaptchav3' data-sitekey='6Le4_5opAAAAAAjfJWp_5jKtVvwJYxkx7Oat-ZAz' data-tabindex='0'><input id="input_499af4f4251aece3cdc8eda658648292" class="gfield_recaptcha_response" type="hidden" name="input_499af4f4251aece3cdc8eda658648292" value=""/></div>
-		                     <div class='gform-body gform_body'>
-		                        <div id='gform_fields_1' class='gform_fields top_label form_sublabel_below description_below'>
-		                           <div id="field_1_3"  class="gfield gfield--type-email gfield--width-full white form-hide-message gfield_contains_required field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"  data-js-reload="field_1_3">
-		                              <label class='gfield_label gform-field-label' for='input_1_3' >Email<span class="gfield_required"><span class="gfield_required gfield_required_text">(Required)</span></span></label>
-		                              <div class='ginput_container ginput_container_email'>
-		                                 <input name='input_3' id='input_1_3' type='email' value='' class='large'    aria-required="true" aria-invalid="false"  />
-		                              </div>
-		                           </div>
-		                           <div id="field_1_5"  class="gfield gfield--type-number white gfield_contains_required field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"  data-js-reload="field_1_5">
-		                              <label class='gfield_label gform-field-label' for='input_1_5' >Zip Code<span class="gfield_required"><span class="gfield_required gfield_required_text">(Required)</span></span></label>
-		                              <div class='ginput_container ginput_container_number'><input name='input_5' id='input_1_5' type='number' step='any'   value='' class='large'     aria-required="true" aria-invalid="false"  /></div>
-		                           </div>
-		                           <fieldset id="field_1_12"  class="gfield gfield--type-checkbox gfield--type-choice gfield--width-full white gfield_contains_required field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"  data-js-reload="field_1_12">
-		                              <legend class='gfield_label gform-field-label gfield_label_before_complex'  >Which Newsletters Would You Like To Receive?<span class="gfield_required"><span class="gfield_required gfield_required_text">(Required)</span></span></legend>
-		                              <div class='ginput_container ginput_container_checkbox'>
-		                                 <div class='gfield_checkbox' id='input_1_12'>
-		                                    <div class='gchoice gchoice_1_12_1'>
-		                                       <input class='gfield-choice-input' name='input_12.1' type='checkbox'  value='Vermont Tourism Newsletter'  id='choice_1_12_1'   />
-		                                       <label for='choice_1_12_1' id='label_1_12_1' class='gform-field-label gform-field-label--type-inline'>Vermont Tourism Newsletter</label>
-		                                    </div>
-		                                    <div class='gchoice gchoice_1_12_2'>
-		                                       <input class='gfield-choice-input' name='input_12.2' type='checkbox'  value='Fall Foliage Report'  id='choice_1_12_2'   />
-		                                       <label for='choice_1_12_2' id='label_1_12_2' class='gform-field-label gform-field-label--type-inline'>Fall Foliage Report</label>
-		                                    </div>
-		                                 </div>
-		                              </div>
-		                           </fieldset>
-		                           <div id="field_1_7"  class="gfield gfield--type-captcha gfield--width-full white field_sublabel_below gfield--no-description field_description_below gfield_visibility_visible"  data-js-reload="field_1_7">
-		                              <label class='gfield_label gform-field-label' for='input_1_7' >CAPTCHA</label>
-		                              <div id='input_1_7' class='ginput_container ginput_recaptcha' data-sitekey='6Le4_5opAAAAAAjfJWp_5jKtVvwJYxkx7Oat-ZAz'  data-theme='light' data-tabindex='-1' data-size='invisible' data-badge='bottomright'></div>
-		                           </div>
-		                        </div>
-		                     </div>
-		                     <div class='gform_footer top_label'> <input type='submit' id='gform_submit_button_1' class='gform_button button' value='Submit'  onclick='if(window["gf_submitting_1"]){return false;}  if( !jQuery("#gform_1")[0].checkValidity || jQuery("#gform_1")[0].checkValidity()){window["gf_submitting_1"]=true;}  ' onkeypress='if( event.keyCode == 13 ){ if(window["gf_submitting_1"]){return false;} if( !jQuery("#gform_1")[0].checkValidity || jQuery("#gform_1")[0].checkValidity()){window["gf_submitting_1"]=true;}  jQuery("#gform_1").trigger("submit",[true]); }' />
-		                        <input type='hidden' class='gform_hidden' name='is_submit_1' value='1' />
-		                        <input type='hidden' class='gform_hidden' name='gform_submit' value='1' />
-		                        <input type='hidden' class='gform_hidden' name='gform_unique_id' value='' />
-		                        <input type='hidden' class='gform_hidden' name='state_1' value='WyJ7XCIxMi4xXCI6XCIzNjU5MDcyYmU0YTNiM2VmNTdhYmE3ZWFhZDFjZjNhYlwiLFwiMTIuMlwiOlwiMmI3MzFjNTE5MzE2ZGJjMTQ4MDkyMzg5Y2VjOTdkNWJcIn0iLCI1NTU5ZmVhNWQ0NmQyYWFlNTE1NTc4MWRlYTljNWJhYSJd' />
-		                        <input type='hidden' class='gform_hidden' name='gform_target_page_number_1' id='gform_target_page_number_1' value='0' />
-		                        <input type='hidden' class='gform_hidden' name='gform_source_page_number_1' id='gform_source_page_number_1' value='1' />
-		                        <input type='hidden' name='gform_field_values' value='' />
-		                     </div>
-		                  </form>
-		               </div>
+		               <!-- The parent site renders its newsletter signup form here; it is hidden on
+		                    this site via css (.footer__secondary-form > * { display: none }). -->
 		            </div>
 		            <div class="footer__secondary-social">
 		               <h3 class="font-bold mb-4">Connect With Us</h3>
 		               <ul>
-		                  <li><a href="https://www.instagram.com/vermonttourism/" target="_blank"><i class="fab fa-instagram"></i><span
+		                  <li><a href="https://www.instagram.com/vermonttourism/" target="_blank"><i class="fa-brands fa-instagram"></i><span
 		                     class="sr-only">Instagram</span></a>
 		                  </li>
-		                  <li><a href="https://www.youtube.com/user/vermonttourism" target="_blank"><i class="fab fa-youtube"></i><span
+		                  <li><a href="https://www.youtube.com/user/vermonttourism" target="_blank"><i class="fa-brands fa-youtube"></i><span
 		                     class="sr-only">Youtube</span></a></li>
 		                  <li><a href="https://www.facebook.com/VermontTourism" target="_blank"><i
-		                     class="fab fa-facebook-square"></i><span
+		                     class="fa-brands fa-square-facebook"></i><span
 		                     class="sr-only">Facebook</span></a>
 		                  </li>
 		               </ul>
@@ -341,11 +296,22 @@
 		      </div>
 		   </div>
 		   <div class="footer__utility">
+		      <div class="footer__logo">
+		         <div class="row">
+		            <a href="https://vermontvacation.com">
+		               <img src="https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-1024x246.png"
+		                  width="1024"
+		                  height="246"
+		                  srcset="https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-1024x246.png 1024w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-300x72.png 300w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1-768x185.png 768w, https://vermontvacation.com/wp-content/uploads/2026/07/Logo_64px-1.png 1392w"
+		                  sizes="(max-width: 1024px) 100vw, 1024px"
+		                  alt="Vermont Logo"/>
+		            </a>
+		         </div>
+		      </div>
 		      <div class="footer__utility--copyright">
 		         <div class="row">
-		         		<span style="color: #ffffff;"><u><a style="color: #ffffff;" href="mailto:info@vermontvacation.com">Email a request</a></u> to report accessibility issues or to receive content in a different format.</span>
-		            <p>Copyright © 2024 State of Vermont. All rights reserved. </p>
-                <p class="tenf-credit">Website by <a href="https://10fdesign.io/" target="_blank">10F Design</a>.</p>
+		            <p>Copyright © 2026 State of Vermont. | All rights reserved. | Email to <a href="mailto:accd.vtvinfo@vermont.gov?subject=accessibility%20request%20from%20mytrip.vermontvacation.com" style="text-transform: none;">report an issue or request an alternative format</a>.</p>
+		            <p class="tenf-credit">Website by <a href="https://10fdesign.io/" target="_blank">10F Design</a>.</p>
 		         </div>
 		      </div>
 		   </div>

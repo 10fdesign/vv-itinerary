@@ -25,7 +25,66 @@
 	text-decoration: none;
 }
 .header a {
-	color: #20282a;
+	color: #fff;
+}
+
+.sr-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden
+}
+
+/* Vendored copy of the parent site theme css (vermontvacation.com bvk-theme app.css), 2026 rebrand.
+   Font urls point at assets/fonts, theme image urls absolutized to vermontvacation.com. */
+@font-face {
+    font-family: "Meso";
+    src: url("assets/fonts/Meso-Extralight.woff2") format("woff2"), url("assets/fonts/Meso-Extralight.woff") format("woff");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Meso";
+    src: url("assets/fonts/Meso-ExtralightItalic.woff2") format("woff2"), url("assets/fonts/Meso-ExtralightItalic.woff") format("woff");
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Meso";
+    src: url("assets/fonts/Meso-Book.woff2") format("woff2"), url("assets/fonts/Meso-Book.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Meso";
+    src: url("assets/fonts/Meso-BookItalic.woff2") format("woff2"), url("assets/fonts/Meso-BookItalic.woff") format("woff");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Meso";
+    src: url("assets/fonts/Meso-Bold.woff2") format("woff2"), url("assets/fonts/Meso-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Meso";
+    src: url("assets/fonts/Meso-BoldItalic.woff2") format("woff2"), url("assets/fonts/Meso-BoldItalic.woff") format("woff");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap
 }
 
 .sr-only {
@@ -157,6 +216,10 @@ button:-moz-focusring,
     outline: 1px dotted ButtonText
 }
 
+fieldset {
+    padding: .35em .75em .625em
+}
+
 legend {
     box-sizing: border-box;
     color: inherit;
@@ -211,10 +274,10 @@ template {
 }
 
 body {
-    font-family: georgiapro,Georgia,sans-serif;
+    font-family: "Meso", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 1em;
+    font-size: 1rem;
     line-height: 1.5
 }
 
@@ -229,44 +292,34 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 800;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     margin-top: 0;
     margin-bottom: 1rem;
+    color: #20282a;
     text-transform: uppercase
-}
-
-.acf-icon.dark:before {
-    color: #fff !important
-}
-
-.acf-icon.dark:hover:before {
-    color: red !important
 }
 
 h1 {
     font-size: 2.5rem;
-    line-height: 1.25;
-    text-indent: -2px;
-    /* letter-spacing: -2px */
+    line-height: 1.25
 }
 
 h2 {
     font-size: 1.8rem;
-    line-height: 1.15384615;
-    text-indent: -2px
+    line-height: 1.15
 }
 
 h3 {
     font-size: 1.475em;
-    line-height: 1.13636364;
+    line-height: 1.13;
     margin-bottom: .5rem
 }
 
 h4 {
     font-size: 1.125em;
-    line-height: 1.11111111
+    line-height: 1.11
 }
 
 p,
@@ -279,15 +332,25 @@ p {
     margin-bottom: .9375rem
 }
 
-main a:hover {
-    color: #000;
+a {
+    text-decoration: none
+}
+
+#content p a,
+#content li a {
     text-decoration: underline
 }
 
+#content p a:hover,
+#content li a:hover {
+    text-decoration: none
+}
+
 .cta-button,
-.gform_button {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+.gform_button,
+#menu-off-canvas-utility a {
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     display: inline-block;
     position: relative;
@@ -295,89 +358,20 @@ main a:hover {
     text-decoration: none !important;
     text-align: center;
     border: none;
+    border-radius: 6px;
     text-shadow: none;
     line-height: 1.5;
     cursor: pointer;
     transition: all .14s ease-in-out;
-    color: #20282a
-}
-
-.cta-button:before,
-.gform_button:before {
-    position: absolute;
-    content: "";
-    display: block;
-    border-bottom: 4px solid #f5b324;
-    border-radius: 2px;
-    bottom: -5px;
-    width: 100%
+    color: #631206;
+    background-color: #f4e774;
+    padding: 5px 15px 5px 15px
 }
 
 .cta-button:hover,
-.gform_button:hover {
+.gform_button:hover,
+#menu-off-canvas-utility a:hover {
     color: #20282a
-}
-
-.cta-button:hover:before,
-.gform_button:hover:before {
-    border-bottom: 4px solid #35afc8
-}
-
-.cta-button--yellow,
-.gform_button--yellow {
-    color: #fff !important
-}
-
-.cta-button--yellow:before,
-.gform_button--yellow:before {
-    content: "";
-    display: block;
-    border-bottom: 4px solid #f5b324;
-    border-radius: 2px
-}
-
-.cta-button--yellow:hover,
-.gform_button--yellow:hover {
-    color: #35afc8 !important
-}
-
-.cta-button--yellow:hover:before,
-.gform_button--yellow:hover:before {
-    border-bottom: 4px solid #35afc8
-}
-
-.cta-button--blue,
-.gform_button--blue {
-    color: #20282a
-}
-
-.cta-button--blue:before,
-.gform_button--blue:before {
-    content: "";
-    display: block;
-    border-bottom: 4px solid #35afc8;
-    border-radius: 2px
-}
-
-.cta-button--blue:hover,
-.gform_button--blue:hover {
-    color: #35afc8 !important
-}
-
-.gform_button {
-    color: #fff;
-    background: rgba(0, 0, 0, 0)
-}
-
-.gform_button:before {
-    content: "";
-    display: block;
-    border-bottom: 4px solid #56a054;
-    border-radius: 2px
-}
-
-.gform_button:hover {
-    color: #fff
 }
 
 .text-link {
@@ -395,26 +389,20 @@ main a:hover {
     margin-right: 1rem
 }
 
-.simplefavorite-button {
-    border: none;
-    background: none
-}
-
-.simplefavorite-button.active i {
-    color: #e74c39
-}
-
-.simplefavorite-button:hover {
-    cursor: pointer
-}
-
-.simplefavorite-button i {
-    color: #fff
-}
-
 .acf-block-preview .cta-button {
     background: none;
     padding: 0
+}
+
+.header__utility-cta a {
+    background: rgba(0, 0, 0, 0);
+    border: 1px solid #fff;
+    color: #fff
+}
+
+.header__utility-cta a:hover {
+    background-color: #f4e774;
+    border: 1px solid #f4e774
 }
 
 .table-wrapper {
@@ -476,6 +464,7 @@ table tbody+tbody {
 .table-bordered {
     border: 1px solid #b8b8b8;
     border-collapse: separate;
+    *border-collapse: collapsed;
     border-radius: .47rem
 }
 
@@ -547,6 +536,11 @@ table tbody+tbody {
     color: #20282a !important
 }
 
+* {
+    position: relative;
+    box-sizing: border-box
+}
+
 @media screen and (max-width: 600px) {
 
     body,
@@ -565,8 +559,12 @@ body {
     margin: 0
 }
 
+p {
+    line-height: 1.9
+}
+
 .row {
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 1.5rem;
     width: 100%
@@ -594,27 +592,17 @@ body {
     outline: 3px solid #e6e6e6
 }
 
-body>div.content>div.landing {
-    padding: 0 1.25rem
-}
-
-@media only screen and (min-width: 1030px) {
-    body>div.content>div.landing {
-        padding: 0 1.875rem
-    }
-}
-
 embed,
 iframe,
 object {
     max-width: 100%
 }
 
-/*img {
+img {
     width: 100%;
     max-width: 100%;
     height: auto
-}*/
+}
 
 ul li,
 ol li {
@@ -627,7 +615,7 @@ ol ul {
 }
 
 .error404 .header {
-    background-color: #20282a
+    background-color: #213622
 }
 
 .error404 #content {
@@ -650,24 +638,30 @@ ol ul {
     max-width: 900px
 }
 
-.acf-block p a {
-    color: #35afc8
+.image-content--bg p a,
+.image-content--bg ol a,
+.image-content--bg ul a {
+    color: #fff !important;
+    font-weight: bold;
+    border-bottom: 1px solid #fff
 }
 
-.acf-block p a:hover {
-    text-decoration: underline
+.image-content--bg p a:hover,
+.image-content--bg ol a:hover,
+.image-content--bg ul a:hover {
+    text-decoration: none;
+    border-bottom: 2px solid #fff
 }
 
 .link--external:after {
     display: inline-block;
     font-family: "Font Awesome 6 Pro";
     font-weight: 900;
-    content: "ï‚Ž";
+    content: "";
     margin-left: .25rem;
     font-size: .8rem
 }
 
-.page-id-377 .a2a_kit,
 .home .a2a_kit {
     display: none !important
 }
@@ -681,7 +675,7 @@ ol ul {
 }
 
 .gform-body input {
-    font-family: franklin-gothic-atf, sans-serif;
+    font-family: "Meso", sans-serif;
     font-weight: 400;
     font-style: normal
 }
@@ -693,25 +687,29 @@ ol ul {
 }
 
 .post-password-form p {
-    font-family: georgiapro,Georgia,sans-serif;
+    font-family: "Meso", sans-serif;
     font-weight: 400;
     font-style: normal
 }
 
 .post-password-form label {
-    font-family: georgiapro,Georgia,sans-serif;
+    font-family: "Meso", sans-serif;
     font-weight: 700;
     font-style: normal
 }
 
 .post-password-form input[type=submit] {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal
 }
 
 .post-password-form input[type=submit]:hover {
     cursor: pointer
+}
+
+.page-id-27534 #itinerary_button_iframe {
+    display: none
 }
 
 .screen-reader-text {
@@ -791,12 +789,13 @@ ol ul {
 .breadcrumbs p,
 .breadcrumbs a,
 .breadcrumbs span {
-    font-size: .8rem
+    font-size: .8rem;
+    color: #20282a
 }
 
 .footer {
     padding: 6rem 0 0;
-    background-color: #20282a
+    background-color: #213622
 }
 
 .footer a,
@@ -888,7 +887,9 @@ ol ul {
 
 .footer__primary-menus a {
     margin-bottom: .4rem;
-    font-family: arial
+    font-family: "Meso", sans-serif;
+    font-weight: 400;
+    font-style: normal
 }
 
 .footer__primary-menu {
@@ -1024,7 +1025,7 @@ ol ul {
 
 .footer__utility a,
 .footer__utility p {
-    font-family: franklin-gothic-atf, sans-serif;
+    font-family: "Meso", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: .8rem
@@ -1041,50 +1042,33 @@ ol ul {
     }
 }
 
-.footer .gform_footer {
-    position: relative
+.footer__utility--copyright p,
+.footer__utility--copyright a {
+    text-transform: uppercase !important
 }
 
-.footer .gform_footer:before {
-    content: "";
-    position: absolute;
-    top: 2.6rem;
-    display: block;
-    border-bottom: 4px solid #56a054;
-    border-radius: 2px;
-    width: 54px
-}
-
-.footer .gform_footer:hover:before {
-    border-color: #35afc8
-}
-
-.footer .gform_footer input {
-    padding: 0
+.footer .footer-copyright--sep {
+    display: inline-block;
+    padding: 0 .5rem
 }
 
 .header {
     position: fixed;
     top: 0;
-    background: rgba(32, 40, 42, .7);
+    background: #213622;
     width: 100%;
     z-index: 30;
     max-width: 100%
 }
 
-.listings-index .header,
-.events-index .header {
-    position: fixed;
-}
-
 .header.sticky {
     transition: all .3s ease;
-    background-color: #20282a
+    background-color: #213622
 }
 
 .header--open {
     height: 100vh;
-    background-color: #20282a;
+    background-color: #213622;
     position: relative;
     top: 0 !important
 }
@@ -1161,13 +1145,12 @@ ol ul {
 
 .header__canvas-image span {
     display: block;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 800;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     color: #fff;
     font-size: 3rem;
-    text-transform: uppercase;
-    z-index: 1;
+    text-transform: uppercase
 }
 
 @media screen and (max-width: 600px) {
@@ -1215,7 +1198,7 @@ ol ul {
 .header__canvas-nav-sep {
     position: absolute;
     height: 600px;
-    left: 55%;
+    left: 50%;
     top: 0;
     -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
@@ -1269,7 +1252,7 @@ ol ul {
     justify-content: center;
     align-items: center;
     margin: 0;
-    padding-left: 2.5rem;
+    padding-left: 0
 }
 
 .header__canvas #menu-off-canvas li {
@@ -1297,9 +1280,9 @@ ol ul {
 .header__canvas #menu-off-canvas>li>a {
     text-transform: uppercase;
     font-size: 1.8rem;
-    margin-bottom: 1.75rem;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 800;
+    margin-bottom: 2.5rem;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     color: #20282a
 }
@@ -1317,7 +1300,7 @@ ol ul {
 .header__canvas #menu-off-canvas>li ul.sub-menu {
     display: none;
     position: absolute;
-    padding-left: 5rem;
+    padding-left: 3rem;
     right: 0;
     top: 0
 }
@@ -1349,7 +1332,7 @@ ol ul {
     margin-bottom: 1rem;
     display: inline-block;
     width: auto;
-    font-family: georgiapro,Georgia,sans-serif;
+    font-family: "Meso", sans-serif;
     font-weight: 700;
     font-style: normal;
     color: #20282a
@@ -1362,87 +1345,87 @@ ol ul {
     border-radius: 2px
 }
 
-header ul.menu, header .menu-item a {
-	position: relative;
+.header__canvas #menu-off-canvas .menu-item--active:nth-of-type(1)>a:after {
+    color: #631206
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(1) .sub-menu--active .current-menu-item a:after {
     content: "";
     display: block;
-    border-bottom: 4px solid #56a054;
+    border-bottom: 4px solid #631206;
     border-radius: 2px
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(1) .sub-menu a:hover:after {
     content: "";
     display: block;
-    border-bottom: 4px solid #56a054;
+    border-bottom: 4px solid #631206;
     border-radius: 2px
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(2)>a:after {
-    background-image: url("/wp-content/themes/bvk-theme/img/nav-arrow-yellow.png")
+    color: #f37247
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(2) .sub-menu--active .current-menu-item a:after {
     content: "";
     display: block;
-    border-bottom: 4px solid #f5b324;
+    border-bottom: 4px solid #f37247;
     border-radius: 2px
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(2) .sub-menu a:hover:after {
     content: "";
     display: block;
-    border-bottom: 4px solid #f5b324;
+    border-bottom: 4px solid #f37247;
     border-radius: 2px
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(3)>a:after {
-    background-image: url("/wp-content/themes/bvk-theme/img/nav-arrow-purple.png")
+    color: #196895
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(3) .sub-menu--active .current-menu-item a:after {
     content: "";
     display: block;
-    border-bottom: 4px solid #b486b8;
+    border-bottom: 4px solid #196895;
     border-radius: 2px
 }
-
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(3) .sub-menu a:hover:after {
     content: "";
     display: block;
-    border-bottom: 4px solid #b486b8;
+    border-bottom: 4px solid #196895;
     border-radius: 2px
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(4)>a:after {
-    background-image: url("/wp-content/themes/bvk-theme/img/nav-arrow-blue.png")
+    color: #774e2b
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(4) .sub-menu--active .current-menu-item a:after {
     content: "";
     display: block;
-    border-bottom: 4px solid #35afc8;
+    border-bottom: 4px solid #774e2b;
     border-radius: 2px
 }
 
 .header__canvas #menu-off-canvas .menu-item--active:nth-of-type(4) .sub-menu a:hover:after {
     content: "";
     display: block;
-    border-bottom: 4px solid #35afc8;
+    border-bottom: 4px solid #774e2b;
     border-radius: 2px
 }
 
 .header__canvas #menu-off-canvas .menu-item--active>a:after {
     position: absolute;
-    content: "";
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 30px;
-    height: 30px;
-    left: -2.5rem
+    left: -1.5rem;
+    font-size: .75rem;
+    content: "";
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 900;
+    display: inline-block;
+    margin-right: .5em
 }
 
 .header__canvas #menu-off-canvas .menu-item a {
@@ -1464,21 +1447,12 @@ header ul.menu, header .menu-item a {
 
 .header__canvas #menu-off-canvas-utility {
     position: absolute;
-    bottom: 10rem;
+    bottom: 3rem !important;
     display: flex;
-    list-style: none;
-    background-color: #fff !important;
-    padding: 0;
-    padding-bottom: 0px;
-    margin: 0;
     flex-direction: row;
-    align-items: center !important;
-    justify-content: space-evenly !important;
-    width: 100%;
-    bottom: 1rem !important;
-    left: 0;
-    right: 0;
-    padding-bottom: 5.5rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+    list-style: none
 }
 
 @media screen and (max-width: 600px) {
@@ -1493,19 +1467,11 @@ header ul.menu, header .menu-item a {
 }
 
 .header__canvas #menu-off-canvas-utility li a {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     position: relative;
     font-size: .9rem
-}
-
-#menu-off-canvas-utility a {
-	color: #222 !important;
-	display: block;
-	border-bottom: 4px solid #f5b324;
-	border-radius: 2px;
-	width: 100%;
 }
 
 .header__inner {
@@ -1521,10 +1487,19 @@ header ul.menu, header .menu-item a {
     flex-direction: row
 }
 
+.header__utility-cta {
+    position: absolute;
+    right: 15rem
+}
+
+.header__utility img {
+    max-width: 20px
+}
+
 .header__utility-search,
 .header__utility-favorites,
 .header__utility-hamburger {
-    padding: 0 .5rem
+    padding: 0 .75rem
 }
 
 .header__utility-search button,
@@ -1541,18 +1516,28 @@ header ul.menu, header .menu-item a {
     cursor: pointer
 }
 
-.header__utility-search i,
-.header__utility-favorites i,
-.header__utility-hamburger i {
-    color: #fff
-}
-
 .header__utility-hamburger .fa-bars {
     color: #fff
 }
 
-.header__utility .favorites--active i {
-    color: #e74c39
+.header__utility-favorites {
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
+    font-style: normal
+}
+
+.header__utility-favorites a {
+    display: flex;
+    flex-direction: row;
+    align-items: center
+}
+
+.header__utility-favorites span {
+    display: flex
+}
+
+.header__utility-favorites-text {
+    margin-right: .25rem
 }
 
 .header #openHamburger,
@@ -1609,22 +1594,16 @@ header ul.menu, header .menu-item a {
     padding: 0 1rem
 }
 
-span {
-	font-family: inherit;
-}
-
 .header #menu-primary a {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
-    font-size: .8rem;
-    letter-spacing: 2px
+    font-size: 1rem
 }
 
 #primaryNav a {
     color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 2px
+    text-transform: uppercase
 }
 
 .menu-item__toggle {
@@ -1667,9 +1646,54 @@ span {
     display: none !important
 }
 
-/*
+.header__utility-favorites a {
+    color: #fff !important
+}
+
+.header__utility-favorites a i {
+    margin-left: .25rem
+}
+
+#menu-off-canvas-utility {
+    background-color: #fff !important;
+    margin: 0;
+    flex-direction: row;
+    align-items: center !important;
+    justify-content: space-evenly !important;
+    width: 100%;
+    bottom: 1rem !important;
+    left: 0;
+    right: 0;
+    padding-bottom: 5.5rem
+}
+
+@media screen and (max-width: 1030px) {
+    .header__canvas #menu-off-canvas-utility {
+        align-items: flex-start !important;
+        padding-left: 2rem
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .header__canvas #menu-off-canvas-utility {
+        padding-left: 3.4rem
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .header__canvas #menu-off-canvas-utility {
+        flex-direction: column;
+        padding-left: 2.5rem;
+        margin-top: 3rem
+    }
+
+    #menu-off-canvas-utility a {
+        margin-bottom: .5rem
+    }
+}
+
 .search .header {
-    background-color: #20282a
+    background-color: #213622
 }
 
 .search #content {
@@ -1683,7 +1707,6 @@ span {
 .search .row {
     max-width: 1000px
 }
-*/
 
 .site-search {
     display: none
@@ -1773,15 +1796,15 @@ span {
 }
 
 .site-search__form-title {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 800;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     margin-bottom: 2rem;
     font-size: 1.8rem
 }
 
 .site-search--modal .header {
-    background-color: #20282a
+    background-color: #213622
 }
 
 .search-form {
@@ -1800,10 +1823,10 @@ span {
     padding: 1rem
 }
 
-header .search-submit {
+.search-submit {
     position: absolute;
     padding: 0 1.5rem;
-    background-color: #20282a;
+    background-color: #213622;
     outline: none;
     border: none;
     height: 54.4px;
@@ -1811,11 +1834,11 @@ header .search-submit {
     border-radius: 2px
 }
 
-header .search-submit:hover {
+.search-submit:hover {
     cursor: pointer
 }
 
-header .search-submit i {
+.search-submit i {
     color: #fff
 }
 
@@ -1917,21 +1940,26 @@ header .search-submit i {
     background-repeat: no-repeat;
     display: block;
     width: 30px;
-    height: 30px
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #20282a
 }
 
-.accordion__icon-open {
-    background-image: url("/wp-content/themes/bvk-theme/img/accordion-arrow.png")
+.accordion__icon-icon i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
 }
 
-.accordion__icon-close {
-    background-image: url("/wp-content/themes/bvk-theme/img/accordion-x.png");
+.accordion__icon .accordion__icon-close {
     display: none
 }
 
 .accordion__title {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     text-transform: uppercase;
     font-size: 1.2rem;
@@ -1973,16 +2001,17 @@ header .search-submit i {
 }
 
 .anchor-nav a {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     text-transform: uppercase;
     margin-right: 2rem;
-    flex-grow: 1
+    flex-grow: 1;
+    color: #20282a
 }
 
 .anchor-nav a:hover {
-    color: #35afc8
+    color: #196895
 }
 
 .anchor-nav a:last-of-type {
@@ -2005,25 +2034,153 @@ header .search-submit i {
     }
 }
 
+.api-listing {
+    padding: 6rem 0
+}
+
+.api-listing h2 {
+    margin-bottom: 1rem
+}
+
+.api-listing h3 {
+    font-size: 1.2rem;
+    font-weight: 500
+}
+
+.api-listing__listings {
+    margin-bottom: 3rem !important
+}
+
+.api-listing__listings p {
+    text-align: left;
+    line-height: 1.4
+}
+
+.api-listing__listings img {
+    margin-bottom: 1rem
+}
+
+.api-listing__listings .centered-text {
+    text-align: center
+}
+
+.api-listing__title,
+.api-listing__link,
+.api-listing__subheading,
+.api-listing__body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center
+}
+
+.api-listing__body {
+    padding: 1rem 0 3rem 0;
+    margin: 0 auto;
+    max-width: 800px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: center
+}
+
+.api-listing__link {
+    margin-top: 5rem
+}
+
+.api-listing .slick-next,
+.api-listing .slick-prev {
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 20px;
+    z-index: 3;
+    top: calc(50% - 20px) !important
+}
+
+.api-listing .slick-next-icon,
+.api-listing .slick-prev-icon {
+    display: none !important
+}
+
+.api-listing .slick-next {
+    background-image: url("https://vermontvacation.com/wp-content/themes/bvk-theme/img/next-arrow.png");
+    right: -80px
+}
+
+@media screen and (max-width: 600px) {
+    .api-listing .slick-next {
+        right: -60px
+    }
+}
+
+.api-listing .slick-prev {
+    background-image: url("https://vermontvacation.com/wp-content/themes/bvk-theme/img/prev-arrow.png");
+    left: -80px
+}
+
+@media screen and (max-width: 600px) {
+    .api-listing .slick-prev {
+        left: -60px
+    }
+}
+
+.api-listing .slick-slide {
+    margin: 0 1rem
+}
+
+@media screen and (max-width: 600px) {
+    .api-listing .slick-slide {
+        margin: 0
+    }
+}
+
+.api-listing .slick-list {
+    margin: 0 -1rem
+}
+
+@media screen and (max-width: 600px) {
+    .api-listing .slick-list {
+        margin: 0
+    }
+}
+
+.api-listing .slick-dots {
+    bottom: -40px
+}
+
+.api-listing .slick-slide {
+    padding-bottom: 1rem
+}
+
+.static-preview .listings-slider {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px
+}
+
+.static-preview .listings-slider>div {
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-sizing: border-box
+}
+
 .breadcrumbs {
     background-color: #f2f2f2;
     border-bottom: 4px solid #fff
 }
 
 .breadcrumbs span {
-    font-family: franklin-gothic-atf, sans-serif;
+    font-family: "Meso", sans-serif;
     font-weight: 400;
-    font-style: normal;
-    letter-spacing: .5px
+    font-style: normal
 }
 
 .callout--black .callout__content-bg {
-    background-color: #20282a
+    background-color: #213622
 }
 
 .callout--black h2,
-.callout--black p,
-.callout--black a {
+.callout--black p {
     color: #fff
 }
 
@@ -2290,8 +2447,14 @@ header .search-submit i {
 }
 
 .content-block--left .content-block__content a {
-    color: #35afc8;
-    font-weight: bold
+    color: #005e70;
+    font-weight: bold;
+    border-bottom: 1px solid #005e70
+}
+
+.content-block--left .content-block__content a:hover {
+    text-decoration: none;
+    border-bottom: 2px solid #005e70
 }
 
 .content-block--left .content-block__image {
@@ -2310,82 +2473,6 @@ header .search-submit i {
 
 .content-block--left .content-block__image--right {
     order: 2
-}
-
-.favorites {
-    padding: 4rem 0;
-    background-color: #f2f2f2
-}
-
-.favorites__content {
-    text-align: center;
-    max-width: 750px;
-    margin: 0 auto 4rem
-}
-
-.favorites__items {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap
-}
-
-@media screen and (max-width: 600px) {
-    .favorites__items {
-        flex-direction: column
-    }
-}
-
-.favorites__item {
-    width: calc(25% - 1rem);
-    margin: 1rem .5rem;
-    background-color: #fff
-}
-
-@media screen and (max-width: 900px) {
-    .favorites__item {
-        width: calc(33.3333333333% - 1rem)
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .favorites__item {
-        width: 100%;
-        margin: 1.5rem 0
-    }
-
-    .favorites__item:last-of-type {
-        margin-bottom: 0
-    }
-}
-
-.favorites__item-thumbnail .simplefavorite-button {
-    position: absolute;
-    z-index: 2;
-    right: .5rem;
-    top: .5rem
-}
-
-.favorites__item-thumbnail .simplefavorite-button i {
-    font-size: 1.5rem
-}
-
-.favorites__item-inner {
-    padding: 1rem
-}
-
-.favorites__item-inner a {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
-    font-style: normal
-}
-
-.favorites .no-favorites {
-    text-align: center;
-    margin: 0 auto;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 1.4rem
 }
 
 .floating-image {
@@ -2475,8 +2562,8 @@ header .search-submit i {
 
 .funneling-block__block-title {
     color: #fff;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 500;
+    font-family: "Meso", sans-serif;
+    font-weight: 400;
     font-style: normal;
     position: absolute;
     bottom: 1rem;
@@ -2567,11 +2654,10 @@ header .search-submit i {
 }
 
 .hero__tagline {
-    letter-spacing: 4px;
     text-transform: uppercase;
     font-size: 1rem;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal
 }
 
@@ -2583,6 +2669,90 @@ header .search-submit i {
     font-size: 3rem
 }
 
+.hero-video {
+    background-color: rgba(32, 40, 42, .2);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    min-height: 450px
+}
+
+@media only screen and (min-width: 768px) {
+    .hero-video {
+        min-height: 700px
+    }
+}
+
+.hero-video:before {
+    content: "";
+    background-color: inherit;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0
+}
+
+.hero-video__media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0
+}
+
+@media(prefers-reduced-motion: reduce) {
+    .hero-video__media {
+        display: none
+    }
+}
+
+.hero-video__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover
+}
+
+.hero-video__toggle {
+    position: absolute;
+    left: 1.5rem;
+    bottom: 2.75rem;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(32, 40, 42, .4);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color .2s ease-out
+}
+
+.hero-video__toggle:hover,
+.hero-video__toggle:focus-visible {
+    background: rgba(32, 40, 42, .6)
+}
+
+.hero-video__toggle-icon {
+    font-size: 1rem
+}
+
+.hero-video__toggle-icon--play {
+    margin-left: 2px
+}
+
 .image-carousel {
     padding: 6rem 0
 }
@@ -2590,7 +2760,6 @@ header .search-submit i {
 .image-carousel__content-headline {
     text-transform: uppercase;
     font-size: .9rem;
-    letter-spacing: 2px;
     margin-bottom: .25rem
 }
 
@@ -2886,19 +3055,18 @@ header .search-submit i {
 }
 
 .image-carousel__gallery-category {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 500;
+    font-family: "Meso", sans-serif;
+    font-weight: 400;
     font-style: normal;
     text-transform: uppercase;
-    letter-spacing: 2px;
     font-size: .9rem;
     margin-bottom: .25rem
 }
 
 .image-carousel__gallery-title {
     text-transform: uppercase;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 800;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     font-size: 1.2rem;
     margin-bottom: .5rem
@@ -2940,18 +3108,17 @@ header .search-submit i {
 }
 
 .image-carousel .slick-next {
-    background-image: url("/wp-content/themes/bvk-theme/img/next-arrow.png")
+    background-image: url("https://vermontvacation.com/wp-content/themes/bvk-theme/img/next-arrow.png")
 }
 
 .image-carousel .slick-prev {
-    background-image: url("/wp-content/themes/bvk-theme/img/prev-arrow.png")
+    background-image: url("https://vermontvacation.com/wp-content/themes/bvk-theme/img/prev-arrow.png")
 }
 
 .image-carousel__content-headline {
-    font-family: franklin-gothic-atf, sans-serif;
+    font-family: "Meso", sans-serif;
     font-weight: 400;
-    font-style: normal;
-    letter-spacing: 2px
+    font-style: normal
 }
 
 .acf-block-preview .image-carousel__gallery-center {
@@ -2976,7 +3143,7 @@ header .search-submit i {
 }
 
 .image-content--bg {
-    background-color: #20282a
+    background-color: #213622
 }
 
 .image-content--bg h2,
@@ -3138,17 +3305,16 @@ header .search-submit i {
 .image-content__content-separator {
     height: 2px;
     width: 15px;
-    background-color: #20282a;
+    background-color: #213622;
     display: block;
     margin-bottom: 1rem
 }
 
 .image-content__tagline {
-    letter-spacing: 4px;
     text-transform: uppercase;
     font-size: 1rem;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal
 }
 
@@ -3252,8 +3418,8 @@ header .search-submit i {
     left: 1rem;
     color: #fff;
     margin-bottom: 0;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 500;
+    font-family: "Meso", sans-serif;
+    font-weight: 400;
     font-style: normal;
     z-index: 2
 }
@@ -3286,8 +3452,8 @@ header .search-submit i {
 }
 
 .map .wpgmza_infowindow_title {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal
 }
 
@@ -3297,9 +3463,9 @@ header .search-submit i {
 }
 
 .map .wpgmza_infowindow_link {
-    color: #35afc8 !important;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    color: #20282a !important;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     font-size: .9rem;
     margin-bottom: 0
@@ -3507,7 +3673,7 @@ header .search-submit i {
 }
 
 .map--black {
-    background-color: #20282a
+    background-color: #213622
 }
 
 .map--black h2,
@@ -3522,11 +3688,10 @@ header .search-submit i {
 }
 
 .map__tagline {
-    letter-spacing: 4px;
     text-transform: uppercase;
     font-size: 1rem;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal
 }
 
@@ -3537,6 +3702,10 @@ header .search-submit i {
 
 .map .ol-info-window-close {
     z-index: 2
+}
+
+.map__content a {
+    color: #20282a !important
 }
 
 .photo-wall {
@@ -3578,7 +3747,7 @@ header .search-submit i {
 }
 
 .grid:after {
-    /* content: ""; */
+    content: "";
     display: block;
     clear: both
 }
@@ -3628,8 +3797,8 @@ header .search-submit i {
 .pull-quote__quote,
 .pull-quote__name {
     font-weight: bold;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 800;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal
 }
 
@@ -3644,7 +3813,8 @@ header .search-submit i {
 }
 
 .region-map {
-    padding: 6rem 0
+    padding: 6rem 0;
+    background-color: #094735
 }
 
 @media screen and (max-width: 900px) {
@@ -3677,24 +3847,87 @@ header .search-submit i {
     }
 }
 
+@media screen and (max-width: 900px) {
+    .region-map__map {
+        order: 1;
+        padding: 3rem 1.5rem 0
+    }
+}
+
 .region-map__content {
-    background-color: #f2f2f2;
+    background-color: #094735 !important;
     padding: 3rem;
     min-height: 100%
 }
 
 @media screen and (max-width: 900px) {
     .region-map__content {
-        padding: 3rem 1.5rem
+        padding: 3rem 1.5rem;
+        order: 2
     }
 }
 
-.region-map__content-instruction {
-    color: #707070;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+.region-map__content h2 {
+    margin-bottom: 1.5rem;
+    color: #fff
+}
+
+.region-map__content a.region-map__content-region {
+    color: #fff
+}
+
+.region-map__content a.region-map__content-region:hover {
+    color: #f37247
+}
+
+.region-map__content-regions {
+    display: flex;
+    flex-direction: column;
+    padding-left: 2rem
+}
+
+.region-map__content-region {
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
-    font-size: 1.2rem
+    font-size: 1.1rem;
+    display: flex;
+    align-self: flex-start;
+    margin: .5rem 0;
+    text-align: left;
+    border: none;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    font-weight: bold;
+    position: relative
+}
+
+.region-map__content-region:before {
+    content: "";
+    position: absolute;
+    left: -1rem;
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 900;
+    color: #20282a;
+    display: none
+}
+
+.region-map__content-region:hover {
+    color: #f37247 !important
+}
+
+.region-map__content-region:hover:before {
+    display: block;
+    color: #f37247 !important
+}
+
+.region-map__content-region--active {
+    color: #f37247 !important
+}
+
+.region-map__content-region--active:before {
+    display: block;
+    color: #f37247 !important
 }
 
 .region-map__tooltip-button {
@@ -3708,7 +3941,7 @@ header .search-submit i {
 .region-map__tooltip-button:before {
     content: "";
     display: block;
-    border-bottom: 4px solid #56a054;
+    border-bottom: 4px solid #f37247;
     border-radius: 2px;
     position: absolute;
     bottom: -10px;
@@ -3717,6 +3950,16 @@ header .search-submit i {
 
 .region-map__tooltip-button:hover {
     color: #fff
+}
+
+.imp-tooltip-wrap {
+    display: none
+}
+
+@media screen and (max-width: 900px) {
+    .imp-tooltip-wrap {
+        display: block
+    }
 }
 
 .imp-tooltip .hs-arrow {
@@ -3863,11 +4106,10 @@ header .search-submit i {
 
 .related-content__content-category {
     text-transform: uppercase;
-    letter-spacing: 2px;
     font-size: .9rem;
     margin-bottom: .25rem;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 500;
+    font-family: "Meso", sans-serif;
+    font-weight: 400;
     font-style: normal
 }
 
@@ -3876,8 +4118,8 @@ header .search-submit i {
     font-weight: bold;
     font-size: 1.3rem;
     margin-bottom: .25rem;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 800;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal
 }
 
@@ -3886,7 +4128,7 @@ header .search-submit i {
 }
 
 .separator__sep {
-    background-image: url("/wp-content/themes/bvk-theme/img/separator.png");
+    background-image: url("https://vermontvacation.com/wp-content/themes/bvk-theme/img/separator.png");
     background-size: contain;
     background-repeat: no-repeat;
     max-width: 520px;
@@ -3957,7 +4199,7 @@ header .search-submit i {
 
 .upcoming-events__content-bg {
     position: absolute;
-    background-color: #20282a;
+    background-color: #213622;
     top: 0;
     right: 0;
     bottom: 0;
@@ -3973,7 +4215,7 @@ header .search-submit i {
 
 .upcoming-events__content-texture {
     position: absolute;
-    background-image: url("/wp-content/themes/bvk-theme/img/bg-white-small.png");
+    background-image: url("https://vermontvacation.com/wp-content/themes/bvk-theme/img/bg-white-small.png");
     background-size: cover;
     background-repeat: no-repeat;
     top: 0;
@@ -4026,37 +4268,35 @@ header .search-submit i {
 }
 
 .upcoming-events__event-cat {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 500;
+    font-family: "Meso", sans-serif;
+    font-weight: 400;
     font-style: normal;
     text-transform: uppercase;
     margin-bottom: 0;
-    letter-spacing: 2px;
     font-size: .9rem
 }
 
 .upcoming-events__event-title {
     text-transform: uppercase;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 800;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     font-size: 1.3rem;
     margin-bottom: .25rem
 }
 
 .upcoming-events__event-date {
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 500;
+    font-family: "Meso", sans-serif;
+    font-weight: 400;
     font-style: normal;
     margin-bottom: 0;
-    font-size: .8rem;
-    letter-spacing: 2px
+    font-size: .8rem
 }
 
 .upcoming-events__event-link {
     color: #e74c39 !important;
-    font-family: franklin-gothic-atf, sans-serif;
-    font-weight: 600;
+    font-family: "Meso", sans-serif;
+    font-weight: 700;
     font-style: normal;
     font-size: 1.2rem;
     display: flex;
@@ -4069,7 +4309,7 @@ header .search-submit i {
 }
 
 .video {
-    background-color: #20282a;
+    background-color: #213622;
     padding: 6rem 0
 }
 
@@ -4265,8 +4505,6 @@ header .search-submit i {
         display: none
     }
 }
-
-
 @media screen and (max-width: 600px) {
   .header__canvas #menu-off-canvas-utility {
     flex-direction: column;
@@ -4299,4 +4537,40 @@ header .search-submit i {
 	#menu-off-canvas-utility a {
 		margin-bottom: 0.5rem;
 	}
+}
+
+/* --- mytrip.vermontvacation.com overrides (must come after the vendored theme css) --- */
+
+/* The theme makes the header fixed (parent site pages start with full-bleed heroes);
+   keep it in-flow like before the rebrand. */
+.header {
+    position: sticky;
+}
+
+/* The rebrand css sets a global dark color on h1-h6, which beats the white these
+   titles used to inherit (hero text sits on an image). */
+.text-white h1,
+.text-white h2,
+.text-white h3 {
+    color: inherit;
+}
+
+/* The theme draws the active off-canvas menu marker with a Font Awesome 6 Pro
+   glyph; this site ships FA6 Free (same glyph, different family name). */
+.header__canvas #menu-off-canvas .menu-item--active>a:after {
+    font-family: "Font Awesome 6 Free";
+}
+
+/* Center the big footer logo */
+.footer__logo .row {
+    display: flex;
+    justify-content: center;
+}
+
+/* The theme positions the cta absolutely (right: 15rem) with no mobile handling;
+   it collides with the logo once the primary nav collapses at 900px. */
+@media screen and (max-width: 900px) {
+    .header__utility-cta {
+        display: none;
+    }
 }
