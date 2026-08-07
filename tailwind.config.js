@@ -6,8 +6,8 @@ module.exports = {
   content: ["./assets/css/input.css","./_site/**/*.html", "./assets/js/*.js"],
   theme: {
     fontFamily: {
-      body: ["georgiapro", "sans-serif"],
-      display: ["franklin-gothic-atf", "sans-serif"]
+      body: ["Meso", "sans-serif"],
+      display: ["Meso", "sans-serif"]
     },
     container: {
       center: true,

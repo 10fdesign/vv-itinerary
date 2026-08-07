@@ -602,10 +602,6 @@ video {
   visibility: visible;
 }
 
-.invisible {
-  visibility: hidden;
-}
-
 .fixed {
   position: fixed;
 }
@@ -691,14 +687,6 @@ video {
   width: 1.5rem;
 }
 
-.w-\[14px\] {
-  width: 14px;
-}
-
-.w-\[16px\] {
-  width: 16px;
-}
-
 .w-fit {
   width: -moz-fit-content;
   width: fit-content;
@@ -740,10 +728,6 @@ video {
   align-items: center;
 }
 
-.justify-end {
-  justify-content: flex-end;
-}
-
 .justify-center {
   justify-content: center;
 }
@@ -764,10 +748,6 @@ video {
   gap: 2rem;
 }
 
-.gap-\[0\.4rem\] {
-  gap: 0.4rem;
-}
-
 .gap-x-8 {
   -moz-column-gap: 2rem;
        column-gap: 2rem;
@@ -781,10 +761,6 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
-}
-
-.self-center {
-  align-self: center;
 }
 
 .rounded-md {
@@ -855,14 +831,6 @@ video {
   background-color: rgb(255 255 255 / 0.8);
 }
 
-.\!fill-white {
-  fill: #ffffff !important;
-}
-
-.fill-white {
-  fill: #ffffff;
-}
-
 .fill-yellow {
   fill: #F5B324;
 }
@@ -874,11 +842,6 @@ video {
 
 .p-4 {
   padding: 1rem;
-}
-
-.px-\[0\.5rem\] {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 
 .py-4 {
@@ -900,7 +863,7 @@ video {
 }
 
 .font-display {
-  font-family: franklin-gothic-atf, sans-serif;
+  font-family: Meso, sans-serif;
 }
 
 .text-2xl {
@@ -916,10 +879,6 @@ video {
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
-}
-
-.text-\[0\.7em\] {
-  font-size: 0.7em;
 }
 
 .text-lg {
@@ -950,10 +909,6 @@ video {
 
 .leading-8 {
   line-height: 2rem;
-}
-
-.tracking-\[0\.5px\] {
-  letter-spacing: 0.5px;
 }
 
 .text-blue {

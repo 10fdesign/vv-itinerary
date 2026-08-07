@@ -64,7 +64,7 @@
 }
 
 .map-infowindow p {
-  font-family: franklin-gothic-atf, sans-serif;
+  font-family: "Meso", sans-serif;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -74,7 +74,7 @@
 }
 
 .map-infowindow .plain-link {
-  font-family: franklin-gothic-atf, sans-serif;
+  font-family: "Meso", sans-serif;
   font-size: 1rem;
   font-weight: 400;
 }
@@ -85,7 +85,7 @@
 
 .map-infowindow .address {
   color: #444;
-  font-family: franklin-gothic-atf, sans-serif;
+  font-family: "Meso", sans-serif;
   font-size: 0.9rem;
   margin-bottom: 0.25rem;
 }
